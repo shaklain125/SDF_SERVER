@@ -3,4 +3,4 @@
 !.gitignore
 /*.exe
 /!*.zip
-*.txt
+/!*.txt
