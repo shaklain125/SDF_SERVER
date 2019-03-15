@@ -25,7 +25,7 @@
       <div id="contentContainer">
         <div id="content">
           <div>
-            <a class="linkBtn" href="index.php">Go Home</a>
+            <a class="linkBtn" href="index.php">Home</a>
           </div>
           <?php
           $store = null;
