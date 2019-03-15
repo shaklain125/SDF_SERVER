@@ -51,7 +51,7 @@
                   echo '<div>No Page Found</div>';
                 }
               }else {
-                echo '<h3 style="font-family:arial; margin:0; margin-bottom:20px;">'.$totalNofResults.' result(s) found for \''.$query.'\'</h3>';
+                echo '<h3 style="margin:0; margin-bottom:20px;">'.$totalNofResults.' result(s) found for \''.$query.'\'</h3>';
               }
               foreach ($searchResultsArr as $key => $value) {
                 $d = $value->GetLatestDiscount($query);
@@ -66,8 +66,7 @@
                 }
                 echo '<div class="searchLinkText">';
                 echo $value->getName().'<br /><br />';
-                echo '</div>';
-                echo '<div style="text-align:center;">';
+                echo 'Likes: '.$value->getLikes().str_repeat('&nbsp;', 7).'Dislikes: '.$value->getDislikes().'<br />';
                 echo '</div>';
                 echo '</div>';
                 echo '</a>';
