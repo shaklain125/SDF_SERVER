@@ -55,13 +55,20 @@
               }
               foreach ($searchResultsArr as $key => $value) {
                 $d = $value->GetLatestDiscount($query);
-                echo '<a class="StoreLink" href="store?id='.$value->getStoreId().'">';
-                echo '<div class="StoreLink" style="margin-bottom:30px;border-style:solid; border-width:thin; padding: 20px;font-family:arial">';
+                echo '<a href="store?id='.$value->getStoreId().'">';
+                echo '<div class="searchLink">';
+                echo '<div>';
+                echo '<img class="searchLinkImg" src="'.$value->getStorePhotoPath().'" alt="">'.'<br /><br />';
+                echo '</div>';
                 if($d != null)
                 {
-                  echo '<div style="margin-bottom:10px;padding-bottom:30px;text-align:center;">'.$d->getPercent().'% OFF '.$d->getName().'</div>';
+                  echo '<div class="searchLinkText">'.$d->getPercent().'% OFF '.$d->getName().'</div>';
                 }
-                echo '<div>'.$value->getName().'</div>';
+                echo '<div class="searchLinkText">';
+                echo $value->getName().'<br /><br />';
+                echo '</div>';
+                echo '<div style="text-align:center;">';
+                echo '</div>';
                 echo '</div>';
                 echo '</a>';
                 // printval($d);
