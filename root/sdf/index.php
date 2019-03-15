@@ -111,6 +111,9 @@
                     }
                   }
                   echo '<div>';
+                  echo '<img class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">'.'<br /><br />';
+                  echo '</div>';
+                  echo '<div class="storeLinkText">';
                   echo $store->getName().'<br /><br />';
                   echo '</div>';
                   foreach ($prefDiscountFromStore as $key => $value) {
@@ -121,7 +124,9 @@
                   echo '<div class="overlay">';
                   echo '<div class="overlayDescription">'.substr($store->getDescription(), 0, 80).'</div>';
                   echo '</div><br />';
+                  echo '<div class="storeLinkText">';
                   echo 'Likes: '.$store->getLikes().str_repeat('&nbsp;', 7).'Dislikes: '.$store->getDislikes().'<br />';
+                  echo '</div>';
                   echo '</div>';
                   echo '</a>';
                 }
@@ -154,11 +159,17 @@
                 //   echo '</div>';
                 // }
                 echo '<div>';
+                echo '<img class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">'.'<br /><br />';
+                echo '</div>';
+                echo '<div class="storeLinkText">';
                 echo $store->getName().'<br /><br />';
                 echo '</div>';
                 echo '<div class="overlay">';
                 echo '<div class="overlayDescription">'.substr($store->getDescription(), 0, 80).'</div>';
                 echo '</div><br />';
+                echo '<div class="storeLinkText">';
+                echo 'Likes: '.$store->getLikes().str_repeat('&nbsp;', 7).'Dislikes: '.$store->getDislikes().'<br />';
+                echo '</div>';
                 echo '</div>';
                 echo '</a>';
               }
