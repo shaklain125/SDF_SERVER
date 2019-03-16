@@ -4,8 +4,12 @@ include '../_importPhp.php';
 if(isset($_POST['userid']))
 {
   // var_dump($_POST);
+  // echo json_encode(array(
+  //   'post' => $_POST
+  // ));
+  // return;
   startSession();
-  SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
+  // SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
   $user = null;
   if(isset($_SESSION['student']))
   {
@@ -91,15 +95,18 @@ if(isset($_POST['userid']))
   {
     if($user->updateStudentProfile($input_email,$input_fname,$input_lname,$newPass,$input_dob,$input_university,$input_graduation,$categs,$subCategs))
     {
-      $_SESSION['errorMsg'] = 'Updated';
+      echo json_encode(array(
+        'message' => 'Updated'
+      ));
     }
   }else {
     if($user->updateProfile($input_email,$input_fname,$input_lname,$newPass))
     {
-      $_SESSION['errorMsg'] = 'Updated';
+      echo json_encode(array(
+        'message' => 'Updated'
+      ));
     }
   }
-  header('Location:'.$_SERVER['HTTP_REFERER']);
 }
 
 function getCategories()
@@ -133,11 +140,12 @@ function getCategoryNumb($subCateg) {
 
 function errorMsg($msg, $prefC, $prefSc)
 {
-  $_POST['prefC'] = serialize($prefC);
-  $_POST['prefSubC'] = serialize($prefSc);
-  $_SESSION['postdata'] = $_POST;
-  $_SESSION['errorMsg'] = $msg;
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
+  echo json_encode(array(
+    // 'prefC' => $prefC,
+    // 'prefSubC' => $prefSc,
+    // 'postdata' => $_POST,
+    'errorMsg' => $msg
+  ));
 }
 
 ?>

@@ -25,10 +25,10 @@
       return $this->regstudent[0]['university'];
     }
     public function getPrefCategories() {
-      return $this->regstudent[0]['prefCategories'];
+      return $this->regstudent[0]['prefCategories'] == null ? serialize(array()) :$this->regstudent[0]['prefCategories'];
     }
     public function getPrefSubCategories() {
-      return $this->regstudent[0]['prefSubCategories'];
+      return $this->regstudent[0]['prefSubCategories'] == null ? serialize(array()) :$this->regstudent[0]['prefSubCategories'];
     }
     public function updateStudentProfile($email,$fname,$lname,$password,$dob,$university,$gradD,$prefC, $prefSc) {
       parent::updateProfile($email,$fname,$lname,$password);
@@ -57,7 +57,7 @@
           $stores = $this->removeNotFoundStoresFromList('disliked_stores',unserialize($stores));
         }
       }
-      return serialize($stores);
+      return $stores;
     }
 
     public function getStoreHistory()
@@ -68,7 +68,7 @@
       {
         $stores = $this->removeNotFoundStoresFromList('store_view_history',unserialize($stores));
       }
-      return serialize($stores);
+      return $stores;
     }
 
     public function ToggleLikes($storeid) {
@@ -80,7 +80,7 @@
       $dislikes = $store['dislikes'];
       if($favStores != null)
       {
-        $favStores = unserialize($favStores);
+        $favStores = $favStores;
         $search = $this->searchStoreid($favStores, $storeid);
         if($search == -1)
         {
@@ -96,7 +96,7 @@
       }
       if($dislikedStores != null)
       {
-        $dislikedStores = unserialize($dislikedStores);
+        $dislikedStores = $dislikedStores;
         $search = $this->searchStoreid($dislikedStores, $storeid);
         if($search != -1)
         {
@@ -125,7 +125,7 @@
       $dislikes = $store['dislikes'];
       if($dislikedStores != null)
       {
-        $dislikedStores = unserialize($dislikedStores);
+        $dislikedStores = $dislikedStores;
         $search = $this->searchStoreid($dislikedStores, $storeid);
         if($search == -1)
         {
@@ -141,7 +141,7 @@
       }
       if($favStores != null)
       {
-        $favStores = unserialize($favStores);
+        $favStores = $favStores;
         $search = $this->searchStoreid($favStores, $storeid);
         if($search != -1)
         {
@@ -173,22 +173,32 @@
     }
 
     public function hasLikedStore($storeid) {
-      $favStores = unserialize($this->getLikedStores(true));
-      if($this->searchStoreid($favStores,$storeid) == -1)
+      $favStores = $this->getLikedStores(true);
+      if($favStores != null)
       {
-        return false;
+        if($this->searchStoreid($favStores,$storeid) == -1)
+        {
+          return false;
+        }else {
+          return true;
+        }
       }else {
-        return true;
+        return false;
       }
     }
 
     public function hasDislikedStore($storeid) {
-      $dislikedStores = unserialize($this->getLikedStores(false));
-      if($this->searchStoreid($dislikedStores,$storeid) == -1)
+      $dislikedStores = $this->getLikedStores(false);
+      if($dislikedStores != null)
       {
-        return false;
+        if($this->searchStoreid($dislikedStores,$storeid) == -1)
+        {
+          return false;
+        }else {
+          return true;
+        }
       }else {
-        return true;
+        return false;
       }
     }
 
@@ -197,7 +207,7 @@
       $storehistory = $this->getStoreHistory();
       if($storehistory != null)
       {
-        $storehistory = unserialize($storehistory);
+        $storehistory = $storehistory;
         $search = $this->searchStoreid($storehistory, $storeid);
         if($search != -1)
         {
@@ -218,7 +228,7 @@
       $storehistory = $this->getStoreHistory();
       if($storehistory != null)
       {
-        $storehistory = unserialize($storehistory);
+        $storehistory = $storehistory;
         $search = $this->searchStoreid($storehistory, $storeid);
         if($search != -1)
         {
@@ -240,6 +250,10 @@
 
     private function removeNotFoundStoresFromList($slistName, $stores) {
       $s = $stores;
+      if($s == null)
+      {
+        return array();
+      }
       foreach ($s as $key => $value) {
         if(!$this->StoreExists($value))
         {
@@ -360,6 +374,23 @@
       $studentClaim = new studentclaim($studentclaimid);
       $studentClaim->setDiscountRating($bool);
     }
+
+    public function removeStudentAccount() {
+      $sclaims = $this->getStudentClaims();
+      $conn = createSqlConn();
+      foreach ($sclaims as $key => $value) {
+        $q = 'DELETE FROM studentclaim WHERE studentclaim_id='.$value->getStudentClaimID();
+        if(getQueryResult($q, $conn))
+        {
+          setNextAvailableAutoIncrement('studentclaim','studentclaim_id');
+        }
+      }
+      $q = 'DELETE FROM student WHERE userid='.$this->getUserId();
+      $result = getQueryResult($q, $conn);
+      closeSqlConn($conn);
+      parent::removeAccount();
+    }
+
   }
   // $regUser1 = new student(1);
   // echo $regUser1->getUserId().'<br />';

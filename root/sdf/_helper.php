@@ -126,6 +126,22 @@ function startSession() {
       session_start();
   }
 }
+
+function rrmdir($dir) { 
+   if (is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if (is_dir($dir."/".$object))
+           rrmdir($dir."/".$object);
+         else
+           unlink($dir."/".$object);
+       }
+     }
+     rmdir($dir);
+   }
+ }
+
 function startsWith($val,$str) {
   return substr($str, 0, strlen($val)) == $val;
 }
@@ -178,6 +194,16 @@ function ResetTableAutoincrement($tablename) {
     return setAutoIncrement($tablename,getTableSize($tablename)+1,$conn);
   }
   closeSqlConn($conn);
+}
+
+function setNextAvailableAutoIncrement($table,$incrCol) {
+  $conn = createSqlConn();
+  $q = 'SELECT t1.'.$incrCol.'+1 AS MISSING_ID FROM '.$table.' AS t1 LEFT JOIN '.$table.' AS t2 ON t1.'.$incrCol.'+1 = t2.'.$incrCol.' WHERE t2.'.$incrCol.' IS NULL ORDER BY t1.'.$incrCol.' LIMIT 1';
+  $incrementVal = SqlResultToArray($q,$conn);
+  $incrementVal  = (int) $incrementVal[0]['MISSING_ID'];
+  $result = setAutoIncrement($table,$incrementVal,$conn);
+  closeSqlConn($conn);
+  return $result;
 }
 
 function searchArr($arr, $val) {

@@ -9,7 +9,7 @@ if (isset($_POST['signin'])) {
   {
     session_unset();
     startSession();
-    SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
+    // SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
     $userid = $reguser->getUserId();
     if(findRowInTable('userid',$userid,'student') != null)
     {
@@ -19,21 +19,24 @@ if (isset($_POST['signin'])) {
       $reguser = new storemember($userid);
       $_SESSION['storemember'] = serialize($reguser);
     }
-    echo 'Login Success';
-    header('Location: ' . '../index.php');
+    // echo 'Login Success';
+    echo json_encode(array(
+      'message' => 'success'
+    ));
   }else {
-    echo 'Login Failed';
+    // echo 'Login Failed';
     errorMsg('Login failed');
   }
-}else {
-  header('Location: ../index.php');
 }
 
 function errorMsg($msg)
 {
-  session_unset();
-  startSession();
-  $_SESSION['errorMsg'] = $msg;
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
+  // session_unset();
+  // startSession();
+  // $_SESSION['errorMsg'] = $msg;
+  echo json_encode(array(
+    'errorMsg' => $msg
+  ));
+  // header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 ?>

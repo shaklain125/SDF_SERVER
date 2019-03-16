@@ -4,6 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <?php include '_importStyle.php'; ?>
+    <script type="text/javascript">
+      function clearAllHistoryFrm() {
+        var reqData = 'clearHistory=';
+        var req = new XMLHttpRequest();
+        req.onload = () =>
+        {
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          if (respData) {
+            clearAllHistoryFormResultHandler(respData)
+          }
+        }
+        req.open('post', 'form_handlers/_clearHistory.php');
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.send(reqData);
+      }
+
+      function clearAllHistoryFormResultHandler(response) {
+        if(response.message == 'ok')
+        {
+          location.reload();
+        }
+      }
+    </script>
   </head>
   <body>
     <?php
@@ -23,8 +51,8 @@
           <div>
             <h2 style="margin:0; font-family:arial;">Store History</h2>
           </div>
-          <form onsubmit="return clearHistoryForm()" style="margin-bottom:20px;" id="clearHistoryForm" action="form_handlers/_clearHistory.php" method="post">
-            <input type="submit" name="clearHistory" value="Clear History">
+          <form style="margin-bottom:20px;" id="clearHistoryForm">
+            <input type="button" name="clearHistory" value="Clear History" onclick="clearAllHistoryFrm()">
           </form>
           <?php
             $user = null;
@@ -33,7 +61,11 @@
             {
               $user = unserialize($_SESSION['student']);
               $conn = createSqlConn();
-              $storehistory = unserialize($user->getStoreHistory());
+              $storehistory = $user->getStoreHistory();
+              if($storehistory == null)
+              {
+                $storehistory = array();
+              }
               $storehistory = array_reverse($storehistory);
               if(sizeof($storehistory) > 0)
               {
@@ -85,15 +117,5 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-      window.onload = Load()
-      function Load() {
-      <?php echo GetXandYScrollPositions();?>
-      }
-      function clearHistoryForm() {
-        AddXandYScrollToForm("clearHistoryForm");
-        return true
-      }
-    </script>
   </body>
 </html>

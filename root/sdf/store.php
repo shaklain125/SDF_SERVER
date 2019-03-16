@@ -3,7 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <?php include '_importStyle.php'; ?>
+    <?php
+      include '_importStyle.php';
+      include '_importPhp.php';
+      include '_checkLoggedIn.php';
+      startSession();
+    ?>
     <style media="screen">
     .storePhotoPage{
       object-fit: cover;
@@ -11,13 +16,80 @@
       height: 336px;
     }
     </style>
+    <script type="text/javascript">
+
+      function rateStore(val) {
+        var reqData = null;
+        var req = new XMLHttpRequest();
+        var formdata = $("#rateStoreForm").serialize();
+        if(val)
+        {
+          reqData = 'like=&' + formdata;
+        }else {
+          reqData = 'dislike=&' + formdata;
+        }
+        req.onload = () =>
+        {
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          if (respData) {
+            rateFormResultHandler(respData)
+          }
+        }
+        req.open('post', 'form_handlers/_rateStore.php');
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.send(reqData);
+      }
+
+      function rateFormResultHandler(response) {
+        if(response[1])
+        {
+          element("like").className = "likebtn activeLikeBtn"
+        }else {
+          element("like").className = "likebtn"
+        }
+        if(response[2])
+        {
+          element("dislike").className = "dislikebtn activeDislikeBtn"
+        }else {
+          element("dislike").className = "dislikebtn"
+        }
+        element("likes").innerHTML = response[0][0]
+        element("dislikes").innerHTML = response[0][1]
+      }
+
+      function claimDiscountFrm(formid) {
+        var formdata = $("#" + formid).serialize();
+        var reqData = 'claimDiscount=&' + formdata;
+        var req = new XMLHttpRequest();
+        req.onload = () =>
+        {
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          if (respData) {
+            claimDiscountFormResultHandler(respData)
+          }
+        }
+        req.open('post', 'form_handlers/_claimDiscount.php');
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.send(reqData);
+      }
+
+      function claimDiscountFormResultHandler(response) {
+        ShowSessionDivMsg(response.message);
+        setTimeout("HideSessionDivMsg()",3000);
+      }
+    </script>
   </head>
   <body>
-    <?php
-      include '_importPhp.php';
-      include '_checkLoggedIn.php';
-      startSession();
-    ?>
     <div id="container">
       <?php
       include '_fixedHeaderAndSideBar.php'
@@ -55,16 +127,16 @@
                 $active2 = 'activeDislikeBtn';
               }
             ?>
-            <form onsubmit="return rateStoreForm()" id="rateStoreForm" style="text-align:center" action="form_handlers/_rateStore.php" method="post">
+            <form id="rateStoreForm" style="text-align:center">
               <input type="hidden" name="storeid" value="<?php echo $store->getStoreId()?>">
               <div style="text-align:center; font-size: 25pt;display: flex;justify-content: center;font-family:arial;">
                 <div style="text-align:center;padding:10px; padding-right:0;padding-left:0;margin-right:10px">
-                  <input type="submit" class="likebtn <?php echo $active ?>" name="like" value="">
-                  <?php echo $store->getLikes(); ?>
+                  <input type="button" class="likebtn <?php echo $active ?>" name="like" id="like" value="" onclick="rateStore(true)">
+                  <span id="likes"><?php echo $store->getLikes(); ?></span>
                 </div>
                 <div style="text-align:center;padding:10px;">
-                  <input type="submit" class="dislikebtn <?php echo $active2 ?>" name="dislike" value="">
-                  <?php echo $store->getDislikes(); ?>
+                  <input type="button" class="dislikebtn <?php echo $active2 ?>" name="dislike" id="dislike" value="" onclick="rateStore(false)">
+                  <span id="dislikes"><?php echo $store->getDislikes(); ?></span>
                 </div>
               </div>
             </form>
@@ -117,9 +189,9 @@
                 echo 'Expire Date: '.$value->getExpireDate().'</br>';
                 echo 'Subcategory: '.$value->getSubCategory().'</br>';
             ?>
-                <form onsubmit="return claimDiscountForm()" id="claimDiscountForm" action="form_handlers/_claimDiscount.php" method="post">
+                <form id="claimDiscountForm<?php echo $value->getDiscountId()?>">
                   <input type="hidden" name="discountid" value="<?php echo $value->getDiscountId()?>">
-                  <input type="submit" name="claimDiscount" value="Claim Discount">
+                  <input type="button" name="claimDiscount" value="Claim Discount" onclick="claimDiscountFrm('claimDiscountForm<?php echo $value->getDiscountId()?>')">
                 </form>
             <?php
                 echo '</div>';

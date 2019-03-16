@@ -1,19 +1,25 @@
 <?php
   include '../_importPhp.php';
+  startSession();
   if(isset($_POST['removeStore']))
   {
-    startSession();
-    SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
     $storeid = $_POST['storeid'];
     $store = new store($storeid);
     $user = unserialize($_SESSION['storemember']);
+    rrmdir('../stores/'.$_POST['storeid'].'/');
     $user->removeStore($storeid);
-    $_SESSION['message'] = '\"'.$store->getName().'\" removed';
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    echo json_encode(array(
+      'message' => 'Store '.$storeid.' removed',
+      'storeid' => $storeid
+    ));
   }elseif (isset($_POST['removeAll'])) {
     $user = unserialize($_SESSION['storemember']);
+    foreach (unserialize($user->getStores()) as $key => $value) {
+      rrmdir('../stores/'.$value.'/');
+    }
     $user->RemoveAllStores();
-    $_SESSION['message'] = "Al stores removed";
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    echo json_encode(array(
+      'message' => "Al stores removed"
+    ));
   }
 ?>

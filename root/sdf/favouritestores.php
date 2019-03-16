@@ -30,7 +30,11 @@
             {
               $user = unserialize($_SESSION['student']);
               $conn = createSqlConn();
-              $favStores = unserialize($user->getLikedStores(true));
+              $favStores = $user->getLikedStores(true);
+              if($favStores == null)
+              {
+                $favStores = array();
+              }
               $favStores = array_reverse($favStores);
               if(sizeof($favStores) > 0)
               {

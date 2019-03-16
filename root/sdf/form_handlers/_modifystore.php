@@ -1,10 +1,9 @@
 <?php
   include '../_importPhp.php';
-
   if(isset($_POST['store_id']))
   {
     startSession();
-    SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
+    // SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
     $user = unserialize($_SESSION['storemember']);
     $storeid = $_POST['store_id'];
     $storename = $_POST['input_store_name'];
@@ -18,17 +17,17 @@
     foreach ($discountsToRemove as $key => $value) {
       if($user->DeleteDiscount($value))
       {
-        echo 'Discount '.$value.' deleted <br />';
+        // echo 'Discount '.$value.' deleted <br />';
       }else {
-        echo 'Discount '.$value.' NOT deleted <br />';
+        // echo 'Discount '.$value.' NOT deleted <br />';
       }
     }
-    echo '<br />';
+    // echo '<br />';
     if($user->EditStorePage($storeid,$storename,$storedescr,$storephone,$storewebsite,$storecateg))
     {
-      echo 'Store info. updated';
+      // echo 'Store info. updated';
     }
-    echo '<br />';
+    // echo '<br />';
     if(sizeof($newDiscounts) > 0)
     {
       foreach ($newDiscounts as $key => $value) {
@@ -39,16 +38,17 @@
         $discountSubCateg = $value['input_discount_subcateg'];
         if($user->AddDiscount($storeid,$discountName,$discountPercent,$discountStartD,$discountEndD,$discountSubCateg,15))
         {
-          echo 'created discount: '.$discountName;
+          // echo 'created discount: '.$discountName;
         }else {
-          echo 'not created discount: '.$discountName;
+          // echo 'not created discount: '.$discountName;
         }
       }
     }else {
-      echo 'No new discounts added';
+      // echo 'No new discounts added';
     }
-    $_SESSION['message'] = 'Modifications saved';
-    header('Location:'.$_SERVER['HTTP_REFERER']);
+    echo json_encode(array(
+      'message' => 'Modifications saved'
+    ));
   }
 
   function setStorePhoto($storeid) {

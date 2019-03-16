@@ -145,6 +145,16 @@
       $q = strtolower($q);
       return 'lower('.$colName.') like "'.$q.'%" or lower('.$colName.') like "%'.$q.'" or lower('.$colName.') like "%'.$q.'%"';
     }
+
+    public function removeAccount() {
+      $conn = createSqlConn();
+      $q = 'DELETE FROM registereduser WHERE userid='.$this->getUserId();
+      $result = getQueryResult($q,$conn);
+      setNextAvailableAutoIncrement('registereduser','userid');
+      closeSqlConn($conn);
+      header('location: ../logout.php');
+      return true;
+    }
   }
   // $regUser1 = new registereduser(1);
   // echo $regUser1->getUserId().'<br />';

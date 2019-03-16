@@ -3,14 +3,18 @@
   startSession();
   if(isset($_POST['usecode']))
   {
-    SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
     $sclaim = new studentclaim($_POST['studentclaimid']);
     if($sclaim->UseCode())
     {
       $_SESSION['message'] = 'Code Used';
+      echo json_encode(array(
+        'message' => 'Code Used'
+      ));
     }else {
       $_SESSION['message'] = 'Code Not Used';
+      echo json_encode(array(
+        'message' => 'Code Not Used'
+      ));
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
   }
 ?>

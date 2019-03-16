@@ -27,7 +27,6 @@ html,body,#container {
   width: 0;
   font-family: 'myriad-pro';
   position: fixed;
-  z-index: 1;
   top: 0;
   left: 0;
   background-color: #111;
@@ -35,7 +34,7 @@ html,body,#container {
   transition: 0.1s;
   padding-top: 60px;
   opacity: 0.96;
-  z-index: 9999;
+  z-index: 2;
 }
 
 /* Style the sidenav links and the dropdown button */
@@ -144,7 +143,30 @@ html,body,#container {
   padding: 12px 20px 12px 40px;
 }
 
-input[type=submit].likebtn{
+a.livesearch{
+  text-decoration: none;
+}
+
+div.livesearch{
+  border-top: solid;
+  border-width: thin;
+  border-color: #ccc;
+  padding: 20px;
+  color: black;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+div.livesearch:hover{
+  background-color:#efefef;
+}
+
+#liveSearchDiv{
+  margin-top: 5px;
+  border:none;
+}
+
+input[type=button].likebtn{
   background-image: url('../icons/likeBtn.png');
   background-repeat: no-repeat;
   background-position: 0px 0px;
@@ -169,11 +191,11 @@ input[type=submit].likebtn{
   background-color: transparent;
 }
 
-input[type=submit].activeLikeBtn, input[type=submit].likebtn:hover{
+input[type=button].activeLikeBtn, input[type=button].likebtn:hover{
   filter: brightness(0) invert(1);
 }
 
-input[type=submit].dislikebtn{
+input[type=button].dislikebtn{
   background-image: url('../icons/dislikeBtn.png');
   background-repeat: no-repeat;
   background-position: 8px 6px;
@@ -198,7 +220,7 @@ input[type=submit].dislikebtn{
   background-color: transparent;
 }
 
-input[type=submit].activeDislikeBtn, input[type=submit].dislikebtn:hover{
+input[type=button].activeDislikeBtn, input[type=button].dislikebtn:hover{
   filter: brightness(0) invert(1);
 }
 
@@ -226,7 +248,7 @@ input[type=submit].activeDislikeBtn, input[type=submit].dislikebtn:hover{
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
   -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
   box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
-  z-index: 9998;
+  z-index: 1;
 }
 
 input[type=text],input[type=date],input[type=password],select{
@@ -428,7 +450,7 @@ textarea{
   background-color: rgba(0,0,0,0.93);
   font-family:'myriad-pro';
   text-align:center;
-  z-index: 2;
+  z-index: 3;
 }
 
 /*For PC and Laptop*/

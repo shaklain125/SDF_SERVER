@@ -8,6 +8,78 @@
       include '_importPhp.php';
       startSession();
     ?>
+    <script type="text/javascript">
+      function updateProfileFrm() {
+        if(!profileForm())
+        {
+          return;
+        }
+        var fd = new FormData(element('profileForm'));
+        var reqData = fd;
+        var req = new XMLHttpRequest();
+        req.onload = () =>
+        {
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          console.log(respData)
+          if (respData) {
+            updateProfileFormResultHandler(respData)
+          }
+        }
+        req.open('post', 'form_handlers/_updateProfile.php');
+        req.send(reqData);
+      }
+
+      function updateProfileFormResultHandler(response) {
+        if(response.message)
+        {
+          ShowSessionDivMsg(response.message);
+          setTimeout("HideSessionDivMsg()",3000);
+        }else if (response.errorMsg) {
+          element("errorMsgDiv").innerHTML = response.errorMsg;
+          element("errorMsgDiv").style.display = ""
+        }
+      }
+
+      function rateFrm(rating, formid) {
+        var reqData = null
+        if(rating)
+        {
+          reqData = 'rate=GOOD&'
+        }else {
+          reqData = 'rate=BAD&'
+        }
+        reqData += $('#'+formid).serialize();
+        var req = new XMLHttpRequest();
+        req.onload = () =>
+        {
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          if (respData) {
+            rateFormResultHandler(respData)
+          }
+        }
+        req.open('post', 'form_handlers/_rateDiscount.php');
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.send(reqData);
+      }
+
+      function rateFormResultHandler(response) {
+        if(response.message == 'ok')
+        {
+          location.reload();
+        }
+      }
+
+    </script>
     <style media="screen">
       #profilePhoto{
         border-radius: 50%;
@@ -119,7 +191,7 @@
             if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
             {
           ?>
-          <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" action="form_handlers/_updateProfile.php" method="post" enctype="multipart/form-data">
+          <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" enctype="multipart/form-data">
             <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
             <div id="coverProfilePhoto" style="width:100%; text-align:center;height:300px;">
               <input type="hidden" id="removeProfilePhoto" name="removeProfilePhoto" value="false">
@@ -150,8 +222,8 @@
                 Password: <?php echo $user->getPassword();?>
               </div>
             </div>
-            <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo keepProfileValues("input_username",$user->getUsername(),false)?>" oninput="handleMsgChange()"> -->
-            <input type="text" name="input_email" placeholder="E-Mail" value="<?php echo keepProfileValues("input_email",$user->getEmail(),false)?>" oninput="handleMsgChange()">
+            <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
+            <input type="text" name="input_email" placeholder="E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
             <div id="ChangePass">
               <a href="javascript:void(0)" onclick="changePassword()" class="linkBtn">Change Password</a>
               <div id="changePwDiv" style="display:none;padding:20px; border-style:solid;border-width:thin;">
@@ -162,19 +234,19 @@
                 </div>
               </div>
             </div>
-            <input type="text" name="input_fname" placeholder="First Name"value="<?php echo keepProfileValues("input_fname",$user->getFirstName(),false)?>" oninput="handleMsgChange()">
-            <input type="text" name="input_lname" placeholder="Last Name" value="<?php echo keepProfileValues("input_lname",$user->getLastName(),false)?>" oninput="handleMsgChange()">
+            <input type="text" name="input_fname" placeholder="First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()">
+            <input type="text" name="input_lname" placeholder="Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()">
             <?php
                 if(isset($_SESSION['student']))
                 {
             ?>
-            <input type="date" name="input_dob" placeholder="Date Of Birth" value="<?php echo keepProfileValues("input_dob",$user->getDob(),false); ?>" max="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+            <input type="date" name="input_dob" placeholder="Date Of Birth" value="<?php echo $user->getDob() ?>" max="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
             <select name="input_university" onchange="handleMsgChange()">
               <?php
                 $conn = createSqlConn();
                 $university = SqlResultToArray("select * from university",$conn);
                 foreach ($university as $key => $value) {
-                  if($value['university_name'] == keepProfileValues("input_university",$user->getUniversity(),false))
+                  if($value['university_name'] == $user->getUniversity())
                   {
                     echo '<option value="'.$value['university_name'].'" selected>'.$value['university_name'].'</option>';
                   }else {
@@ -184,7 +256,7 @@
                 closeSqlConn($conn);
               ?>
             </select>
-            <input type="date" name="input_graduation" placeholder="Graduation Date" value="<?php echo keepProfileValues("input_graduation",$user->getGradDate(),false); ?>" min="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+            <input type="date" name="input_graduation" placeholder="Graduation Date" value="<?php echo $user->getGradDate() ?>" min="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
             <?php
               }
             ?>
@@ -201,8 +273,13 @@
                 $categ = SqlResultToArray("select * from category",$conn);
                 $subcateg = SqlResultToArray("select * from subcategory",$conn);
                 $categIndx = 1;
-                $db_prefCategs = unserialize(keepProfileValues("prefC",($user->getPrefCategories()),false));
-                $db_prefSubCategs = unserialize(keepProfileValues("prefSubC",($user->getPrefSubCategories()),true));
+                $db_prefCategs = unserialize($user->getPrefCategories());
+                $db_prefSubCategs = unserialize($user->getPrefSubCategories());
+                // if($db_prefCategs == false || $db_prefSubCategs == false)
+                // {
+                //   $db_prefCategs = array();
+                //   $db_prefSubCategs = array();
+                // }
                 foreach ($subcateg as $key1 => $value1) {
                   foreach ($db_prefCategs as $key2 => $value2) {
                     if($value1['category_name'] == $value2)
@@ -239,10 +316,9 @@
                 closeSqlConn($conn);
               }
               ?>
-              <div id="errorMsgDiv" style="display:<?php echo errorExists(); ?>">
-                <?php echo ShowError(); ?>
+              <div id="errorMsgDiv" style="display:none">
               </div>
-              <input type="submit" name="saveProfile" value="Save Settings">
+              <input type="button" name="saveProfile" value="Save Settings" onclick="updateProfileFrm()">
               </form>
               <?php
               if(isset($_SESSION['student']))
@@ -262,7 +338,7 @@
             <div>
               <?php
                 $claimedL = $user->getStudentClaims();
-                // $claimedL = array_reverse($claimedL);
+                $claimedL = array_reverse($claimedL);
                 if(sizeof($claimedL) == 0)
                 {
                   echo '<div style="padding:20px; border-top:0;text-align:left; border-style:solid; border-width:thin;">';
@@ -321,10 +397,10 @@
                         if(!$value->isUsed())
                         {
                 ?>
-                          <form onsubmit="return showDiscountForm()" id="showDiscountForm" action="form_handlers/_showDiscountCode.php" method="post">
+                          <form id="showDiscountForm<?php echo $value->getStudentClaimID() ?>">
                             <input type="hidden" name="discountid" value="<?php echo $discount->getDiscountId() ?>">
                             <input type="hidden" name="studentclaimid" value="<?php echo $value->getStudentClaimID() ?>">
-                            <p style="text-align:center;"><input type="submit" name="showcode" value="Show Code"></p>
+                            <p style="text-align:center;"><input type="button" name="showcode" value="Show Code" onclick="showDiscountFrm('showDiscountForm<?php echo $value->getStudentClaimID() ?>')"></p>
                           </form>
                 <?php
                         }else{
@@ -337,10 +413,10 @@
                             echo '<p>Change Rating</p>';
                           }
               ?>
-                          <form id="rateForm<?php echo $discount->getDiscountId();?>" onsubmit="return RateForm(this)" action="form_handlers/_rateDiscount.php" method="post">
+                          <form id="rateForm<?php echo $discount->getDiscountId();?>">
                             <input type="hidden" name="studentclaimid" value="<?php echo $value->getStudentClaimID()?>">
-                            <input type="submit" style="padding:5px;margin:0;" name="rate" value="GOOD">
-                            <input type="submit" style="padding:5px;margin:0;" name="rate" value="BAD">
+                            <input type="button" style="padding:5px;margin:0;" name="rate" value="GOOD" onclick="rateFrm(true, 'rateForm<?php echo $discount->getDiscountId();?>')">
+                            <input type="button" style="padding:5px;margin:0;" name="rate" value="BAD" onclick="rateFrm(false, 'rateForm<?php echo $discount->getDiscountId();?>')">
                           </form>
               <?php
                         }
@@ -353,6 +429,7 @@
                   foreach ($updateclaimedL as $key => $value) {
                     array_push($up, $value->getStudentClaimID());
                   }
+                  $up = array_reverse($up);
                   $user->setClaimedListArray($up,$studentclaimidsToRemove);
                   echo '</div>';
               }
@@ -409,7 +486,6 @@
         <?php echo GetXandYScrollPositions();?>
         changebtntoggle = null;
         removeAcc = false;
-        ShowOverlayCode();
         <?php echo getSessionDivMsg(3000);?>
       }
 
@@ -488,8 +564,6 @@
             if(changebtntoggle == null || changebtntoggle == false)
             {
               element("changepw").value = false;
-              removeE("currentpw")
-              removeE("newpw")
             }else {
               if(!pwMatch)
               {
@@ -506,8 +580,6 @@
           if(changebtntoggle == null || changebtntoggle == false)
           {
             element("changepw").value = false;
-            removeE("currentpw")
-            removeE("newpw")
           }else {
             if(!pwMatch)
             {
@@ -565,60 +637,85 @@
 
       function CloseOverlayCode() {
         document.body.removeChild(element("overlay-DiscountCode"));
-        document.body.removeChild(element("useDiscountForm"));
       }
 
-      function ShowOverlayCode() {
-        <?php
-        if(isset($_SESSION['dcodeData']))
+      function showDiscountFrm(formid) {
+        var reqData = 'showcode=&' + $('#' + formid).serialize();
+        var req = new XMLHttpRequest();
+        req.onload = () =>
         {
-          $d = unserialize($_SESSION['dcodeData']);
-          $discount = $d[0];
-          $sclaim = $d[1];
-          $store = (new store($discount->getStoreId()))->getName();
-          $dname = $discount->getPercent().'% OFF '.$discount->getName();
-          $subc = $discount->getSubCategory();
-          $expireDate ='Expires: '.$discount->getExpireDate();
-          $code =$discount->getCode();
-          unset($_SESSION['dcodeData']);
-        ?>
-        document.write('<div id="overlay-DiscountCode" style="display:block;padding:20px">');
-        document.write("<h4>Click inside the box to exit</h4>")
-        document.write('<div style="border-style:solid; margin-top:50px;cursor: pointer;" onclick="CloseOverlayCode()">')
-        document.write('<h1><?php echo $store; ?></h1>');
-        document.write('<h2><?php echo $dname; ?></h2>');
-        document.write('<h2><?php echo $subc; ?></h2>');
-        document.write('<h3><?php echo $expireDate; ?></h3>');
-        document.write('<h1><?php echo $code; ?></h1>');
-        document.write('</div>')
-        document.write('<form id="useDiscountForm" onsubmit="return useDiscountForm()" action="form_handlers/_useDiscount.php" method="post">')
-        document.write('<input type="hidden" name="studentclaimid" value="<?php echo $sclaim->getStudentClaimID() ?>">');
-        document.write('<div><input type="submit" name="usecode" value="Use Discount"></div>');
-        document.write('</form>')
-        document.write('</div>');
-        <?php
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          if (respData) {
+            ShowOverlayCode(respData)
+          }
         }
-        ?>
+        req.open('post', 'form_handlers/_showDiscountCode.php');
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.send(reqData);
       }
-      function RateForm(e) {
-        AddXandYScrollToForm(e.id);
-        return true
+
+      function ShowOverlayCode(response) {
+        if(response.message == 'ok')
+        {
+          var overlay = document.createElement("div")
+          overlay.id = "overlay-DiscountCode"
+          overlay.style.display = "block"
+          overlay.style.padding = "20px"
+          overlay.innerHTML = '<h4>Click inside the box to exit</h4>'+
+          '<div style="border-style:solid; margin-top:50px;cursor: pointer;" onclick="CloseOverlayCode()">'+
+          '<h1>' +response.storename+ '</h1>'+
+          '<h2>' +response.dname+ '</h2>'+
+          '<h2>' +response.subcateg+ '</h2>'+
+          '<h3>' +response.expire+ '</h3>'+
+          '<h1>' +response.code+ '</h1>'+
+          '</div>'+
+          '<form id="useDiscountForm">'+
+          '<input type="hidden" name="studentclaimid" value="' +response.sclaimid+ '">'+
+          '<div><input type="button" name="usecode" value="Use Discount" onclick="useDiscountFrm()"></div>'+
+          '</form>'
+          document.body.appendChild(overlay);
+        }
       }
-      function useDiscountForm() {
-        AddXandYScrollToForm("useDiscountForm");
-        return true
+
+      function useDiscountFrm() {
+        var reqData = 'usecode=&' + $('#useDiscountForm').serialize();
+        var req = new XMLHttpRequest();
+        req.onload = () =>
+        {
+          var respData = null;
+          try {
+            respData = JSON.parse(req.responseText)
+          } catch (e) {
+
+          }
+          if (respData) {
+            useDiscountFormResultHandler(respData)
+          }
+        }
+        req.open('post', 'form_handlers/_useDiscount.php');
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.send(reqData);
       }
+
+      function useDiscountFormResultHandler(response) {
+        if(response.message)
+        {
+          location.reload()
+        }
+      }
+
       function profileForm() {
         var s = update();
         if(!s)
         {
           return false;
         }
-        AddXandYScrollToForm("profileForm");
-        return true
-      }
-      function showDiscountForm() {
-        AddXandYScrollToForm("showDiscountForm");
+        // AddXandYScrollToForm("profileForm");
         return true
       }
 

@@ -26,7 +26,7 @@ window.addEventListener('mouseup',function(e){
   var s = element("searchBar");
   if(element("searchBarDiv").style.display == "block")
   {
-    if(e.target != s  && e.target != element("searchBarDiv") && e.target != element("searchCollapsebtn"))
+    if(e.target != s  && e.target != element("searchBarDiv") && e.target != element("liveSearchDiv") && e.target.parentNode != element("liveSearchDiv") &&  e.target != element("searchCollapsebtn"))
     {
       element("searchBarDiv").style.display = "none";
     }
@@ -136,6 +136,24 @@ function searchForm() {
     }
   }else {
     return false;
+  }
+}
+
+function ValidSearchQuery() {
+  var val = element('searchBar').value;
+  if(val)
+  {
+    var emptyCheck = val.replace(/ /g, '');
+    val = val.trimStart();
+    val = val.trimEnd();
+    if(emptyCheck.length == 0)
+    {
+      return null
+    }else {
+      return val;
+    }
+  }else {
+    return null;
   }
 }
 

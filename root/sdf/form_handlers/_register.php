@@ -3,17 +3,9 @@ include '../_importPhp.php';
 
 if(isset($_POST['register']))
 {
-  SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
-  var_dump($_POST);
+  // SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
   $regType = $_POST['regType'];
-  $postdata = $_POST;
-  if($regType == 2)
-  {
-    unset($postdata['input_dob']);
-    unset($postdata['input_university']);
-    unset($postdata['input_graduation']);
-  }
-  if(ArrayNotNull($postdata))
+  if(ArrayNotNull($_POST))
   {
     $usrname = $_POST['input_username'];
     $email = $_POST['input_email'];
@@ -26,30 +18,22 @@ if(isset($_POST['register']))
       {
         registerUser($usrname,$email,$password,$firstname,$lastname, $regType);
       }else {
-        errorMsg('Please accept terms and policies',$regType);
+        errorMsg('Please accept terms and policies');
       }
     }else {
-      errorMsg('Please accept terms and policies',$regType);
+      errorMsg('Please accept terms and policies');
     }
   }else {
-    errorMsg('Please fill all input boxes',$regType);
+    errorMsg('Please fill all input boxes');
   }
 }else {
   header('Location: ../index.php');
 }
-function errorMsg($msg,$regType)
+function errorMsg($msg)
 {
-  session_unset();
-  startSession();
-  if($regType == 1)
-  {
-    $_SESSION['display'] = array('','');
-  }else {
-    $_SESSION['display'] = array('','none');
-  }
-  $_SESSION['postdata'] = $_POST;
-  $_SESSION['errorMsg'] = $msg;
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
+  echo json_encode(array(
+    'errorMsg' => $msg
+  ));
 }
 
 function registerUser($usrname,$email,$password,$firstname,$lastname,$regType)
@@ -73,26 +57,30 @@ function registerUser($usrname,$email,$password,$firstname,$lastname,$regType)
           $q1 = "INSERT INTO student (userid,dob,graduation_date,university) VALUES ($last_id,'$dob','$graduation','$university')";
           if(getQueryResult($q1,$conn))
           {
-            echo 'Student account created';
+            // echo 'Student account created';
             $reguser = new student($last_id);
             $_SESSION['student'] = serialize($reguser);
-            header('Location: ' . '../index.php');
+            echo json_encode(array(
+              'message' => 'ok'
+            ));
           }else {
-            echo "Error: " . $q1 . "<br>" . $conn->error;
+            // echo "Error: " . $q1 . "<br>" . $conn->error;
           }
         }elseif ($regType == 2) {
           $q1 = "INSERT INTO storemember (userid) VALUES ($last_id)";
           if(getQueryResult($q1, $conn))
           {
-            echo 'Store member account created.';
+            // echo 'Store member account created.';
             $reguser = new storemember($last_id);
             $_SESSION['storemember'] = serialize($reguser);
-            header('Location: ' . '../index.php');
+            echo json_encode(array(
+              'message' => 'ok'
+            ));
           }
         }
       }
     }else {
-      errorMsg("username or email already exists",$regType);
+      errorMsg("username or email already exists");
     }
   }
   closeSqlConn($conn);

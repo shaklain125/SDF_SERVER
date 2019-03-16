@@ -87,48 +87,62 @@
                     }
                   }
                 }
-                foreach ($storesToList as $key1 => $value1) {
-                  $store = new store($value1);
-                  echo '<a href="store?id='.$value1.'">';
-                  echo '<div class="StoreLink">';
-                  $discounts = $store->getDiscounts();
-                  $discounts = array_reverse($discounts);
-                  $prefDiscountFromStore = array();
-                  $addedDisc = false;
-                  foreach ($discounts as $key2 => $value2) {
-                    $s = $value2->getSubCategory();
-                    foreach ($db_prefSubCategs as $key3 => $value3) {
-                      if($s == $value3)
+                if(sizeof($storesToList) == 0)
+                {
+                  foreach ($stores as $key => $value) {
+                    array_push($storesToList, $value['storeid']);
+                  }
+                  DisplayStoresNoPref($storesToList);
+                }else {
+                  foreach ($storesToList as $key1 => $value1) {
+                    $store = new store($value1);
+                    echo '<a href="store?id='.$value1.'">';
+                    echo '<div class="StoreLink">';
+                    $discounts = $store->getDiscounts();
+                    $discounts = array_reverse($discounts);
+                    $prefDiscountFromStore = array();
+                    $addedDisc = false;
+                    foreach ($discounts as $key2 => $value2) {
+                      $s = $value2->getSubCategory();
+                      foreach ($db_prefSubCategs as $key3 => $value3) {
+                        if($s == $value3)
+                        {
+                          array_push($prefDiscountFromStore, $value2);
+                          $addedDisc = true;
+                          break;
+                        }
+                      }
+                      if($addedDisc)
                       {
-                        array_push($prefDiscountFromStore, $value2);
-                        $addedDisc = true;
                         break;
                       }
                     }
-                    if($addedDisc)
-                    {
-                      break;
-                    }
-                  }
-                  echo '<div>';
-                  echo '<img class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">'.'<br /><br />';
-                  echo '</div>';
-                  echo '<div class="storeLinkText">';
-                  echo $store->getName().'<br /><br />';
-                  echo '</div>';
-                  foreach ($prefDiscountFromStore as $key => $value) {
-                    echo '<div style="text-align:center;">';
-                    echo $value->getPercent().'% off '.$value->getName();
+                    echo '<div>';
+                    echo '<img class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">'.'<br /><br />';
                     echo '</div>';
+                    echo '<div class="storeLinkText">';
+                    echo $store->getName().'<br /><br />';
+                    echo '</div>';
+                    foreach ($prefDiscountFromStore as $key => $value) {
+                      echo '<div style="text-align:center;">';
+                      echo $value->getPercent().'% off '.$value->getName();
+                      echo '</div>';
+                    }
+                    if(sizeof($prefDiscountFromStore) == 0)
+                    {
+                      echo '<div style="text-align:center;">';
+                      echo 'Discounts N/A';
+                      echo '</div>';
+                    }
+                    echo '<div class="overlay">';
+                    echo '<div class="overlayDescription">'.substr($store->getDescription(), 0, 80).'</div>';
+                    echo '</div><br />';
+                    echo '<div class="storeLinkText">';
+                    echo 'Likes: '.$store->getLikes().str_repeat('&nbsp;', 7).'Dislikes: '.$store->getDislikes().'<br />';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</a>';
                   }
-                  echo '<div class="overlay">';
-                  echo '<div class="overlayDescription">'.substr($store->getDescription(), 0, 80).'</div>';
-                  echo '</div><br />';
-                  echo '<div class="storeLinkText">';
-                  echo 'Likes: '.$store->getLikes().str_repeat('&nbsp;', 7).'Dislikes: '.$store->getDislikes().'<br />';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</a>';
                 }
               }else {
                 foreach ($stores as $key => $value) {
@@ -144,26 +158,24 @@
                 echo '<a href="store?id='.$value1.'">';
                 echo '<div class="StoreLink">';
                 $discounts = $store->getDiscounts();
-                $latestDiscount = 0;
-                foreach ($discounts as $key2 => $value2) {
-                  if($latestDiscount < $value2->getDiscountId())
-                  {
-                    $latestDiscount = $value2->getDiscountId();
-                  }
-                }
-                // if($latestDiscount != 0)
-                // {
-                //   $discL = new discount($latestDiscount);
-                //   echo '<div style="text-align:center;">';
-                //   echo $discL->getPercent().'% off '.$discL->getName();
-                //   echo '</div>';
-                // }
                 echo '<div>';
                 echo '<img class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">'.'<br /><br />';
                 echo '</div>';
                 echo '<div class="storeLinkText">';
                 echo $store->getName().'<br /><br />';
                 echo '</div>';
+                $d = $store->getDiscounts();
+                if(sizeof($d) > 0)
+                {
+                  $d = $d[0];
+                  echo '<div style="text-align:center;">';
+                  echo $d->getPercent().'% off '.$d->getName();
+                  echo '</div>';
+                }else {
+                  echo '<div style="text-align:center;">';
+                  echo 'Discounts N/A';
+                  echo '</div>';
+                }
                 echo '<div class="overlay">';
                 echo '<div class="overlayDescription">'.substr($store->getDescription(), 0, 80).'</div>';
                 echo '</div><br />';

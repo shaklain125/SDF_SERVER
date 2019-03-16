@@ -86,7 +86,7 @@
       if(!$this->isNull())
       {
         $conn = createSqlConn();
-        $q1 = "select discountid from discount where storeid='".$this->getStoreId()."'";
+        $q1 = "select discountid from discount where storeid='".$this->getStoreId()."' AND discount.expire_date > '".date('Y-m-d')."'";
         $discountRows = SqlResultToArray($q1, $conn);
         closeSqlConn($conn);
         $discounts = array();

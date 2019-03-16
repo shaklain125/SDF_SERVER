@@ -3,7 +3,6 @@
   startSession();
   if(isset($_POST['rate']))
   {
-    SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
     $rated = $_POST['rate'] == 'GOOD'?true:false;
     $stclaim = new studentclaim($_POST['studentclaimid']);
     $setR = $stclaim->setDiscountRating($rated);
@@ -19,8 +18,10 @@
       }else{
         $_SESSION['message'] = 'Removed Discount Rating';
       }
+      echo json_encode(array(
+        'message' => 'ok'
+      ));
     }else {
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
   }
 ?>

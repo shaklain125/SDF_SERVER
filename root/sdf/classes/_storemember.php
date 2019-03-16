@@ -151,8 +151,8 @@
         $q = "DELETE FROM store WHERE storeid=".$storeid;
         if(getQueryResult($q,$conn))
         {
-          setAutoIncrement('store', getTableSize('store')+1, $conn);
-          setAutoIncrement('discount', getTableSize('discount')+1, $conn);
+          setNextAvailableAutoIncrement('store','storeid');
+          setNextAvailableAutoIncrement('discount','discountid');
           $this->removeStoreL($storeid, $conn);
         }
       }
@@ -173,9 +173,17 @@
           $this->removeStoreL($storeid, $conn);
         }
       }
-      setAutoIncrement('store', getTableSize('store')+1, $conn);
-      setAutoIncrement('discount', getTableSize('discount')+1, $conn);
+      setNextAvailableAutoIncrement('store','storeid');
+      setNextAvailableAutoIncrement('discount','discountid');
       closeSqlConn($conn);
+    }
+
+    public function removeStoreMemberAccount() {
+      $conn = createSqlConn();
+      $q = 'DELETE FROM storemember WHERE userid='.$this->getUserId();
+      $result = getQueryResult($q, $conn);
+      closeSqlConn($conn);
+      parent::removeAccount();
     }
   }
 ?>

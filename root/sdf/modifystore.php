@@ -4,6 +4,42 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <?php include '_importStyle.php'; ?>
+
+    <script type="text/javascript">
+        function modifyStoreFrm() {
+          if(!modifystoreForm())
+          {
+            return;
+          }
+          var fd = new FormData(element('modifystoreForm'));
+          var reqData = fd;
+          var req = new XMLHttpRequest();
+          req.onload = () =>
+          {
+            var respData = null;
+            try {
+              respData = JSON.parse(req.responseText)
+            } catch (e) {
+
+            }
+            if (respData) {
+              modifyStoreFormResultHandler(respData)
+            }
+          }
+          req.open('post', 'form_handlers/_modifystore.php');
+          // req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          req.send(reqData);
+        }
+
+        function modifyStoreFormResultHandler(response) {
+          if(response.message)
+          {
+            ShowSessionDivMsg(response.message);
+            setTimeout("HideSessionDivMsg()",3000);
+          }
+        }
+    </script>
+
     <style media="screen">
       .storePhoto{
         border-style: solid;
@@ -61,7 +97,7 @@
           <div style="padding:20px; border-style:solid; border-width:thin;">
             ID : <?php echo $store->getStoreId();?>
           </div>
-          <form onsubmit="return modifystoreForm()" id="modifystoreForm" action="form_handlers/_modifystore.php" method="post" enctype="multipart/form-data">
+          <form id="modifystoreForm" enctype="multipart/form-data">
             <input type="hidden" name="store_id" value="<?php echo $store->getStoreId();?>">
 
             <a class="linkBtn" id="removeStorePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveStorePhoto()">Remove Store Photo</a>
@@ -76,16 +112,15 @@
               <input type="file" name="store_image" onchange="previewPhoto()" id="store_image">
             </div>
 
-            <input type="text" id="storename" name="input_store_name" placeholder="* Store name" value="<?php $keep = keepData('input_store_name',false); echo $keep == null?$store->getName() : $keep; ?>">
-            <input type="text" name="input_store_website" placeholder="Website" value="<?php $keep = keepData('input_store_website',false); echo $keep == null?$store->getWebsite() : $keep; ?>">
-            <input type="text" name="input_store_phone" placeholder="Phone No." value="<?php $keep = keepData('input_store_phone',false); echo $keep == null?$store->getPhone() : $keep; ?>">
+            <input type="text" id="storename" name="input_store_name" placeholder="* Store name" value="<?php echo $store->getName() ?>">
+            <input type="text" name="input_store_website" placeholder="Website" value="<?php echo $store->getWebsite() ?>">
+            <input type="text" name="input_store_phone" placeholder="Phone No." value="<?php echo $store->getPhone() ?>">
             <select name="input_store_category" style="border-style:solid; border-width:thin">
               <?php
-                $savedVal = keepData('input_store_category', false);
                 $conn = createSqlConn();
                 $categ = SqlResultToArray("select * from category",$conn);
                 foreach ($categ as $key => $value) {
-                  if($value['category_name'] == $savedVal  || $value['category_name'] == $store->getCategory())
+                  if($value['category_name'] == $store->getCategory())
                   {
                     echo '<option value="'.$value['category_name'].'" selected>'.$value['category_name'].'</option>';
                   }else {
@@ -95,7 +130,7 @@
                 closeSqlConn($conn);
               ?>
             </select>
-            <textarea id="store_description" rows="30" name="input_store_descr" placeholder="Store Description" maxlength="3000" oninput="countDescriptionChar()"><?php $keep = keepData('input_store_descr',false); echo $keep == null?$store->getDescription() : $keep; ?></textarea>
+            <textarea id="store_description" rows="30" name="input_store_descr" placeholder="Store Description" maxlength="3000" oninput="countDescriptionChar()"><?php echo $store->getDescription() ?></textarea>
             <div>
               <span id="descrCharcount">0/3000</span>
             </div>
@@ -154,7 +189,7 @@
             <input id="discountsToRemove" type="hidden" name="discountsToRemove" value="">
             <div id="errorMsg">
             </div>
-            <input type="submit" name="modify" value="Apply changes">
+            <input type="button" name="modify" value="Apply changes" onclick="modifyStoreFrm()">
           </form>
           <?php
               }else {
@@ -180,7 +215,7 @@
           return false;
         }
         ApplyChanges();
-        AddXandYScrollToForm("modifystoreForm");
+        // AddXandYScrollToForm("modifystoreForm");
         return true
       }
       var discountsToRemove = [];

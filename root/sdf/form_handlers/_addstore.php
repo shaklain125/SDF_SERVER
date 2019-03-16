@@ -3,7 +3,7 @@ include '../_importPhp.php';
 
 if(isset($_POST['addStore']))
 {
-  SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
+  // SetXandYScrollSession($_POST['scrollx'],$_POST['scrolly']);
   $postdata = $_POST;
   if($postdata['input_store_descr'] == null)
   {
@@ -21,8 +21,11 @@ if(isset($_POST['addStore']))
     $storecateg = $postdata['input_store_category'];
     if($user->AddStore($storename,$storedescr,$storephone,$storewebsite,$storecateg))
     {
-      echo 'Added';
-      header('Location: ../managestores.php');
+      // echo 'Added';
+      echo json_encode(array(
+        'status' => 'true'
+      ));
+      // header('Location: ../managestores.php');
     }else {
       errorMsg('Not Added');
     }
@@ -33,9 +36,10 @@ if(isset($_POST['addStore']))
 
 function errorMsg($msg)
 {
-  startSession();
-  $_SESSION['postdata'] = $_POST;
-  $_SESSION['errorMsg'] = $msg;
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
+  echo json_encode(array(
+    'status' => 'false',
+    'postdata' => $_POST,
+    'errorMsg' => $msg
+  ));
 }
 ?>

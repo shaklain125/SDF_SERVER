@@ -64,9 +64,53 @@
     ?>
     <form onsubmit="return searchForm()" id="seachForm" action="search.php" method="get">
       <!-- <?php echo $query == null?'':$query; ?> -->
-      <input id="searchBar" type="text" placeholder="Search..." name="q" value="">
+      <input id="searchBar" type="text" autocomplete="off" placeholder="Search..." oninput="LiveSearch()" name="q" value="">
       <input style="display:none" type="submit">
+      <div id="liveSearchDiv" style="height:0px; overflow-y:scroll;">
+
+      </div>
     </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  function LiveSearch() {
+    var q = ValidSearchQuery();
+    if(!q)
+    {
+      element('liveSearchDiv').style.height = '0px';
+      return;
+    }
+    element('liveSearchDiv').style.height = '185px';
+    var reqData = 'liveSearch=' + encodeURIComponent(q);
+    var req = new XMLHttpRequest();
+    req.onload = () =>
+    {
+      var respData = null;
+      try {
+        respData = JSON.parse(req.responseText)
+      } catch (e) {
+
+      }
+      if (respData) {
+        LiveSearchResultHandler(respData)
+      }
+    }
+    req.open('post', 'form_handlers/_liveSearch.php');
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.send(reqData);
+  }
+
+  function LiveSearchResultHandler(response) {
+    var r = response.results;
+    var resultLinks = []
+    for(var i in r)
+    {
+      resultLinks.push('<a class="livesearch" href="store.php?id='+i+'"><div class="livesearch">'+r[i]+'</div></a>')
+    }
+    element('liveSearchDiv').innerHTML = resultLinks.join("")
+  }
+
+</script>
+
 <script type="text/javascript" src="js/script.js"></script>
