@@ -124,7 +124,7 @@
       $conn = createSqlConn();
       $q = "DELETE FROM discount where discountid=".$discountid;
       $result = getQueryResult($q,$conn);
-      ResetTableAutoincrement('discount');
+      setNextAvailableAutoIncrement('discount','discountid');
       closeSqlConn($conn);
       return $result;
     }
