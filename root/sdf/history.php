@@ -80,7 +80,7 @@
                     if($user->StoreExists($value))
                     {
                       $store = new store($value);
-                      echo '<a class="StoreLink" href="store?id='.$value.'">';
+                      echo '<a class="StoreLink" href="store.php?id='.$value.'">';
                       echo '<div class="StoreLink" style="margin-bottom:20px; border-style:solid; border-width:thin; padding: 20px;">';
                       echo '<div>';
                       echo 'ID: '.$store->getStoreId();
