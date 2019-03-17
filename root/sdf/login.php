@@ -42,10 +42,8 @@
             <br />
                  <div id="errorMsgDiv" style="display:none">
                  </div>
-                 <div class="containerLoginForm-btn">
-                   <div class="wrapLogin-btn">
-                     <input class="login-btn" type="button" name="signin" value="Log In" onclick="signinFrm()">
-                   </div>
+                 <div class="wrapLogin-btn">
+                   <input class="login-btn" type="button" name="signin" value="Log In" onclick="signinFrm()">
                  </div>
                  <div style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;">
                   <a href="signup.php" class="formText">
