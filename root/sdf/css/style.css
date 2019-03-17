@@ -1,5 +1,4 @@
 html,body,#container {
-  height: 100%;
   margin: 0;
   padding: 0;
   background-color: black;
@@ -226,11 +225,9 @@ input[type=button].activeDislikeBtn, input[type=button].dislikebtn:hover{
 
 
 #content{
-  height: 100%;
   box-sizing: border-box;
   border-style: none;
   border-width: thin;
-  padding: 10px;
 }
 #contentContainer{
   transition: margin-left .5s;
@@ -279,12 +276,10 @@ input[type=submit],input[type=button]{
 }
 #formContentContainer{
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 15px;
 }
 
 #loginForm {

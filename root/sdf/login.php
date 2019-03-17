@@ -19,40 +19,44 @@
       <?php
       include '_fixedHeaderAndSideBar.php'
        ?>
-      <div id="formContentContainer">
-        <div id="formContent">
-            <form id="loginForm">
-              <span class="loginForm-title">
-                Login
-              </span>
-              <div class="inputWrap">
-						    <span class="inputLabel">Username</span>
-                <input class="formInput" type="text" name="signin_username" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Username" value="">
-              </div>
-              <br />
-              <br />
-              <div class="inputWrap">
-						    <span class="inputLabel">Password</span>
-                <input class="formInput" type="text" name="signin_pw" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Password"value="">
-              </div>
+       <div id="contentContainer">
+         <div id="content">
+           <div id="formContentContainer">
+           <div id="formContent">
+               <form id="loginForm">
+                 <span class="loginForm-title">
+                   Login
+                 </span>
+                 <div class="inputWrap">
+                  <span class="inputLabel">Username</span>
+                   <input class="formInput" type="text" name="signin_username" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Username" value="">
+                 </div>
+                 <br />
+                 <br />
+                 <div class="inputWrap">
+                  <span class="inputLabel">Password</span>
+                   <input class="formInput" type="text" name="signin_pw" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Password"value="">
+                 </div>
 
-					<br />
-					<br />
-              <div id="errorMsgDiv" style="display:none">
-              </div>
-              <div class="containerLoginForm-btn">
-                <div class="wrapLogin-btn">
-                  <input class="login-btn" type="button" name="signin" value="Log In" onclick="signinFrm()">
+            <br />
+            <br />
+                 <div id="errorMsgDiv" style="display:none">
+                 </div>
+                 <div class="containerLoginForm-btn">
+                   <div class="wrapLogin-btn">
+                     <input class="login-btn" type="button" name="signin" value="Log In" onclick="signinFrm()">
+                   </div>
+                 </div>
+                 <div style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;">
+                  <a href="signup.php" class="formText">
+                    Sign Up
+                  </a>
                 </div>
-              </div>
-              <div style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;">
-					    	<a href="signup.php" class="formText">
-					    		Sign Up
-					    	</a>
-				    	</div>
-           </form>
-        </div>
-      </div>
+              </form>
+           </div>
+         </div>
+         </div>
+       </div>
     </div>
     <script type="text/javascript">
       // window.onload = Load()
