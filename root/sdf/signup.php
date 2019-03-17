@@ -39,6 +39,7 @@
               header('location: signup.php?regtype=1');
             }
           ?>
+          <a href="signup.php?regtype=<?php echo $_GET['regtype'] == '1'? '2' : '1' ?>">Register <?php echo $_GET['regtype'] == '1'? 'As Store Member' : 'As Student' ?></a>
           <h2 id="RegisterH2">Register <?php echo $_GET['regtype'] == '1'? 'As Student' : 'As Store Member' ?></h2>
           <div id="registrationdiv">
             <form onsubmit="return registrationForm()" id="registrationForm" action="form_handlers/_register.php" method="post">
