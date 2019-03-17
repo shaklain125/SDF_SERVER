@@ -228,6 +228,7 @@ input[type=button].activeDislikeBtn, input[type=button].dislikebtn:hover{
   box-sizing: border-box;
   border-style: none;
   border-width: thin;
+  padding-top: 3%;
 }
 #contentContainer{
   transition: margin-left .5s;
