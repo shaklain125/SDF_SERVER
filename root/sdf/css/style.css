@@ -373,6 +373,10 @@ textarea:focus, input:focus {
   height: 50px;
 }
 
+.login-btn, .registration-btn:hover{
+  cursor: pointer;
+}
+
 /* .regUserBtn{
   width: 50%;
   font-size: 10pt;
@@ -453,38 +457,36 @@ textarea{
 }
 
 .searchLink{
-  text-decoration: none;
-  background-color: white;
-  color: black;
   margin-top:30px;
   margin-right:30px;
-  border-style:none;
-  border-width:thin;
-  border-radius: 0px 10px 10px 0px;
-  /* padding: 20px; */
   width: 80%;
   margin: 0 auto;
-  height: 250px;
+  float: none;
   font-size: 25px;
-  position: relative;
+  height: 180px;
+  margin-bottom:30px;
+  margin: 0px auto;
 }
 
 .searchLinkImg{
   float: left;
   position: absolute;
   margin: auto;
-  max-height: 100%;
+  /* max-height: 100%;
   max-width: 33%;
   min-height: 100%;
-  min-width: 33%;
+  min-width: 33%; */
   border-style:none;
+  object-fit: cover;
+  width: 33%;
+  width: 100%
+  max-width: initial;
+  height:100%;
   /* object-fit: contain; */
 }
 
 .searchLinkText {
   padding: 10px;
-  position: relative;
-  padding-left: 35%;
 }
 
 /* .StoreLink:hover .overlay {
@@ -567,6 +569,12 @@ textarea{
   padding-right: 0px;
 }
 
+#SearchResultsDiv{
+  padding-top: 30px;
+  margin:0px auto;
+  overflow:hidden;
+}
+
 /*For PC and Laptop*/
 @media only screen and (min-width: 1181px) {
     .sidenav a, .dropdown-btn {
@@ -574,6 +582,14 @@ textarea{
     }
     .StoreLink{
       font-size: 12pt;
+    }
+    .searchLink{
+      margin-bottom: 30px;
+    }
+    .searchLinkText{
+      position: relative;
+      padding-left: 35%;
+      margin-bottom: 20px;
     }
 }
 
@@ -586,6 +602,18 @@ textarea{
     width: 30%;
     font-size: 12pt;
     margin-right: 20px;
+  }
+  .searchLink{
+    width: 80%;
+    margin-left: 13px;
+    margin-right: 13px;
+    margin: 0px auto;
+    margin-bottom: 30px;
+  }
+  .searchLinkText{
+    position: relative;
+    padding-left: 35%;
+    margin-bottom: 20px;
   }
 }
 /*For Smartphones*/
@@ -618,20 +646,11 @@ textarea{
   }
 
   .searchLink{
-    text-decoration: none;
-    background-color: white;
-    color: black;
-    margin-top: none;
-    border-style:none;
-    border-width:thin;
-    border-radius: 10px;
-    float: left;
+    margin-bottom: 30px;
     width: 42.7%;
-    font-size: 20px;
     margin-left: 13px;
     margin-right: 13px;
-    height: 450px;
-    position: relative;
+    float: left;
   }
 
   .searchLinkImg{
@@ -641,6 +660,7 @@ textarea{
     max-width: none;
     min-height: none;
     min-width: none;
+    float: left;
     width:100%;
     height:50%;
     position: relative;
@@ -648,16 +668,69 @@ textarea{
     border-radius: 10px 10px 0px 0px;
     /* object-fit: cover; */
   }
-
-  .searchLinkText {
-    padding: 10px;
-    position: static;
-    left: 0;
-  }
 }
 
 /*For small Smartphones*/
-@media only screen and (max-width: 633px) {
+@media only screen and (min-width: 435px) and (max-width: 633px) {
+    .sidenav a, .dropdown-btn {font-size: 20px;}
+
+    #HomeStoresDiv{
+      padding-left: 0px;
+    }
+
+    .StoreLink{
+      width: 100%;
+      font-size: 16px;
+      height: auto;
+    }
+    .overlayDescription {
+      font-size: 18px;
+    }
+    .storeLinkImg{
+      width:100%;
+      height: auto;
+      object-fit:
+    }
+
+    span.likeBtn{
+      background-size: 35px 35px;
+      background-position: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+    span.dislikeBtn{
+      background-size: 23px 23px;
+      background-position: 10px 0px;
+      padding-top: 0px;
+      padding-bottom: 5px;
+    }
+
+    .searchLink{
+      margin-bottom: 30px;
+      width: 42.7%;
+      margin-left: 13px;
+      margin-right: 13px;
+      float: left;
+    }
+
+    .searchLinkImg{
+      float: none;
+      margin: none;
+      max-height: none;
+      max-width: none;
+      min-height: none;
+      min-width: none;
+      width:100%;
+      height:50%;
+      position: relative;
+      border-style:none;
+      border-radius: 10px 10px 0px 0px;
+      /* object-fit: cover; */
+    }
+
+}
+
+@media only screen and (max-width: 434px) {
     .sidenav a, .dropdown-btn {font-size: 20px;}
 
     #HomeStoresDiv{
@@ -695,14 +768,12 @@ textarea{
       text-decoration: none;
       background-color: white;
       color: black;
-      margin-top: none;
       border-style:none;
       border-width:thin;
       border-radius: 10px;
       width: 100%;
-      font-size: 16px;
-      height: 400px;
       position: relative;
+      margin-bottom: 30px;
     }
 
     .searchLinkImg{
@@ -718,11 +789,5 @@ textarea{
       border-style:none;
       border-radius: 10px 10px 0px 0px;
       /* object-fit: cover; */
-    }
-
-    .searchLinkText {
-      padding: 10px;
-      position: static;
-      left: 0;
     }
 }
