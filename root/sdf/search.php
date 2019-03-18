@@ -70,6 +70,9 @@
                 echo '</div>';
                 echo '</div>';
                 echo '</a>';
+                echo '<br />';
+                echo '<br />';
+                echo '<br />';
                 // printval($d);
               }
               if($page <= $number_of_pages && $page >= 1)
