@@ -284,14 +284,8 @@ input[type=submit],input[type=button]{
   align-items: center;
 }
 
-#loginForm {
+#loginForm, #registrationForm  {
   width: 100%;
-}
-
-#registrationForm {
-  padding:10px;
-  border-style: solid;
-  border-width: thin;
 }
 
 .loginForm-title {
@@ -301,13 +295,6 @@ input[type=submit],input[type=button]{
   color: #333333;
   line-height: 1.2;
   text-align: center;
-}
-
-#RegisterH2{
-  text-align: center;
-  background-color: black;
-  color:white;
-  font-family: 'myriad-pro';
 }
 
 .inputWrap {
@@ -355,11 +342,11 @@ textarea:focus, input:focus {
   text-transform: uppercase;
 }
 
-.wrapLogin-btn {
+.wrapLogin-btn, .wrapRegistration-btn {
   width: 100%;
 }
 
-.login-btn {
+.login-btn, .registration-btn {
   background: green;
   font-size: 16px;
   color: #fff;
@@ -373,14 +360,14 @@ textarea:focus, input:focus {
   height: 50px;
 }
 
-.regUserBtn{
+/* .regUserBtn{
   width: 50%;
   font-size: 10pt;
   font-family: 'myriad-pro';
   padding: 10px;
   float: left;
   display: block;
-}
+} */
 
 input[type="date"]:before {
   content: attr(placeholder) !important;
