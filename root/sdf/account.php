@@ -111,6 +111,9 @@
         background-size: 100% auto;
         background-position: 50% 50%;
         background-clip: padding-box;
+        width:100%;
+        text-align:center;
+        height:300px;
       }
     </style>
   </head>
@@ -171,39 +174,38 @@
        ?>
       <div id="contentContainer">
         <div id="content">
-          <div>
-            <a class="linkBtn" href="index.php">Home</a>
-          </div>
           <?php
           function getAccountType() {
             if (isset($_SESSION['student'])) {
-              return 'Student';
+              return '<div>'.strtoupper(unserialize($_SESSION['student'])->getUsername()).'</div>';
             }elseif (isset($_SESSION['storemember'])) {
-              return 'Store Member';
+              return '<div>'.strtoupper(unserialize($_SESSION['storemember'])->getUsername()).'</div>';
             }
           }
            ?>
-          <div>
-            <h2 style="margin:0; margin-bottom: 10px; font-family:arial;">User Profile: <?php echo getAccountType()?></h2>
-          </div>
           <?php
             $user = null;
             if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
             {
           ?>
           <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" enctype="multipart/form-data">
-            <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
-            <div id="coverProfilePhoto" style="width:100%; text-align:center;height:300px;">
-              <input type="hidden" id="removeProfilePhoto" name="removeProfilePhoto" value="false">
-              <div id="profilephotoContainer">
-                <div id="profilePhoto"></div>
+            <div id="profilePicContainer">
+              <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
+              <div id="coverProfilePhoto">
+                <input type="hidden" id="removeProfilePhoto" name="removeProfilePhoto" value="false">
+                <div id="profilephotoContainer">
+                  <div id="profilePhoto"></div>
+                </div>
+                <!-- <img  src="icons/profile.png" width="150px" height="150px" alt="profilePic"> -->
               </div>
-              <!-- <img  src="icons/profile.png" width="150px" height="150px" alt="profilePic"> -->
-            </div>
-            <div style="font-family:arial;color:black;background-color:white;padding:20px;border-style:solid;border-width:thin;border-left:0;border-right:0;border-bottom:0;">
-              Upload Profile Photo:
-              <input type="file" name="profile_image" onchange="previewPhoto()" id="profile_image">
-              <div id="imageErrorMsg"></div>
+              <div style="background-color:white; padding:20px; color:black; padding-bottom:0px;">
+                <h2 style="margin:0;"><?php echo getAccountType()?></h2>
+              </div>
+              <div style="font-family:arial;color:black;background-color:white;padding:20px;">
+                Upload Profile Photo:
+                <input type="file" name="profile_image" onchange="previewPhoto()" id="profile_image">
+                <div id="imageErrorMsg"></div>
+              </div>
             </div>
             <?php
                 if(isset($_SESSION['student']))
@@ -214,49 +216,73 @@
                 }
             ?>
             <input type="hidden" name="userid" value="<?php echo $user->getUserId()?>">
-            <div style="width:100%;margin-top: 10px; padding:20px;border-style:solid;border-width:thin;">
-              <div>
-                Username: <?php echo $user->getUsername();?>
-              </div>
-              <div style="margin-top:10px;">
-                Password: <?php echo $user->getPassword();?>
-              </div>
-            </div>
             <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
-            <input type="text" name="input_email" placeholder="E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
-            <div id="ChangePass">
-              <a href="javascript:void(0)" onclick="changePassword()" class="linkBtn">Change Password</a>
-              <div id="changePwDiv" style="display:none;padding:20px; border-style:solid;border-width:thin;">
-                <input type="text" id="currentpw" name="currentPass" placeholder="Current Password" value="">
-                <input type="text" id="newpw" name="newPw" placeholder="New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
-                <input type="text" id="checknewpw" placeholder="Confirm New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
-                <div id="checkNewPwDiv">
+            <div id="formContentContainerAcoount">
+              <div id="formContentAcoount">
+                <div class="inputWrap">
+                  <span class="inputLabel">Email</span>
+                  <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
                 </div>
+                <div id="ChangePass">
+                  <div>
+                    <a href="javascript:void(0)" onclick="changePassword()" class="linkBtn">Change Password</a>
+                  </div>
+                  <div id="changePwDiv" style="margin-bottom: 20px; display:none;padding:20px; border-style:solid;border-width:thin; border-color: black;">
+                    <div class="inputWrap">
+                      <span class="inputLabel">Current Password</span>
+                      <input class="formInput" type="text" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="">
+                    </div>
+                    <div class="inputWrap">
+                      <span class="inputLabel">New Password</span>
+                      <input class="formInput" type="text" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
+                    </div>
+                    <div class="inputWrap">
+                      <span class="inputLabel">Confirm New Password</span>
+                      <input class="formInput" type="text" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
+                    </div>
+                    <div id="checkNewPwDiv">
+                    </div>
+                  </div>
+                </div>
+                <div class="inputWrap" style="margin-top: 20px;">
+                  <span class="inputLabel">First Name</span>
+                  <input class="formInput" type="text" name="input_fname" placeholder="Type Your First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()">
+                </div>
+                <div class="inputWrap">
+                  <span class="inputLabel">Last Name</span>
+                  <input class="formInput" type="text" name="input_lname" placeholder="Type Your Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()">
+                </div>
+                <?php
+                    if(isset($_SESSION['student']))
+                    {
+                ?>
+                <div class="inputWrap">
+                  <span class="inputLabel">Date Of Birth</span>
+                  <input class="formInput" type="date" name="input_dob" placeholder="Type Your Date Of Birth" value="<?php echo $user->getDob() ?>" max="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+                </div>
+                <div class="inputWrap">
+                  <select name="input_university" onchange="handleMsgChange()">
+                  <?php
+                    $conn = createSqlConn();
+                    $university = SqlResultToArray("select * from university",$conn);
+                    foreach ($university as $key => $value) {
+                      if($value['university_name'] == $user->getUniversity())
+                      {
+                        echo '<option value="'.$value['university_name'].'" selected>'.$value['university_name'].'</option>';
+                      }else {
+                        echo '<option value="'.$value['university_name'].'">'.$value['university_name'].'</option>';
+                      }
+                    }
+                    closeSqlConn($conn);
+                  ?>
+                </select>
               </div>
+                <div class="inputWrap">
+                  <span class="inputLabel">Graduation Date</span>
+                  <input class="formInput" type="date" name="input_graduation" placeholder="Type Your Graduation Date" value="<?php echo $user->getGradDate() ?>" min="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+                </div>
             </div>
-            <input type="text" name="input_fname" placeholder="First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()">
-            <input type="text" name="input_lname" placeholder="Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()">
-            <?php
-                if(isset($_SESSION['student']))
-                {
-            ?>
-            <input type="date" name="input_dob" placeholder="Date Of Birth" value="<?php echo $user->getDob() ?>" max="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
-            <select name="input_university" onchange="handleMsgChange()">
-              <?php
-                $conn = createSqlConn();
-                $university = SqlResultToArray("select * from university",$conn);
-                foreach ($university as $key => $value) {
-                  if($value['university_name'] == $user->getUniversity())
-                  {
-                    echo '<option value="'.$value['university_name'].'" selected>'.$value['university_name'].'</option>';
-                  }else {
-                    echo '<option value="'.$value['university_name'].'">'.$value['university_name'].'</option>';
-                  }
-                }
-                closeSqlConn($conn);
-              ?>
-            </select>
-            <input type="date" name="input_graduation" placeholder="Graduation Date" value="<?php echo $user->getGradDate() ?>" min="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+          </div>
             <?php
               }
             ?>

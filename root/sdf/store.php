@@ -164,7 +164,7 @@
           <div style="padding:20px; text-align:center;">
             <?php echo $store->getCategory();?>
           </div>
-          <div style="padding:20px; text-align:center; border-style:solid; border-width:thin;">
+          <div class="storePageText">
             <?php echo $store->getDescription() == '' ? 'No Store Description' : $store->getDescription();?>
           </div>
           <?php
@@ -176,7 +176,7 @@
               $discounts = $store->getDiscounts();
               $discounts = array_reverse($discounts);
               foreach ($discounts as $key => $value) {
-                echo '<div id="discount'.$value->getDiscountId().'" style="padding:20px;border-style:solid; border-width:thin; margin-top:20px; text-align:center;">';
+                echo '<div id="discount" class="storePageText"'.$value->getDiscountId().'" style="padding:20px;border-style:solid; border-width:thin; margin-top:20px; text-align:center;">';
                 echo 'Discount Name: '.$value->getName().'</br>';
                 echo 'Percentage: '.$value->getPercent().'%</br>';
                 // echo 'Code: '.$value->getCode().'</br>';

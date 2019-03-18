@@ -278,23 +278,31 @@ input[type=submit],input[type=button]{
   margin-top: 10px;
 }
 
-#formContent{
+#formContent, #formContentAcoount{
   padding-left: 55px;
   padding-right: 55px;
   padding-top: 65px;
   padding-bottom: 54px;
-  width: 500px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
 }
-#formContentContainer{
+#formContentContainer, #formContentContainerAcoount{
   width: 100%;
   padding-top: 3%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+
+#formContent{
+  width: 500px;
+}
+
+#formContentAcoount{
+  width: 80%;
+  margin: 0 auto;
 }
 
 #loginForm, #registrationForm  {
@@ -314,6 +322,7 @@ input[type=submit],input[type=button]{
   width: 100%;
   position: relative;
   border-bottom: 2px solid #d9d9d9;
+  margin-bottom: 20px;
 }
 
 .inputLabel {
@@ -525,6 +534,18 @@ textarea{
   max-width: 100%;
 }
 
+.storePageText, .accountPageText {
+  padding:20px;
+  text-align:center;
+  border-style:solid;
+  border-width:thin;
+  color: black;
+  background-color: white;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
 #message {
   position: fixed;
   bottom: 0;
@@ -576,6 +597,11 @@ textarea{
   padding-top: 30px;
   margin:0px auto;
   overflow:hidden;
+}
+
+#profilePicContainer{
+  width: 80%;
+  margin: 0px auto;
 }
 
 /*For PC and Laptop*/
@@ -676,6 +702,15 @@ textarea{
     height: auto;
     object-fit:;
   }
+  .storePageText {
+    width: 100%;
+  }
+  #formContentAcoount{
+    width: 100%;
+  }
+  #profilePicContainer{
+    width: 100%;
+  }
 }
 
 /*For small Smartphones*/
@@ -740,9 +775,19 @@ textarea{
       height: auto;
       object-fit:;
     }
+    .storePageText {
+      width: 100%;
+    }
+    #formContentAcoount{
+      width: 100%;
+    }
+    #profilePicContainer{
+      width: 100%;
+    }
 
 }
 
+/*For very small Smartphones*/
 @media only screen and (max-width: 434px) {
     .sidenav a, .dropdown-btn {font-size: 20px;}
 
@@ -807,5 +852,14 @@ textarea{
       width: 100%;
       height: auto;
       object-fit:;
+    }
+    .storePageText {
+      width: 100%;
+    }
+    #formContentAcoount{
+      width: 100%;
+    }
+    #profilePicContainer{
+      width: 100%;
     }
 }
