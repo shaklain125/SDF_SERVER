@@ -518,7 +518,10 @@ textarea{
   text-align: center;
 }
 
-.storePhotoPage {
+.storePhotoPage{
+  object-fit: cover;
+  width: 560px;
+  height: 336px;
   max-width: 100%;
 }
 
@@ -668,6 +671,11 @@ textarea{
     border-radius: 10px 10px 0px 0px;
     /* object-fit: cover; */
   }
+  .storePhotoPage{
+    width: 100%;
+    height: auto;
+    object-fit:;
+  }
 }
 
 /*For small Smartphones*/
@@ -726,6 +734,11 @@ textarea{
       border-style:none;
       border-radius: 10px 10px 0px 0px;
       /* object-fit: cover; */
+    }
+    .storePhotoPage{
+      width: 100%;
+      height: auto;
+      object-fit:;
     }
 
 }
@@ -789,5 +802,10 @@ textarea{
       border-style:none;
       border-radius: 10px 10px 0px 0px;
       /* object-fit: cover; */
+    }
+    .storePhotoPage{
+      width: 100%;
+      height: auto;
+      object-fit:;
     }
 }

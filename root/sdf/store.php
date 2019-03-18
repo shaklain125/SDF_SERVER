@@ -10,11 +10,6 @@
       startSession();
     ?>
     <style media="screen">
-    .storePhotoPage{
-      object-fit: cover;
-      width: 560px;
-      height: 336px;
-    }
     </style>
     <script type="text/javascript">
 
