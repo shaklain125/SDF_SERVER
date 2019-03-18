@@ -190,6 +190,19 @@ input[type=button].likebtn{
   background-color: transparent;
 }
 
+span.likeBtn{
+  background-size: 35px 35px;
+  background-position: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+span.dislikeBtn{
+  background-size: 23px 23px;
+  background-position: 10px 0px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
 input[type=button].activeLikeBtn, input[type=button].likebtn:hover{
   filter: brightness(0) invert(1);
 }
@@ -228,7 +241,6 @@ input[type=button].activeDislikeBtn, input[type=button].dislikebtn:hover{
   box-sizing: border-box;
   border-style: none;
   border-width: thin;
-  padding-top: 3%;
 }
 #contentContainer{
   transition: margin-left .5s;
@@ -278,6 +290,7 @@ input[type=submit],input[type=button]{
 }
 #formContentContainer{
   width: 100%;
+  padding-top: 3%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -420,29 +433,36 @@ textarea{
   text-decoration: none;
   background-color: white;
   color: black;
-  margin-top:30px;
   margin-right:30px;
   border-style:none;
   border-width:thin;
   border-radius: 10px;
   float: left;
-  width: 18%;
-  height: 450px;
+  width: 230px;
+  height: auto;
   font-size: 25px;
   position: relative;
+  overflow: hidden;
+  margin-bottom:30px;
+  cursor: default;
 }
 
 .storeLinkImg{
-  width:100%;
-  height:50%;
-  position: relative;
-  border-style:none;
-  border-radius: 10px 10px 0px 0px;
-  /* object-fit: cover; */
+  object-fit: cover;
+  width: 100%;
+  max-width: initial;
+  height:180px;
 }
 
+.storeLinkImg:hover{
+  cursor: pointer;
+}
 .storeLinkText {
   padding: 10px;
+}
+
+.storeLinkText:hover{
+  cursor: pointer;
 }
 
 .searchLink{
@@ -481,9 +501,9 @@ textarea{
   left: 33%;
 }
 
-.StoreLink:hover .overlay {
+/* .StoreLink:hover .overlay {
   height: 100%;
-}
+} */
 
 .overlay {
   position: absolute;
@@ -547,29 +567,63 @@ textarea{
   z-index: 3;
 }
 
+#HomeStoresDiv{
+  display: table;
+  margin:0px auto;
+  overflow:hidden;
+  padding: 30px;
+  padding-top: 20px;
+  padding-left: 30px;
+  padding-right: 0px;
+}
+
 /*For PC and Laptop*/
 @media only screen and (min-width: 1181px) {
     .sidenav a, .dropdown-btn {
       margin-left: 30px;
     }
+    .StoreLink{
+      font-size: 12pt;
+    }
 }
 
 /*For Tablets*/
-@media only screen and (min-width: 768px) and (max-width: 1180px) {
+@media only screen and (min-width: 735px) and (max-width: 1180px) {
+  #HomeStoresDiv{
+    padding-left: 50px;
+  }
   .StoreLink{
-    width: 29.7%;
-    font-size: 20px;
-    margin-left: 13px;
-    margin-right: 13px;
+    width: 30%;
+    font-size: 12pt;
+    margin-right: 20px;
   }
 }
 /*For Smartphones*/
-@media only screen and (min-width: 420px) and (max-width: 767px) {
+@media only screen and (min-width: 634px) and (max-width: 734px) {
+
   .StoreLink{
-    width: 42.7%;
+    width: 45%;
     font-size: 20px;
-    margin-left: 13px;
-    margin-right: 13px;
+    height: auto;
+  }
+
+  .storeLinkImg{
+    width: 100%;
+    height: auto;
+    object-fit:;
+  }
+
+  span.likeBtn{
+    background-size: 35px 35px;
+    background-position: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  span.dislikeBtn{
+    background-size: 23px 23px;
+    background-position: 10px 0px;
+    padding-top: 0px;
+    padding-bottom: 10px;
   }
 
   .searchLink{
@@ -587,18 +641,38 @@ textarea{
 }
 
 /*For small Smartphones*/
-@media only screen and (max-width: 419px) {
+@media only screen and (max-width: 633px) {
     .sidenav a, .dropdown-btn {font-size: 20px;}
+
+    #HomeStoresDiv{
+      padding-left: 0px;
+    }
+
     .StoreLink{
       width: 100%;
-      height: 400px;
       font-size: 16px;
+      height: auto;
     }
     .overlayDescription {
       font-size: 18px;
     }
     .storeLinkImg{
       width:100%;
+      height: auto;
+      object-fit:
+    }
+
+    span.likeBtn{
+      background-size: 35px 35px;
+      background-position: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+    span.dislikeBtn{
+      background-size: 23px 23px;
+      background-position: 10px 0px;
+      padding-top: 0px;
+      padding-bottom: 5px;
     }
 
     .searchLink{
