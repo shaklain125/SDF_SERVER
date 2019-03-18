@@ -118,7 +118,13 @@
                           break;
                         }
                       }
+                      echo '<div class="StoreLinkImgcontainer">';
                       echo '<img title="'.$store->getDescription().'" class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">';
+                      echo '<div class="overlay">';
+                      $descr = $store->getDescription();
+                      echo '<div class="overlayDescription" title="'.$descr.'">'.substr($store->getDescription(), 0, 80).(strlen($descr) > 80?'...':'').'</div>';
+                      echo '</div>';
+                      echo '</div>';
                       echo '<div class="storeLinkText" title="'.$store->getName().'" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
                       echo $store->getName();
                       echo '</div>';
@@ -133,10 +139,7 @@
                         echo 'Discounts N/A';
                         echo '</div>';
                       }
-                      echo '<div class="overlay">';
-                      echo '<div class="overlayDescription">'.substr($store->getDescription(), 0, 80).'</div>';
-                      echo '</div><br />';
-                      echo '<div style="text-align:center; margin-bottom:20px">';
+                      echo '<div style="text-align:center; margin-top:20px;margin-bottom:20px">';
                       echo '<span class="likebtnDisabled likeBtn"></span><span>'.$store->getLikes().'</span>';
                       echo '<span style="margin-left:20px" class="dislikebtnDisabled dislikeBtn"></span><span>'.$store->getDislikes().'</span>';
                       echo '</div>';
