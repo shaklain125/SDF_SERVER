@@ -4,6 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <?php include '_importStyle.php'; ?>
+    <style>
+    .wordwrap {
+   white-space: pre-wrap;      /* CSS3 */
+   white-space: -moz-pre-wrap; /* Firefox */
+   white-space: -pre-wrap;     /* Opera <7 */
+   white-space: -o-pre-wrap;   /* Opera 7 */
+   word-wrap: break-word;      /* IE */
+}
+    </style>
   </head>
   <body>
     <?php
@@ -49,14 +58,21 @@
                     if($user->StoreExists($value))
                     {
                       $store = new store($value);
-                      echo '<a href="store?id='.$value.'">';
-                      echo '<div class="StoreLink">';
-                      echo '<div>';
-                      echo $store->getName();
-                      echo '</div>';
-                      echo '<div>';
-                      echo $store->getDescription();
-                      echo '</div>';
+                      echo '<a style="text-decoration:none;" href="store?id='.$store->getStoreId().'">';
+                      echo '<div class="StoreLink searchLink">';
+                        echo '<div>';
+                        echo '<img class="searchLinkImg" src="'.$store->getStorePhotoPath().'" alt="">';
+                        echo '</div>';
+                        echo '<div class="searchLinkText" title="'.$store->getName().'" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
+                        echo $store->getName();
+                        echo '</div>';
+                        echo '<div title="'.$store->getDescription().'" class="searchLinkText wordwrap">';
+                        echo substr($store->getDescription(), 0, 80).(strlen($store->getDescription()) > 80?'...':'');
+                        echo '</div>';
+                        echo '<div style="text-align:center; margin-bottom:20px">';
+                        echo '<span class="likebtnDisabled likeBtn"></span><span>'.$store->getLikes().'</span>';
+                        echo '<span style="margin-left:20px" class="dislikebtnDisabled dislikeBtn"></span><span>'.$store->getDislikes().'</span>';
+                        echo '</div>';
                       echo '</div>';
                       echo '</a>';
                     }

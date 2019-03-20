@@ -90,11 +90,13 @@
                   }
                   if(sizeof($storesToList) == 0)
                   {
+                    echo '<h3>Recently Added</h3>';
                     foreach ($stores as $key => $value) {
                       array_push($storesToList, $value['storeid']);
                     }
                     DisplayStoresNoPref($storesToList);
                   }else {
+                    echo '<h3>Reccomended</h3>';
                     foreach ($storesToList as $key1 => $value1) {
                       $store = new store($value1);
                       echo '<a href="store?id='.$value1.'">';
@@ -148,6 +150,7 @@
                     }
                   }
                 }else {
+                  echo '<h3>Recently Added</h3>';
                   foreach ($stores as $key => $value) {
                     array_push($storesToList, $value['storeid']);
                   }
@@ -160,7 +163,6 @@
                   $store = new store($value1);
                   echo '<a href="store?id='.$value1.'">';
                   echo '<div class="StoreLink">';
-                  $discounts = $store->getDiscounts();
                   echo '<div class="StoreLinkImgcontainer">';
                   echo '<img title="'.$store->getDescription().'" class="storeLinkImg" src="'.$store->getStorePhotoPath().'" alt="">';
                   echo '<div class="overlay">';
@@ -172,6 +174,7 @@
                   echo $store->getName();
                   echo '</div>';
                   $d = $store->getDiscounts();
+                  $d = array_reverse($d);
                   if(sizeof($d) > 0)
                   {
                     $d = $d[0];
