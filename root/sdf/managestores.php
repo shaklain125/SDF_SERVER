@@ -124,7 +124,7 @@
               foreach ($stores as $key => $value) {
                 $store1 = new store($value);
                 $name = $store1->getName();
-                echo '<div id="store'.$store1->getStoreId().'" style="overflow:hidden;width:100%;border-style:solid;border-width:thin;padding:10px;margin-top:20px;">';
+                echo '<div class="manageStoreStyle" id="store'.$store1->getStoreId().'" style="overflow:hidden;width:100%;border-style:solid;border-width:thin;padding:10px;margin-top:20px;">';
                 echo '<div>ID: '.$store1->getStoreId().' | '.$name.'</div>';
                 echo '<input type="button" style="float:left" onclick="location.href=\'modifystore?id='.$store1->getStoreId().'\'" name="modify_store" value="Modify Store">';
                 echo '<form style="float:right" id="RemoveStoreForm'.$key.'">';

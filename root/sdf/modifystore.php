@@ -93,9 +93,6 @@
             if(!$store->isNull())
             {
           ?>
-          <div style="padding:20px; border-style:solid; border-width:thin;">
-            ID : <?php echo $store->getStoreId();?>
-          </div>
           <h3 style="text-align: center;">Edit store page</h3>
           <div id="formContentContainer">
             <div id="formContentEditStore">
@@ -179,10 +176,22 @@
                   <div style="float:right">
                     <a href="javascript:void(0)" style="margin-top:0" class="linkBtn" onclick="removeFromDiscountList(this)" id="removeListDiscount">[X] Remove</a>
                   </div>
-                  <input type="text" placeholder="Discount Name" name="input_discount_name" oninput="handleChange()" value="">
-                  <input type="text" placeholder="Discount Percent" name="input_discount_percent" oninput="handleChange()" value="">
-                  <input type="date" placeholder="Discount Start Date" name="input_discount_start" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
-                  <input type="date" placeholder="Discount Expire Date" name="input_discount_expire" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Name</span>
+                    <input type="text" placeholder="Type In Discount Name" name="input_discount_name" oninput="handleChange()" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Percent</span>
+                    <input type="text" placeholder="Type In Discount Percent" name="input_discount_percent" oninput="handleChange()" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Start Date</span>
+                    <input type="date" placeholder="Enter Discount Start Date" name="input_discount_start" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Expire Date</span>
+                    <input type="date" placeholder="Enter Discount Expire Date" name="input_discount_expire" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
+                  </div>
                   <select name="input_discount_subcateg" style="border-style:solid; border-width:thin">
                     <?php
                       $conn = createSqlConn();
