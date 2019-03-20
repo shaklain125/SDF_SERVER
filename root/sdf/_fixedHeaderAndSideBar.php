@@ -32,14 +32,16 @@
     echo '<a href="signup.php">Sign up</a>';
     echo '<a href="javascript:void(0)">About</a>';
   }
+   echo '<span id="copyrightInfo">Copyright (c) '.date("Y").' by Student Discount Finder Corporation. All Rights Reserved.</span>';
   ?>
+
 </div>
 <div class="topFixedDiv">
   <div style="position: absolute;">
     <button id="menuBtn" class="openbtn" onclick="openNav()">☰</button>
   </div>
   <div>
-    <h3 id="logo" onclick="location.href='index.php';">Student Discount Finder</h1>
+    <h3 id="logo" onclick="location.href='index.php';">Student Discount Finder </h1>
   </div>
   <?php
     if(LoggedIn())
@@ -109,6 +111,15 @@
       resultLinks.push('<a class="livesearch" href="store.php?id='+i+'"><div class="livesearch">'+r[i]+'</div></a>')
     }
     element('liveSearchDiv').innerHTML = resultLinks.join("")
+  }
+
+  window.addEventListener('onload', addCopyRight());
+  function addCopyRight() {
+    var copyrightSpan = '<?php echo 'Copyright (c) '.date("Y").' by Student Discount Finder Corporation. All Rights Reserved.';?>';
+    var footer = document.createElement("footer");
+    footer.id = "copyrightInfoBottom"
+    footer.innerHTML = copyrightSpan;
+    document.body.appendChild(footer)
   }
 
 </script>

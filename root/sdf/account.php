@@ -291,8 +291,8 @@
               if(isset($_SESSION['student']))
               {
             ?>
-              <div style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center; border-style:solid; border-width:thin;">
-                <h4 style="margin:0; font-family:arial;">Preferences</h4>
+              <div class="accountPrefTitle" style="">
+                <h4>Preferences</h4>
               </div>
             <?php
                 $conn = createSqlConn();
@@ -318,11 +318,11 @@
                 foreach ($categ as $key1 => $value1) {
                   $category = $value1['category_name'];
                   $c = replaceSpacesAndchars($category);
-                  echo '<div style="overflow:hidden;margin-top:10px;padding:10px; border-style:solid; border-width:thin;">';
+                  echo '<div class="accountPref" style="">';
                   echo '<input type="checkbox" '.setCategSubCategChecked($db_prefCategs,$category).' onchange="ToggleCategory(this)" id="'.$c.'" name="categ'.$categIndx.'" value="'.$category.'" style="float:left;">';
                   echo '<span style="float:left">'.$category.'</span>';
                   echo '</div>';
-                  echo '<div id="'.$c.'-subContainer" style="overflow:hidden;padding:15px; border-style:solid; border-width:thin;">';
+                  echo '<div class="accountPref" id="'.$c.'-subContainer" style="overflow:hidden;padding:15px; border-style:solid; border-width:thin;">';
                   $indx = 1;
                   foreach ($subcateg as $key2 => $value2) {
                     if($value2['category_name'] == $category)
@@ -344,7 +344,9 @@
               ?>
               <div id="errorMsgDiv" style="display:none">
               </div>
-              <input type="button" name="saveProfile" value="Save Settings" onclick="updateProfileFrm()">
+              <div <?php echo isset($_SESSION['student'])? 'class="accountPrefBtn"':''?>>
+                <input type="button" name="saveProfile" value="Save Settings" onclick="updateProfileFrm()">
+              </div>
               </form>
               <?php
               if(isset($_SESSION['student']))
@@ -353,12 +355,12 @@
                 // echo '<div>category name  -------  checkbox</div>';
                 // echo '<div>subcategories  -------  checkboxes</div>';
                 // echo '<div>Save account settings button</div>';
-                echo '<div style="margin-top:20px;">';
+                echo '<div class="accountPrefBtn" style="margin-top:20px;">';
                 echo '<div style="margin-right:10px;display:inline-block;"><a href="history.php" class="linkBtn">Store History</a></div>';
                 echo '<div style="display:inline-block;"><a href="favouritestores.php" class="linkBtn">Favourite Stores</a></div>';
                 echo '</div>';
             ?>
-            <div style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center; border-style:solid; border-width:thin;">
+            <div class="accountPref" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center; border-style:solid; border-width:thin;">
               <h4 style="margin:0; font-family:arial;">Claimed Discounts</h4>
             </div>
             <div>
@@ -367,7 +369,7 @@
                 $claimedL = array_reverse($claimedL);
                 if(sizeof($claimedL) == 0)
                 {
-                  echo '<div style="padding:20px; border-top:0;text-align:left; border-style:solid; border-width:thin;">';
+                  echo '<div class="accountPref" style="padding:20px; border-top:0;text-align:left; border-style:solid; border-width:thin;">';
                   echo 'No discounts claimed';
                   echo '</div>';
                 }else {
@@ -396,7 +398,7 @@
                       }
                       if($cond1 || $cond2 || $cond3)
                       {
-                        echo '<div style="padding:20px; margin-top:20px;border-top:0;text-align:left; border-style:solid; border-width:thin;">';
+                        echo '<div class="accountPref" style="padding:20px; margin-top:20px;border-top:0;text-align:left; border-style:solid; border-width:thin;">';
                         if(!$value->isUsed())
                         {
                           echo '<p style="margin-bottom:20px;margin-top:0px;border-width:thin;border-top:0; border-left:0;border-right:0; border-style:solid; padding-bottom:5px;">Discount Expires: '.$discount->getExpireDate().'</p>';

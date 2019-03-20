@@ -94,6 +94,28 @@ html,body,#container {
   margin-left: 50px;
 }
 
+#copyrightInfo {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: grey;
+    font-weight: lighter;
+    font-family: arial;
+    font-size: 11pt;
+  }
+#copyrightInfoBottom{
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  color: grey;
+  font-weight: lighter;
+  font-family: arial;
+  font-size: 11pt;
+}
 .openbtn {
   font-size: 20px;
   cursor: pointer;
@@ -551,6 +573,44 @@ textarea{
   border-radius: 10px;
 }
 
+.accountPref, .accountPrefTitle, .accountPrefBtn {
+  background-color: black;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 10px;
+  padding: 10px;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 10px;
+}
+
+.accountPrefBtn {
+  background-color: black;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 10px;
+  padding: 10px;
+  border-style: none;
+  border-width: none;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.accountPrefTitle {
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin-top: 20px;
+  font-size: 15pt;
+  text-align: center;
+}
+
+.accountPrefTitle h4 {
+  margin:0;
+  color: black;
+}
+
 #message {
   position: fixed;
   bottom: 0;
@@ -716,6 +776,16 @@ textarea{
   #profilePicContainer{
     width: 100%;
   }
+  #copyrightInfo{
+    display: none;
+  }
+  #copyrightInfoBottom{
+    display: block;
+    position: static;
+    right:;
+    bottom:;
+    left:;
+  }
 }
 
 /*For small Smartphones*/
@@ -789,7 +859,17 @@ textarea{
     #profilePicContainer{
       width: 100%;
     }
+    #copyrightInfo{
+      display: none;
+    }
 
+    #copyrightInfoBottom{
+      display: block;
+      position: static;
+      right:;
+      bottom:;
+      left:;
+    }
 }
 
 /*For very small Smartphones*/
@@ -867,4 +947,26 @@ textarea{
     #profilePicContainer{
       width: 100%;
     }
+    #copyrightInfo{
+      display: none;
+    }
+    #copyrightInfoBottom{
+      display: block;
+      position: static;
+      right:;
+      bottom:;
+      left:;
+    }
+}
+@media only screen and (orientation: landscape) and (max-height: 534px) {
+  #copyrightInfo{
+    display: none;
+  }
+  #copyrightInfoBottom{
+    display: block;
+    position: static;
+    right:;
+    bottom:;
+    left:;
+  }
 }
