@@ -42,7 +42,6 @@
   </div>
   <div>
     <h3 id="logo" onclick="location.href='index.php';">Student Discount Finder</h1>
-    <h3 id="stylePref"></h3>
   </div>
   <?php
     if(LoggedIn())
@@ -146,6 +145,7 @@
     {
       document.body.style.backgroundColor = '#f2f2f2';
       document.body.style.color = 'black';
+      changeClassStyle('accountPref', 'background-color', 'white')
       changeClassStyle('overlay', 'background-color', 'black');
     }else if (stylePref == 1) {
       document.body.style.backgroundColor = 'white';
