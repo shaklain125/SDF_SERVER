@@ -305,7 +305,7 @@ input[type=submit],input[type=button]{
   margin-top: 10px;
 }
 
-#formContent, #formContentAcoount{
+#formContent, #formContentAccount, #formContentAddStore, #formContentEditStore{
   padding-left: 55px;
   padding-right: 55px;
   padding-top: 65px;
@@ -314,7 +314,7 @@ input[type=submit],input[type=button]{
   border-radius: 10px;
   overflow: hidden;
 }
-#formContentContainer, #formContentContainerAcoount{
+#formContentContainer, #formContentContainerAccount{
   width: 100%;
   padding-top: 3%;
   display: flex;
@@ -327,7 +327,7 @@ input[type=submit],input[type=button]{
   width: 500px;
 }
 
-#formContentAcoount{
+#formContentAccount,#formContentAddStore, #formContentEditStore{
   width: 80%;
   margin: 0 auto;
 }
@@ -715,6 +715,14 @@ textarea{
   margin: 0px auto;
 }
 
+.manageStoreStyle {
+  color: black;
+  background-color: white;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
 /*For PC and Laptop*/
 @media only screen and (min-width: 1181px) {
     .sidenav a, .dropdown-btn {
@@ -816,7 +824,7 @@ textarea{
   .storePageText {
     width: 100%;
   }
-  #formContentAcoount{
+  #formContentAccount, #formContentAddStore, #formContentEditStore{
     width: 100%;
   }
   #profilePicContainer{
@@ -833,7 +841,7 @@ textarea{
     left:;
   }
 
-  .accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
+  #formContentAccount, #formContentAddStore, #formContentEditStore, .manageStoreStyle, #profilePicContainer, #formContentAccount, .storePageText,.accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
     width: 100%;
   }
   .accountPrefBtn{
@@ -907,7 +915,7 @@ textarea{
     .storePageText {
       width: 100%;
     }
-    #formContentAcoount{
+    #formContentAccount, #formContentAddStore, #formContentEditStore{
       width: 100%;
     }
     #profilePicContainer{
@@ -925,7 +933,7 @@ textarea{
       left:;
     }
 
-    .accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
+    #formContentAccount, #formContentAddStore, #formContentEditStore, .manageStoreStyle, #profilePicContainer, #formContentAccount, .storePageText,.accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
       width: 100%;
     }
     .accountPrefBtn{
@@ -1003,7 +1011,7 @@ textarea{
     .storePageText {
       width: 100%;
     }
-    #formContentAcoount{
+    #formContentAccount, #formContentAddStore, #formContentEditStore{
       width: 100%;
     }
     #profilePicContainer{
@@ -1019,7 +1027,7 @@ textarea{
       bottom:;
       left:;
     }
-    .accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
+    #formContentAccount, #formContentAddStore, #formContentEditStore, .manageStoreStyle, #profilePicContainer, #formContentAccount, .storePageText,.accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
       width: 100%;
     }
     .accountPrefBtn{

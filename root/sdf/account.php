@@ -223,8 +223,8 @@
             ?>
             <input type="hidden" name="userid" value="<?php echo $user->getUserId()?>">
             <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
-            <div id="formContentContainerAcoount" style="padding:0px;">
-              <div id="formContentAcoount" style="margin-top:0px; padding-top: 20px;border-top-left-radius:0px; border-top-right-radius:0px;">
+            <div id="formContentContainerAccount" style="padding:0px;">
+              <div id="formContentAccount" style="margin-top:0px; padding-top: 20px;border-top-left-radius:0px; border-top-right-radius:0px;">
                 <div class="inputWrap">
                   <span class="inputLabel">Email</span>
                   <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
