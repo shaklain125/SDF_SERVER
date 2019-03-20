@@ -40,6 +40,7 @@
   </div>
   <div>
     <h3 id="logo" onclick="location.href='index.php';">Student Discount Finder</h1>
+    <h3 id="stylePref"></h3>
   </div>
   <?php
     if(LoggedIn())
@@ -111,6 +112,36 @@
     element('liveSearchDiv').innerHTML = resultLinks.join("")
   }
 
+  window.addEventListener("load",function () {
+    SetStylePref();
+  });
+
+  function SetStylePref() {
+    <?php
+    if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
+    {
+      $user = null;
+      if(isset($_SESSION['student']))
+      {
+        $user = unserialize($_SESSION['student']);
+      }else {
+        $user = unserialize($_SESSION['storemember']);
+      }
+      $stylePref = $user->getStylePref();
+    ?>
+    var stylePref = <?php echo $stylePref ?>;
+    if(stylePref == 0)
+    {
+      document.body.style.backgroundColor = '#f2f2f2';
+      document.body.style.color = 'black';
+      changeClassStyle('overlay', 'background-color', 'black');
+    }else if (stylePref == 1) {
+      document.body.style.backgroundColor = 'white';
+    }
+    <?php
+    }
+    ?>
+  }
 </script>
 
 <script type="text/javascript" src="js/script.js"></script>

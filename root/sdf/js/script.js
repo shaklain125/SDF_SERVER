@@ -157,6 +157,14 @@ function ValidSearchQuery() {
   }
 }
 
+function changeClassStyle(classname, stylename, styleval) {
+  var e = document.getElementsByClassName(classname)
+  for(var x = 0; x < e.length; x++)
+  {
+    e[x].setAttribute('style', stylename + ':' + styleval)
+  }
+}
+
 class ConfirmDialog {
   constructor(msg, yesFunct, noFunct) {
     var container = document.createElement("div");

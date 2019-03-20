@@ -32,10 +32,9 @@
         }
 
         function modifyStoreFormResultHandler(response) {
-          if(response.message)
+          if(response.message == 'ok')
           {
-            ShowSessionDivMsg(response.message);
-            setTimeout("HideSessionDivMsg()",3000);
+            location.reload();
           }
         }
     </script>

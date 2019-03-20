@@ -78,11 +78,11 @@
       }
     }
 
-    public function getProfilePhoto()
+    public function getStylePref()
     {
       if($this->reguser != null)
       {
-        return $this->reguser[0]['profile_photo'];
+        return (int) $this->reguser[0]['stylePref'];
       }
     }
 

@@ -46,9 +46,11 @@
     }else {
       // echo 'No new discounts added';
     }
+    $_SESSION['message'] = 'Modifications saved';
     echo json_encode(array(
-      'message' => 'Modifications saved'
+      'message' => 'ok'
     ));
+
   }
 
   function setStorePhoto($storeid) {
