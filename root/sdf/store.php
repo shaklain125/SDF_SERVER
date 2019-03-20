@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <?php
-      include '_importStyle.php';
       include '_importPhp.php';
+      include '_importStyle.php';
       include '_checkLoggedIn.php';
       startSession();
     ?>
@@ -176,7 +176,7 @@
               $discounts = $store->getDiscounts();
               $discounts = array_reverse($discounts);
               foreach ($discounts as $key => $value) {
-                echo '<div id="discount" class="storePageText"'.$value->getDiscountId().'" style="padding:20px;border-style:solid; border-width:thin; margin-top:20px; text-align:center;">';
+                echo '<div id="discount'.$value->getDiscountId().'" class="storePageText" style="padding:20px; margin-top:20px; text-align:center;">';
                 echo 'Discount Name: '.$value->getName().'</br>';
                 echo 'Percentage: '.$value->getPercent().'%</br>';
                 // echo 'Code: '.$value->getCode().'</br>';

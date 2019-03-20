@@ -86,6 +86,14 @@
       }
     }
 
+    public function setStylePref($val) {
+      $conn = createSqlConn();
+      $q = "UPDATE registereduser SET stylePref=".($val?'1':'0')." WHERE userid=".$this->getUserId();
+      $result = getQueryResult($q,$conn);
+      closeSqlConn($conn);
+      return $result;
+    }
+
     public function updateProfile($email,$fname,$lname,$password) {
       $conn = createSqlConn();
       $q = null;

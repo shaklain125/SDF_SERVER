@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <?php include '_importStyle.php'; ?>
     <?php
       include '_importPhp.php';
       startSession();
+      include '_importStyle.php';
     ?>
     <script type="text/javascript">
       function updateProfileFrm() {
@@ -188,6 +188,9 @@
             if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
             {
           ?>
+          <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:left; border-style:solid; border-width:thin;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+            <h4 style="margin:0; font-family:arial;">Profile: <?php echo isset($_SESSION['student'])?'Student':'Store Member'?></h4>
+          </div>
           <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" enctype="multipart/form-data">
             <div id="profilePicContainer">
               <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
@@ -207,6 +210,9 @@
                 <div id="imageErrorMsg"></div>
               </div>
             </div>
+            <div class="accountPrefTitle" style="padding:10px; margin-top: 20px;font-size: 12pt;text-align:center; border-style:solid; border-width:thin;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+              <h4 style="margin:0; font-family:arial;">User Details</h4>
+            </div>
             <?php
                 if(isset($_SESSION['student']))
                 {
@@ -217,8 +223,8 @@
             ?>
             <input type="hidden" name="userid" value="<?php echo $user->getUserId()?>">
             <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
-            <div id="formContentContainerAcoount">
-              <div id="formContentAcoount">
+            <div id="formContentContainerAcoount" style="padding:0px;">
+              <div id="formContentAcoount" style="margin-top:0px; padding-top: 20px;border-top-left-radius:0px; border-top-right-radius:0px;">
                 <div class="inputWrap">
                   <span class="inputLabel">Email</span>
                   <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
@@ -322,7 +328,7 @@
                   echo '<input type="checkbox" '.setCategSubCategChecked($db_prefCategs,$category).' onchange="ToggleCategory(this)" id="'.$c.'" name="categ'.$categIndx.'" value="'.$category.'" style="float:left;">';
                   echo '<span style="float:left">'.$category.'</span>';
                   echo '</div>';
-                  echo '<div class="accountPref" id="'.$c.'-subContainer" style="overflow:hidden;padding:15px; border-style:solid; border-width:thin;">';
+                  echo '<div class="accountSubPref" id="'.$c.'-subContainer" style="overflow:hidden;">';
                   $indx = 1;
                   foreach ($subcateg as $key2 => $value2) {
                     if($value2['category_name'] == $category)
@@ -355,12 +361,12 @@
                 // echo '<div>category name  -------  checkbox</div>';
                 // echo '<div>subcategories  -------  checkboxes</div>';
                 // echo '<div>Save account settings button</div>';
-                echo '<div class="accountPrefBtn" style="margin-top:20px;">';
+                echo '<div class="accountPrefBtn">';
                 echo '<div style="margin-right:10px;display:inline-block;"><a href="history.php" class="linkBtn">Store History</a></div>';
                 echo '<div style="display:inline-block;"><a href="favouritestores.php" class="linkBtn">Favourite Stores</a></div>';
                 echo '</div>';
             ?>
-            <div class="accountPref" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center; border-style:solid; border-width:thin;">
+            <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center; border-style:solid; border-width:thin;">
               <h4 style="margin:0; font-family:arial;">Claimed Discounts</h4>
             </div>
             <div>
@@ -398,7 +404,7 @@
                       }
                       if($cond1 || $cond2 || $cond3)
                       {
-                        echo '<div class="accountPref" style="padding:20px; margin-top:20px;border-top:0;text-align:left; border-style:solid; border-width:thin;">';
+                        echo '<div class="claimedDiscount">';
                         if(!$value->isUsed())
                         {
                           echo '<p style="margin-bottom:20px;margin-top:0px;border-width:thin;border-top:0; border-left:0;border-right:0; border-style:solid; padding-bottom:5px;">Discount Expires: '.$discount->getExpireDate().'</p>';

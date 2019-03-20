@@ -157,11 +157,11 @@ function ValidSearchQuery() {
   }
 }
 
-function changeClassStyle(classname, stylename, styleval) {
+function changeClassStyle(classname, styleval) {
   var e = document.getElementsByClassName(classname)
   for(var x = 0; x < e.length; x++)
   {
-    e[x].setAttribute('style', stylename + ':' + styleval)
+    e[x].setAttribute('style', styleval)
   }
 }
 

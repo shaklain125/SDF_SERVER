@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <?php include '_importStyle.php'; ?>
+    <?php include '_importPhp.php';include '_importStyle.php'; ?>
     <script type="text/javascript">
       function clearAllHistoryFrm() {
         var reqData = 'clearHistory=';
@@ -35,7 +35,7 @@
   </head>
   <body>
     <?php
-      include '_importPhp.php';
+
       if(!isset($_SESSION['student']))
       {
         header('Location: index.php');

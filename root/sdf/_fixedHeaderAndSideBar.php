@@ -113,46 +113,83 @@
     element('liveSearchDiv').innerHTML = resultLinks.join("")
   }
 
-  window.addEventListener('onload', addCopyRight());
+  window.addEventListener('onload', addFooter());
 
   function addCopyRight() {
-    var copyrightSpan = '<?php echo 'Copyright (c) '.date("Y").' by Student Discount Finder Corporation. All Rights Reserved.';?>';
+    var copyrightSpan = '<?php echo '<div id="copyrightInfoBottom">Copyright (c) '.date("Y").' by Student Discount Finder Corporation. All Rights Reserved.</div>';?>';
+    return copyrightSpan;
+  }
+
+  function addFooter() {
     var footer = document.createElement("footer");
-    footer.id = "copyrightInfoBottom"
-    footer.innerHTML = copyrightSpan;
+    footer.innerHTML = addCopyRight();
     document.body.appendChild(footer)
   }
 
-  window.addEventListener("load",function () {
-    SetStylePref();
-  });
+  window.addEventListener('onload',addDarkMode())
 
-  function SetStylePref() {
+  function addDarkMode() {
+    var div = document.createElement('div')
+    div.innerHTML = addDarkModeSwitch()
+    document.getElementById('container').insertBefore(div, document.getElementById('container').childNodes[0]);
+  }
+  function addDarkModeSwitch() {
+    var e = null;
     <?php
-    if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
+    $user = null;
+    if(isset($_SESSION['storemember']) || isset($_SESSION['student']))
     {
-      $user = null;
       if(isset($_SESSION['student']))
       {
         $user = unserialize($_SESSION['student']);
       }else {
         $user = unserialize($_SESSION['storemember']);
       }
-      $stylePref = $user->getStylePref();
-    ?>
-    var stylePref = <?php echo $stylePref ?>;
-    if(stylePref == 0)
-    {
-      document.body.style.backgroundColor = '#f2f2f2';
-      document.body.style.color = 'black';
-      changeClassStyle('accountPref', 'background-color', 'white')
-      changeClassStyle('overlay', 'background-color', 'black');
-    }else if (stylePref == 1) {
-      document.body.style.backgroundColor = 'white';
     }
+      if($user != null)
+      {
+        ?>
+        e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)"><?php echo $user->getStylePref() == 1?"ON":"OFF"?></button></div>'
     <?php
-    }
+      }
     ?>
+    return e;
+  }
+
+  function changeStyle(e) {
+    if(e.innerHTML == 'OFF')
+    {
+      e.innerHTML = 'ON'
+    }else {
+      e.innerHTML = 'OFF'
+    }
+
+    var reqData = 'style=' + e.innerHTML;
+    var req = new XMLHttpRequest();
+    req.onload = () =>
+    {
+      var respData = null;
+      console.log(req)
+      try {
+        respData = JSON.parse(req.responseText)
+      } catch (e) {
+
+      }
+      if (respData) {
+        if(respData.message == 'ok')
+        {
+          if(e.innerHTML == 'ON')
+          {
+            element('web_style').setAttribute("href", 'css/dark_style.css')
+          }else {
+            element('web_style').setAttribute("href", 'css/style.css')
+          }
+        }
+      }
+    }
+    req.open('post', 'form_handlers/_styleChange.php');
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.send(reqData);
   }
 </script>
 

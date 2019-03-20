@@ -3,12 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <?php include '_importStyle.php'; ?>
+    <?php include '_importPhp.php';include '_importStyle.php'; ?>
   </head>
   <body>
     <?php
-    include '_importPhp.php';
-
     startSession();
     if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
     {
