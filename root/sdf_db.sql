@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2019 at 04:53 PM
+-- Generation Time: Mar 20, 2019 at 09:59 PM
 -- Server version: 5.6.34
 -- PHP Version: 7.1.11
 
@@ -79,8 +79,7 @@ INSERT INTO `discount` (`discountid`, `percent`, `name`, `code`, `expire_date`, 
 (4, '40', 'laptops', 'XXWSYOXAHHQIRMI', '2019-03-13', '2019-03-01', 'Laptops & Tablets', 2),
 (5, '80', 'mouse and keyboards', 'RXQKDLWBMJLYPCQ', '2019-03-01', '2019-03-01', 'Technology Accessories', 2),
 (6, '30', 'football shirts', 'UZOWRSQXUGTENCW', '2019-03-25', '2019-03-01', 'Clothing', 1),
-(7, '30', 'Samsung Wireless Earbuds', 'IFALELUSDKRDQVF', '2019-03-14', '2019-03-02', 'Technology Accessories', 3),
-(8, '30', 'Nike Joggers', 'WFHTYPDUQUDDHBJ', '2019-03-21', '2019-03-15', 'Fitness Clothing', 5);
+(7, '30', 'Samsung Wireless Earbuds', 'IFALELUSDKRDQVF', '2019-03-14', '2019-03-02', 'Technology Accessories', 3);
 
 -- --------------------------------------------------------
 
@@ -94,17 +93,18 @@ CREATE TABLE `registereduser` (
   `firstname` varchar(30) NOT NULL,
   `lastname` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `stylePref` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `registereduser`
 --
 
-INSERT INTO `registereduser` (`userid`, `username`, `firstname`, `lastname`, `email`, `password`) VALUES
-(1, 'student1', 'studentfn', 'studentln', 'student1@gmail.com', '123456'),
-(2, 'storememb1', 'storemembfn', 'storemembln', 'storememb1@gmail.com', '123456'),
-(3, 'storememb2', 'storememb2fn', 'storememb2ln', 'storememb2@gmail.com', '123456');
+INSERT INTO `registereduser` (`userid`, `username`, `firstname`, `lastname`, `email`, `password`, `stylePref`) VALUES
+(1, 'student1', 'studentfn', 'studentln', 'student1@gmail.com', '123456', 1),
+(2, 'storememb1', '', '', '', '123456', 0),
+(3, 'storememb2', 'storemembfn', 'storemembln', 'storememb2@gmail.com', '123456', 0);
 
 -- --------------------------------------------------------
 
@@ -134,8 +134,7 @@ INSERT INTO `store` (`storeid`, `name`, `description`, `category`, `website`, `p
 (1, 'JD', 'A really long description to test if the description overlays the store link', 'Fashion', 'jd.co.uk', '075456412315', 0, 0, NULL, NULL, 2),
 (2, 'Currys', 'currys description here...', 'Technology', 'Currys.com', '075456412315', 0, 0, NULL, NULL, 2),
 (3, 'Carphone Warehouse', '', 'Technology', 'carphonewarehouse.com', '07454542125431', 1, 0, NULL, NULL, 2),
-(4, 'EE', '', 'Technology', 'ee.com', '075456412315', 0, 0, NULL, NULL, 2),
-(5, 'Sports Direct', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'Health & Fitness', 'sportsd.com', '078221315431', 0, 0, NULL, NULL, 2);
+(4, 'EE', '', 'Technology', 'ee.com', '075456412315', 0, 0, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -153,8 +152,8 @@ CREATE TABLE `storemember` (
 --
 
 INSERT INTO `storemember` (`userid`, `stores`) VALUES
-(2, 0x613a353a7b693a303b693a313b693a313b693a323b693a323b693a333b693a333b693a343b693a343b693a353b7d),
-(3, 0x613a303a7b7d);
+(2, 0x613a343a7b693a303b693a313b693a313b693a323b693a323b693a333b693a333b693a343b7d),
+(3, NULL);
 
 -- --------------------------------------------------------
 
@@ -180,7 +179,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`userid`, `dob`, `graduation_date`, `university`, `store_view_history`, `fav_stores`, `disliked_stores`, `claimedlist`, `prefCategories`, `prefSubCategories`) VALUES
-(1, '1997-08-28', '2021-06-01', 'Queen Mary University of London', 0x613a353a7b693a3135313b733a313a2232223b693a3135333b733a313a2234223b693a3135343b733a313a2235223b693a3135353b733a313a2233223b693a3135363b733a313a2231223b7d, 0x613a313a7b693a303b733a313a2233223b7d, 0x613a303a7b7d, 0x613a313a7b693a303b733a313a2231223b7d, 0x613a323a7b733a363a22636174656731223b733a373a2246617368696f6e223b733a363a22636174656734223b733a31303a22546563686e6f6c6f6779223b7d, 0x613a313a7b733a31323a2273756243617465675f335f31223b733a31363a224669746e65737320436c6f7468696e67223b7d);
+(1, '1997-08-28', '2021-06-01', 'Queen Mary University of London', 0x613a343a7b693a3135313b733a313a2232223b693a3135323b733a313a2233223b693a3135333b733a313a2234223b693a3137333b733a313a2231223b7d, 0x613a313a7b693a303b733a313a2233223b7d, 0x613a303a7b7d, 0x613a323a7b693a303b733a313a2231223b693a313b733a313a2232223b7d, 0x613a323a7b733a363a22636174656731223b733a373a2246617368696f6e223b733a363a22636174656734223b733a31303a22546563686e6f6c6f6779223b7d, 0x613a313a7b733a31323a2273756243617465675f335f31223b733a31363a224669746e65737320436c6f7468696e67223b7d);
 
 -- --------------------------------------------------------
 
@@ -202,7 +201,8 @@ CREATE TABLE `studentclaim` (
 --
 
 INSERT INTO `studentclaim` (`studentclaim_id`, `discount_rating`, `used`, `discount`, `discountid`, `discount_available`) VALUES
-(1, NULL, 0, 0x613a323a7b693a303b4f3a383a22646973636f756e74223a313a7b733a31323a2200646973636f756e7400645f223b613a313a7b693a303b613a383a7b733a31303a22646973636f756e746964223b733a313a2231223b733a373a2270657263656e74223b733a323a223135223b733a343a226e616d65223b733a31333a2273706f727420636c6f74686573223b733a343a22636f6465223b733a31353a22444b5450524e52555848524c485941223b733a31313a226578706972655f64617465223b733a31303a22323031392d31302d3237223b733a31303a2273746172745f64617465223b733a31303a22323031392d30322d3237223b733a31313a2273756263617465676f7279223b733a383a22436c6f7468696e67223b733a373a2273746f72656964223b733a313a2231223b7d7d7d693a313b733a323a224a44223b7d, 1, 1);
+(1, NULL, 0, 0x613a323a7b693a303b4f3a383a22646973636f756e74223a313a7b733a31323a2200646973636f756e7400645f223b613a313a7b693a303b613a383a7b733a31303a22646973636f756e746964223b733a313a2231223b733a373a2270657263656e74223b733a323a223135223b733a343a226e616d65223b733a31333a2273706f727420636c6f74686573223b733a343a22636f6465223b733a31353a22444b5450524e52555848524c485941223b733a31313a226578706972655f64617465223b733a31303a22323031392d31302d3237223b733a31303a2273746172745f64617465223b733a31303a22323031392d30322d3237223b733a31313a2273756263617465676f7279223b733a383a22436c6f7468696e67223b733a373a2273746f72656964223b733a313a2231223b7d7d7d693a313b733a323a224a44223b7d, 1, 1),
+(2, NULL, 0, 0x613a323a7b693a303b4f3a383a22646973636f756e74223a313a7b733a31323a2200646973636f756e7400645f223b613a313a7b693a303b613a383a7b733a31303a22646973636f756e746964223b733a313a2236223b733a373a2270657263656e74223b733a323a223330223b733a343a226e616d65223b733a31353a22666f6f7462616c6c20736869727473223b733a343a22636f6465223b733a31353a22555a4f5752535158554754454e4357223b733a31313a226578706972655f64617465223b733a31303a22323031392d30332d3235223b733a31303a2273746172745f64617465223b733a31303a22323031392d30332d3031223b733a31313a2273756263617465676f7279223b733a383a22436c6f7468696e67223b733a373a2273746f72656964223b733a313a2231223b7d7d7d693a313b733a323a224a44223b7d, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -394,7 +394,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `discount`
 --
 ALTER TABLE `discount`
-  MODIFY `discountid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `discountid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `registereduser`
@@ -406,13 +406,13 @@ ALTER TABLE `registereduser`
 -- AUTO_INCREMENT for table `store`
 --
 ALTER TABLE `store`
-  MODIFY `storeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `storeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `studentclaim`
 --
 ALTER TABLE `studentclaim`
-  MODIFY `studentclaim_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `studentclaim_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
