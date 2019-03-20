@@ -92,103 +92,124 @@
             if(!$store->isNull())
             {
           ?>
-          <div style="padding:20px; border-style:solid; border-width:thin;">
-            ID : <?php echo $store->getStoreId();?>
+          <h3 style="text-align: center;">Edit store page</h3>
+          <div id="formContentContainer">
+            <div id="formContentEditStore">
+              <form id="modifystoreForm" enctype="multipart/form-data">
+                <input type="hidden" name="store_id" value="<?php echo $store->getStoreId();?>">
+
+                <a class="linkBtn" id="removeStorePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveStorePhoto()">Remove Store Photo</a>
+                <input type="hidden" id="removeStorePhoto" name="removeStorePhoto" value="false">
+                <div>
+                  <img class="storePhoto" id="StorePhotoLink" src="<?php echo displayStorePhoto() ?>" alt="">
+                  <div id="imageErrorMsg"></div>
+                </div>
+                <div style="font-family:arial;color:black;background-color:white;padding:20px;border-style:solid;border-width:thin;border-left:0;border-right:0;border-bottom:0;">
+                  Upload Store Photo:
+                  <input type="file" name="store_image" onchange="previewPhoto()" id="store_image">
+                </div>
+                <div class="inputWrap">
+                  <span class="inputLabel">Store name</span>
+                  <input type="text" id="storename" name="input_store_name" placeholder="* Store name" value="<?php echo $store->getName() ?>">
+                </div>
+                <div class="inputWrap">
+                  <span class="inputLabel">Store website</span>
+                  <input type="text" name="input_store_website" placeholder="Website" value="<?php echo $store->getWebsite() ?>">
+                </div>
+                <div class="inputWrap">
+                  <span class="inputLabel">Store phone number</span>
+                  <input type="text" name="input_store_phone" placeholder="Phone No." value="<?php echo $store->getPhone() ?>">
+                </div>
+                <select name="input_store_category" style="border-style:solid; border-width:thin">
+                  <?php
+                    $conn = createSqlConn();
+                    $categ = SqlResultToArray("select * from category",$conn);
+                    foreach ($categ as $key => $value) {
+                      if($value['category_name'] == $store->getCategory())
+                      {
+                        echo '<option value="'.$value['category_name'].'" selected>'.$value['category_name'].'</option>';
+                      }else {
+                        echo '<option value="'.$value['category_name'].'">'.$value['category_name'].'</option>';
+                      }
+                    }
+                    closeSqlConn($conn);
+                  ?>
+                </select>
+                <textarea style="border-style:solid; border-width:thin; border-color:black" id="store_description" rows="30" name="input_store_descr" placeholder="Store Description" maxlength="3000" oninput="countDescriptionChar()"><?php echo $store->getDescription() ?></textarea>
+                <div>
+                  <span id="descrCharcount">0/3000</span>
+                </div>
+                <div id="StoreLocations">
+
+                </div>
+                <div id="Store Photos">
+
+                </div>
+                <div>
+                  <input type="button" id="undoRemoveDiscountBtn" onclick="UndoRemoveFromDiscount()" value="Undo Delete" disabled="true">
+                </div>
+                <div id="storeDiscounts">
+                  <?php
+                    $discounts = $store->getDiscounts();
+                    foreach ($discounts as $key => $value) {
+                      echo '<div id="discount'.$value->getDiscountId().'" style="padding:20px;border-style:solid; border-width:thin; margin-top:20px">';
+                      echo '<div style="float:right">';
+                      echo '<a href="javascript:void(0)" style="margin-top:0" class="linkBtn" onclick="removeFromDiscount(this)" id="removeDiscount'.$value->getDiscountId().'">[X] Remove</a>';
+                      echo '</div>';
+                      echo 'Discount Name: '.$value->getName().'</br>';
+                      echo 'Percentage: '.$value->getPercent().'%</br>';
+                      echo 'Code: '.$value->getCode().'</br>';
+                      echo 'Start Date: '.$value->getStartDate().'</br>';
+                      echo 'Expire Date: '.$value->getExpireDate().'</br>';
+                      echo 'Subcategory: '.$value->getSubCategory().'</br>';
+                      echo '</div>';
+                    }
+                  ?>
+                </div>
+                <div>
+                  <a href="javascript:void(0)" onclick="addDiscountFields()" class="linkBtn">+ Add Discount</a>
+                </div>
+                <div id="addDiscountsList">
+                </div>
+                <div id="addDiscount" style="display:none; margin-top: 20px;border-style:solid; border-width:thin; padding: 10px;">
+                  <div style="float:right">
+                    <a href="javascript:void(0)" style="margin-top:0" class="linkBtn" onclick="removeFromDiscountList(this)" id="removeListDiscount">[X] Remove</a>
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Name</span>
+                    <input type="text" placeholder="Type In Discount Name" name="input_discount_name" oninput="handleChange()" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Percent</span>
+                    <input type="text" placeholder="Type In Discount Percent" name="input_discount_percent" oninput="handleChange()" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Start Date</span>
+                    <input type="date" placeholder="Enter Discount Start Date" name="input_discount_start" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Discount Expire Date</span>
+                    <input type="date" placeholder="Enter Discount Expire Date" name="input_discount_expire" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
+                  </div>
+                  <select name="input_discount_subcateg" style="border-style:solid; border-width:thin">
+                    <?php
+                      $conn = createSqlConn();
+                      $subcateg = SqlResultToArray("select * from subcategory",$conn);
+                      foreach ($subcateg as $key => $value) {
+                        echo '<option value="'.$value['subcategory_name'].'">'.$value['subcategory_name'].'</option>';
+                      }
+                      closeSqlConn($conn);
+                    ?>
+                  </select>
+                </div>
+                <input id="newDiscounts" type="hidden" name="newDiscounts" value="">
+                <input id="discountsToRemove" type="hidden" name="discountsToRemove" value="">
+                <div id="errorMsg">
+                </div>
+                <input type="button" name="modify" value="Apply changes" onclick="modifyStoreFrm()">
+              </form>
+            </div>
           </div>
-          <form id="modifystoreForm" enctype="multipart/form-data">
-            <input type="hidden" name="store_id" value="<?php echo $store->getStoreId();?>">
-
-            <a class="linkBtn" id="removeStorePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveStorePhoto()">Remove Store Photo</a>
-            <input type="hidden" id="removeStorePhoto" name="removeStorePhoto" value="false">
-            <div>
-              <img class="storePhoto" id="StorePhotoPage" src="<?php echo displayStorePhoto() ?>" alt="">
-              <img class="storePhoto" id="StorePhotoLink" src="<?php echo displayStorePhoto() ?>" alt="">
-              <div id="imageErrorMsg"></div>
-            </div>
-            <div style="font-family:arial;color:black;background-color:white;padding:20px;border-style:solid;border-width:thin;border-left:0;border-right:0;border-bottom:0;">
-              Upload Store Photo:
-              <input type="file" name="store_image" onchange="previewPhoto()" id="store_image">
-            </div>
-
-            <input type="text" id="storename" name="input_store_name" placeholder="* Store name" value="<?php echo $store->getName() ?>">
-            <input type="text" name="input_store_website" placeholder="Website" value="<?php echo $store->getWebsite() ?>">
-            <input type="text" name="input_store_phone" placeholder="Phone No." value="<?php echo $store->getPhone() ?>">
-            <select name="input_store_category" style="border-style:solid; border-width:thin">
-              <?php
-                $conn = createSqlConn();
-                $categ = SqlResultToArray("select * from category",$conn);
-                foreach ($categ as $key => $value) {
-                  if($value['category_name'] == $store->getCategory())
-                  {
-                    echo '<option value="'.$value['category_name'].'" selected>'.$value['category_name'].'</option>';
-                  }else {
-                    echo '<option value="'.$value['category_name'].'">'.$value['category_name'].'</option>';
-                  }
-                }
-                closeSqlConn($conn);
-              ?>
-            </select>
-            <textarea id="store_description" rows="30" name="input_store_descr" placeholder="Store Description" maxlength="3000" oninput="countDescriptionChar()"><?php echo $store->getDescription() ?></textarea>
-            <div>
-              <span id="descrCharcount">0/3000</span>
-            </div>
-            <div id="StoreLocations">
-
-            </div>
-            <div id="Store Photos">
-
-            </div>
-            <div>
-              <input type="button" id="undoRemoveDiscountBtn" onclick="UndoRemoveFromDiscount()" value="Undo Delete" disabled="true">
-            </div>
-            <div id="storeDiscounts">
-              <?php
-                $discounts = $store->getDiscounts();
-                foreach ($discounts as $key => $value) {
-                  echo '<div id="discount'.$value->getDiscountId().'" style="padding:20px;border-style:solid; border-width:thin; margin-top:20px">';
-                  echo '<div style="float:right">';
-                  echo '<a href="javascript:void(0)" style="margin-top:0" class="linkBtn" onclick="removeFromDiscount(this)" id="removeDiscount'.$value->getDiscountId().'">[X] Remove</a>';
-                  echo '</div>';
-                  echo 'Discount Name: '.$value->getName().'</br>';
-                  echo 'Percentage: '.$value->getPercent().'%</br>';
-                  echo 'Code: '.$value->getCode().'</br>';
-                  echo 'Start Date: '.$value->getStartDate().'</br>';
-                  echo 'Expire Date: '.$value->getExpireDate().'</br>';
-                  echo 'Subcategory: '.$value->getSubCategory().'</br>';
-                  echo '</div>';
-                }
-              ?>
-            </div>
-            <div>
-              <a href="javascript:void(0)" onclick="addDiscountFields()" class="linkBtn">+ Add Discount</a>
-            </div>
-            <div id="addDiscountsList">
-            </div>
-            <div id="addDiscount" style="display:none; margin-top: 20px;border-style:solid; border-width:thin; padding: 10px;">
-              <div style="float:right">
-                <a href="javascript:void(0)" style="margin-top:0" class="linkBtn" onclick="removeFromDiscountList(this)" id="removeListDiscount">[X] Remove</a>
-              </div>
-              <input type="text" placeholder="Discount Name" name="input_discount_name" oninput="handleChange()" value="">
-              <input type="text" placeholder="Discount Percent" name="input_discount_percent" oninput="handleChange()" value="">
-              <input type="date" placeholder="Discount Start Date" name="input_discount_start" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
-              <input type="date" placeholder="Discount Expire Date" name="input_discount_expire" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
-              <select name="input_discount_subcateg" style="border-style:solid; border-width:thin">
-                <?php
-                  $conn = createSqlConn();
-                  $subcateg = SqlResultToArray("select * from subcategory",$conn);
-                  foreach ($subcateg as $key => $value) {
-                    echo '<option value="'.$value['subcategory_name'].'">'.$value['subcategory_name'].'</option>';
-                  }
-                  closeSqlConn($conn);
-                ?>
-              </select>
-            </div>
-            <input id="newDiscounts" type="hidden" name="newDiscounts" value="">
-            <input id="discountsToRemove" type="hidden" name="discountsToRemove" value="">
-            <div id="errorMsg">
-            </div>
-            <input type="button" name="modify" value="Apply changes" onclick="modifyStoreFrm()">
-          </form>
           <?php
               }else {
                 echo 'No page found';

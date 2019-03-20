@@ -26,11 +26,11 @@
   {
     echo '<a href="account.php">Account</a>';
     echo '<a href="javascript:void(0)">About</a>';
-    echo '<a href="logout.php">Logout</a>';
+    echo '<a href="about.php">Logout</a>';
   }else {
     echo '<a href="login.php">Log in</a>';
     echo '<a href="signup.php">Sign up</a>';
-    echo '<a href="javascript:void(0)">About</a>';
+    echo '<a href="about.php">About</a>';
   }
    echo '<span id="copyrightInfo">Copyright (c) '.date("Y").' by Student Discount Finder Corporation. All Rights Reserved.</span>';
   ?>
