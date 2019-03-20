@@ -305,7 +305,7 @@ input[type=submit],input[type=button]{
   margin-top: 10px;
 }
 
-#formContent, #formContentAcoount{
+#formContent, #formContentAccount, #formContentAddStore{
   padding-left: 55px;
   padding-right: 55px;
   padding-top: 65px;
@@ -327,7 +327,7 @@ input[type=submit],input[type=button]{
   width: 500px;
 }
 
-#formContentAcoount{
+#formContentAccount, #formContentAddStore{
   width: 80%;
   margin: 0 auto;
 }
@@ -791,6 +791,9 @@ textarea{
     bottom:;
     left:;
   }
+  #formContentAccount, #formContentAddStore{
+    width: 100%;
+  }
 }
 
 /*For small Smartphones*/
@@ -874,6 +877,9 @@ textarea{
       right:;
       bottom:;
       left:;
+    }
+    #formContentAccount, #formContentAddStore{
+      width: 100%;
     }
 }
 
@@ -961,6 +967,9 @@ textarea{
       right:;
       bottom:;
       left:;
+    }
+    #formContentAccount, #formContentAddStore{
+      width: 100%;
     }
 }
 @media only screen and (orientation: landscape) and (max-height: 534px) {

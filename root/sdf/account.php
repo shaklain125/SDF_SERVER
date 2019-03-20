@@ -218,7 +218,7 @@
             <input type="hidden" name="userid" value="<?php echo $user->getUserId()?>">
             <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
             <div id="formContentContainerAcoount">
-              <div id="formContentAcoount">
+              <div id="formContentAccount">
                 <div class="inputWrap">
                   <span class="inputLabel">Email</span>
                   <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
