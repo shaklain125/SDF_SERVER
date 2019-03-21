@@ -21,7 +21,7 @@
     //   }
     // }
     ?>
-    <div id="container">
+    <div id="container" style="margin-top:50px; padding-top:5%;">
       <div id="main">
         <?php
         if(!isset($_GET['regtype']))

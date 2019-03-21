@@ -61,13 +61,13 @@
         <?php
           include '_fixedHeaderAndSideBar.php'
          ?>
-         <div id="contentContainer" style="margin-top:50px;text-align:center;">
+         <div id="contentContainer" style="margin-top:50px;text-align:center; color:white;">
            <div  style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;" id="content">
              <video autoPlay muted loop id="myVideo">
                 <source src="media/video.mp4" type="video/mp4"/>
             </video>
-             <h1 style="margin: 20px; text-align:center;">Student Discount Finder</h1>
-               <p style="margin: 20px;text-align:center; font-family:arial; font-size:12pt;">Home to Thousands of Exclusive Student Deals. Sign Up Now and Benefit From a Large Range of Deals and Discounts Afforded to You!</p>
+             <h1 style="margin: 20px; text-align:center; color:white;">Student Discount Finder</h1>
+               <p style="margin: 20px;text-align:center; color:white; font-family:arial; font-size:12pt;">Home to Thousands of Exclusive Student Deals. Sign Up Now and Benefit From a Large Range of Deals and Discounts Afforded to You!</p>
                <div id="aboutBtnLinks">
                  <a class="aboutBtn" href="signup.php" class="formText">Sign Up</a>
                  <a class="aboutBtn" href="login.php" class="formText">Sign In</a>

@@ -129,6 +129,8 @@
     var footer = document.createElement("footer");
     footer.innerHTML = addCopyRight();
     footer.id = 'footer';
+    footer.style.backgroundColor = "<?php echo !LoggedIn()?'rgb(28,28,28)':''?>";
+    footer.style.border = "<?php echo !LoggedIn()?'none':''?>";
     document.body.appendChild(footer)
   }
 
@@ -162,37 +164,6 @@
           console.log(localStorage.getItem('style'))
         }
         e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; padding-bottom:0px; text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)"><?php echo $user->getStylePref() == 1?"ON":"OFF"?></button></div>'
-    <?php
-  }else {
-    ?>
-    var s = document.getElementById('web_style').href.endsWith('css/style.css')? 'OFF' : 'ON';
-    <?php
-    if(!LoggedIn())
-    {
-    ?>
-    if(localStorage.getItem("style") == 'ON' || localStorage.getItem("style") == 'OFF')
-    {
-
-      if(localStorage.getItem("style") == 'ON')
-      {
-        document.getElementById('web_style').setAttribute("href", 'css/dark_style.css')
-      }else {
-        document.getElementById('web_style').setAttribute("href", 'css/style.css')
-      }
-      s = localStorage.getItem("style");
-    }
-    <?php
-  }
-  if((basename($_SERVER['SCRIPT_NAME']) == 'about.php'))
-  {
-    ?>
-    document.getElementById('web_style').setAttribute("href", 'css/dark_style.css');
-    return null;
-    <?php
-  }
-    ?>
-    console.log(localStorage.getItem('style'))
-    e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; padding-bottom:0px;text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)">'+s+'</button></div>'
     <?php
   }
     ?>

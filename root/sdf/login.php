@@ -18,7 +18,7 @@
         <?php
         include '_fixedHeaderAndSideBar.php'
          ?>
-         <div id="contentContainer">
+         <div id="contentContainer" style="margin-top:50px; padding-top:5%;">
            <div id="content">
              <div id="formContentContainer">
              <div id="formContent">
