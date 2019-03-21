@@ -87,7 +87,7 @@
                   </div>
                   <div class="inputWrap">
                     <span class="inputLabel">* Phone No.</span>
-                    <input class="formInput" type="text" id="input_store_phone" name="input_store_phone" placeholder="Input Phone No." value="">
+                    <input class="formInput" type="text" id="input_store_phone" name="input_store_phone" placeholder="Input Phone No." maxlength="11" onkeypress="return NumbersOnly(event)" value="">
                   </div>
                   <select id="input_store_category" name="input_store_category" style="border-style:solid; border-width:thin">
                     <?php

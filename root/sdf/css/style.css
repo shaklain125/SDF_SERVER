@@ -332,7 +332,7 @@ input[type=button].activeDislikeBtn, input[type=button].dislikebtn:hover{
   z-index: 1;
 }
 
-input[type=text],input[type=date],input[type=password],select{
+input[type=email],input[type=text],input[type=date],input[type=password],select{
   font-size: 10pt;
   padding: 10px;
   box-sizing: border-box;

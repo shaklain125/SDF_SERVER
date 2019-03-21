@@ -18,7 +18,8 @@
     public function SignIn($username, $password)
     {
       $conn = createSqlConn();
-      $this->reguser = SqlResultToArray('select * from registereduser where upper(username)=upper("'.$username.'") and password="'.$password.'"',$conn);
+      $q = 'SELECT * from registereduser WHERE registereduser.userid IN (SELECT searchUser.userid FROM (SELECT r.userid, STRCMP(BINARY r.password,"'.$password.'") as found FROM registereduser r WHERE upper(r.username)=upper("'.$username.'")) as searchUser WHERE searchUser.found = 0)';
+      $this->reguser = SqlResultToArray($q,$conn);
       closeSqlConn($conn);
       if($this->reguser != null)
       {

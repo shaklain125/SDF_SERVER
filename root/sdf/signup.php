@@ -40,38 +40,38 @@
           <div id="content">
             <div id="formContentContainer">
               <div id="formContent">
-              <form onsubmit="return registrationForm()" id="registrationForm" action="form_handlers/_register.php" method="post">
+              <form  id="registrationForm" action="#">
                 <div style="text-align:center; margin-bottom:20px">
                   <a id="registerALink" href="signup.php?regtype=<?php echo $_GET['regtype'] == '1'? '2' : '1' ?>">Register <?php echo $_GET['regtype'] == '1'? 'As Store Member' : 'As Student' ?></a>
                 </div>
                 <span class="loginForm-title">Register <?php echo $_GET['regtype'] == '1'? 'As Student' : 'As Store Member' ?></span>
                 <div class="inputWrap">
                   <span class="inputLabel">Username</span>
-                <input class="formInput" type="text" id="reg_usrname" name="input_username" placeholder="Type Your Username" value="" oninput="handleRegFormChange()">
+                <input class="formInput" type="text" id="reg_usrname" name="input_username" placeholder="Type Your Username" value="" onkeypress="return NoSpaces(event) && (LettersOnly(event) || NumbersOnly(event))" oninput="handleRegFormChange()" required>
                 </div>
                 <br />
                 <br />
                 <div class="inputWrap">
                   <span class="inputLabel">Email</span>
-                <input class="formInput" type="text" id="reg_email" name="input_email" placeholder="Type Your E-Mail"value="" oninput="handleRegFormChange()">
+                <input class="formInput" type="email" id="reg_email" name="input_email" placeholder="Type Your E-Mail"value="" onkeypress="return EmailCharsOnly(event)" oninput="handleRegFormChange()" required pattern="*@*">
                 </div>
                 <br />
                 <br />
                 <div class="inputWrap">
                   <span class="inputLabel">Password</span>
-                <input class="formInput" type="password" id="reg_password" name="input_pw" placeholder="Type Your Password"value="" oninput="handleRegFormChange()">
+                <input class="formInput" type="password" id="reg_password" name="input_pw" placeholder="Type Your Password"value="" onkeypress="return NoSpaces(event)" oninput="handleRegFormChange()" required>
                 </div>
                 <br />
                 <br />
                 <div class="inputWrap">
                   <span class="inputLabel">First Name</span>
-                <input class="formInput" type="text" id="reg_fname" name="input_fname" placeholder="Type Your First Name"value="" oninput="handleRegFormChange()">
+                <input class="formInput" type="text" id="reg_fname" name="input_fname" placeholder="Type Your First Name"value="" onkeypress="return LettersOnly(event)" oninput="handleRegFormChange()" required>
                 </div>
                 <br />
                 <br />
                 <div class="inputWrap">
                   <span class="inputLabel">Last Name</span>
-                <input class="formInput" type="text" id="reg_lname" name="input_lname" placeholder="Type Your Last Name" value="" oninput="handleRegFormChange()">
+                <input class="formInput" type="text" id="reg_lname" name="input_lname" placeholder="Type Your Last Name" value="" onkeypress="return LettersOnly(event)" oninput="handleRegFormChange()" required>
                 </div>
                 <?php
                 if($_GET['regtype'] == '1')
@@ -81,7 +81,7 @@
                 <br />
                 <div class="inputWrap">
                   <span class="inputLabel">Date Of Birth</span>
-                <input  class="formInput" type="date" id="reg_student_dob" name="input_dob" placeholder="Date Of Birth" value="" max="<?php echo getTodayDate(); ?>" oninput="handleRegFormChange()">
+                <input  class="formInput" type="date" id="reg_student_dob" name="input_dob" placeholder="Date Of Birth" value="" max="<?php echo getTodayDate(); ?>" oninput="handleRegFormChange()" required>
                 </div>
                 <br />
                 <br />
@@ -100,14 +100,14 @@
                 <br />
                 <div class="inputWrap">
                   <span class="inputLabel">Graduation Date</span>
-                <input  class="formInput" type="date" id="reg_student_gradDate" name="input_graduation" placeholder="Graduation Date" value="" min="<?php echo getTodayDate(); ?>" oninput="handleRegFormChange()">
+                <input  class="formInput" type="date" id="reg_student_gradDate" name="input_graduation" placeholder="Graduation Date" value="" min="<?php echo getTodayDate(); ?>" oninput="handleRegFormChange()" required>
                 </div>
                 <?php
                 }
                 ?>
                 <br />
                 <br />
-                <div id="termsAndPolicy" style="border-style:dotted;padding:20px;margin-top:10px">
+                <div id="termsAndPolicy" style="border-style:dotted;padding:20px;margin-top:10px" required>
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </div>
                 <br />

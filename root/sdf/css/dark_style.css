@@ -312,7 +312,7 @@ input[type=button].activeDislikeBtn, input[type=button].dislikebtn:hover{
   z-index: 1;
 }
 
-input[type=text],input[type=date],input[type=password],select{
+input[type=email],input[type=text],input[type=date],input[type=password],select{
   font-size: 10pt;
   padding: 10px;
   box-sizing: border-box;
@@ -339,7 +339,6 @@ input[type=submit],input[type=button]{
 }
 #formContentContainer, #formContentContainerAccount{
   width: 100%;
-  padding-top: 3%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

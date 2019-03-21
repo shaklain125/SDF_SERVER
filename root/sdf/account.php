@@ -39,6 +39,15 @@
         {
           ShowSessionDivMsg(response.message);
           setTimeout("HideSessionDivMsg()",3000);
+          element("currentpw").value = ""
+          element("newpw").value = ""
+          element("checknewpw").value = ""
+          changebtntoggle = false;
+          element("changepw").value = false;
+          pwMatch = false;
+          changebtntoggle = false;
+          element("checkNewPwDiv").innerHTML = ""
+          element("changePwDiv").style.display = "none";
         }else if (response.errorMsg) {
           element("errorMsgDiv").innerHTML = response.errorMsg;
           element("errorMsgDiv").style.display = ""
@@ -192,7 +201,7 @@
             <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:left; border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
               <h4 style="margin:0; font-family:arial;">Profile: <?php echo isset($_SESSION['student'])?'Student':'Store Member'?></h4>
             </div>
-            <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" enctype="multipart/form-data">
+            <form style="margin-top: 10px;" id="profileForm" enctype="multipart/form-data">
               <div id="profilePicContainer">
                 <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
                 <div id="coverProfilePhoto">
@@ -228,7 +237,7 @@
                 <div id="formContentAccount" style="margin-top:0px; padding-top: 20px;border-top-left-radius:0px; border-top-right-radius:0px;">
                   <div class="inputWrap">
                     <span class="inputLabel">Email</span>
-                    <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
+                    <input class="formInput" type="email" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()" onkeypress="return EmailCharsOnly(event)" pattern="*@*">
                   </div>
                   <div id="ChangePass">
                     <div>
@@ -237,15 +246,15 @@
                     <div id="changePwDiv" style="margin-bottom: 20px; display:none;padding:20px; border-style:solid;border-width:thin; border-color: black;">
                       <div class="inputWrap">
                         <span class="inputLabel">Current Password</span>
-                        <input class="formInput" type="text" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="">
+                        <input class="formInput" type="text" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="" onkeypress="return NoSpaces(event)">
                       </div>
                       <div class="inputWrap">
                         <span class="inputLabel">New Password</span>
-                        <input class="formInput" type="text" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
+                        <input class="formInput" type="text" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()"  onkeypress="return NoSpaces(event)">
                       </div>
                       <div class="inputWrap">
                         <span class="inputLabel">Confirm New Password</span>
-                        <input class="formInput" type="text" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
+                        <input class="formInput" type="text" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()"  onkeypress="return NoSpaces(event)">
                       </div>
                       <div id="checkNewPwDiv">
                       </div>
@@ -253,11 +262,11 @@
                   </div>
                   <div class="inputWrap" style="margin-top: 20px;">
                     <span class="inputLabel">First Name</span>
-                    <input class="formInput" type="text" name="input_fname" placeholder="Type Your First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()">
+                    <input class="formInput" type="text" name="input_fname" placeholder="Type Your First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()" onkeypress="return LettersOnly(event)">
                   </div>
                   <div class="inputWrap">
                     <span class="inputLabel">Last Name</span>
-                    <input class="formInput" type="text" name="input_lname" placeholder="Type Your Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()">
+                    <input class="formInput" type="text" name="input_lname" placeholder="Type Your Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()" onkeypress="return LettersOnly(event)">
                   </div>
                   <?php
                       if(isset($_SESSION['student']))
@@ -550,7 +559,9 @@
 
       function changePassword() {
         if (element("changePwDiv").style.display == "none") {
-          ClearDivInputs("changePwDiv")
+          element("currentpw").value = ""
+          element("newpw").value = ""
+          element("checknewpw").value = ""
           changebtntoggle = true;
         }else {
           changebtntoggle = false;
@@ -589,6 +600,7 @@
           pwMatch = false;
         }
       }
+
       function update()
       {
         var i = SetImage();
@@ -751,7 +763,7 @@
           return false;
         }
         // AddXandYScrollToForm("profileForm");
-        return true
+        return true;
       }
 
       function SetImage() {

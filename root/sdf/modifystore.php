@@ -119,7 +119,7 @@
                   </div>
                   <div class="inputWrap">
                     <span class="inputLabel">Store phone number</span>
-                    <input class="formInput" type="text" name="input_store_phone" placeholder="Phone No." value="<?php echo $store->getPhone() ?>">
+                    <input class="formInput" type="text" name="input_store_phone" placeholder="Phone No." maxlength="11" onkeypress="return NumbersOnly(event)" value="<?php echo $store->getPhone() ?>">
                   </div>
                   <select name="input_store_category" style="border-style:solid; border-width:thin">
                     <?php

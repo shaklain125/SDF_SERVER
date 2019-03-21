@@ -165,6 +165,42 @@ function changeClassStyle(classname, styleval) {
   }
 }
 
+function LettersOnly(e) {
+  if(e.key.match(/[A-Za-z]/g))
+  {
+    return true
+  }else {
+    return false
+  }
+}
+
+function NoSpaces(e) {
+  if(e.which != 32)
+  {
+    return true
+  }else {
+    return false
+  }
+}
+
+function EmailCharsOnly(e) {
+  if(e.key.match(/[A-Za-z]/g) || e.key.match(/[1234567890]/g) || e.key.match(/[\.\_\-\@]/))
+  {
+    return true
+  }else {
+    return false
+  }
+}
+
+function NumbersOnly(e) {
+  if(e.key.match(/[1234567890]/g))
+  {
+    return true
+  }else {
+    return false
+  }
+}
+
 class ConfirmDialog {
   constructor(msg, yesFunct, noFunct) {
     var container = document.createElement("div");

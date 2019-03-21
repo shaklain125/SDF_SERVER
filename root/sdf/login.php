@@ -28,13 +28,13 @@
                    </span>
                    <div class="inputWrap">
                     <span class="inputLabel">Username</span>
-                     <input class="formInput" type="text" name="signin_username" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Username" value="">
+                     <input class="formInput" type="text" name="signin_username" onkeydown="keyHandle(event)" oninput="handlechange()" onkeypress="return NoSpaces(event)" placeholder="Type Your Username" value="">
                    </div>
                    <br />
                    <br />
                    <div class="inputWrap">
                     <span class="inputLabel">Password</span>
-                     <input class="formInput" type="text" name="signin_pw" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Password"value="">
+                     <input class="formInput" type="text" name="signin_pw" onkeydown="keyHandle(event)" oninput="handlechange()" onkeypress="return NoSpaces(event)" placeholder="Type Your Password"value="">
                    </div>
                   <br />
                   <br />
