@@ -44,12 +44,13 @@
         text-decoration: none;
         background-color: green;
         color: white;
-        font-size: 20px;
-        padding: 15px 50px 15px 50px;
+        font-size: 12pt;
+        padding: 15px 20px 15px 20px;
         margin: 20px;
         border-right: 1px solid #333333;
         border-bottom: 1px solid #333333;
         border-radius:5px;
+        overflow: hidden;
         float:left;
       }
     </style>
