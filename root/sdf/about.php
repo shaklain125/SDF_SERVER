@@ -16,7 +16,7 @@
         position: relative;
         padding: 0;
         min-height: calc(100vh - 40px);
-        flex-direction: row;/**/
+        flex-direction: row;
       }
       .tint {
         z-index: 1;
