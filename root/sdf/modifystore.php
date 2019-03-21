@@ -422,12 +422,10 @@
       }
 
       function previewPhoto() {
-        var storeImageP = element("StorePhotoPage");
         var storeImageL = element("StorePhotoLink");
         var file = element("store_image").files[0];
         var reader  = new FileReader();
         reader.onloadend = function () {
-             storeImageP.src = reader.result;
              storeImageL.src = reader.result;
          }
         if(SetImage() != -1)
@@ -436,11 +434,9 @@
           {
             reader.readAsDataURL(file);
           }else {
-            storeImageP.src = "'"+<?php echo displayStorePhoto() ?>+"'"
             storeImageL.src = "'"+<?php echo displayStorePhoto() ?>+"'"
           }
         }else {
-          storeImageP.src = "'"+<?php echo displayStorePhoto() ?>+"'"
           storeImageL.src = "'"+<?php echo displayStorePhoto() ?>+"'"
         }
       }
@@ -450,12 +446,10 @@
         {
           element("removeStorePhotoBtn").innerHTML = "Remove Store Photo";
           element("removeStorePhoto").value = 'false';
-          element("StorePhotoPage").src = "'"+<?php echo displayStorePhoto() ?>+"'"
           element("StorePhotoLink").src = "'"+<?php echo displayStorePhoto() ?>+"'"
         }else {
           element("removeStorePhotoBtn").innerHTML = "Undo Remove Store Photo";
           element("removeStorePhoto").value = 'true';
-          element("StorePhotoPage").src = "icons/store.jpg";
           element("StorePhotoLink").src = "icons/store.jpg";
         }
       }
