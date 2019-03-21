@@ -169,345 +169,346 @@
       }
     ?>
     <div id="container">
-      <?php
-      include '_fixedHeaderAndSideBar.php'
-       ?>
-      <div id="contentContainer">
-        <div id="content">
-          <?php
-          function getAccountType() {
-            if (isset($_SESSION['student'])) {
-              return '<div>'.strtoupper(unserialize($_SESSION['student'])->getUsername()).'</div>';
-            }elseif (isset($_SESSION['storemember'])) {
-              return '<div>'.strtoupper(unserialize($_SESSION['storemember'])->getUsername()).'</div>';
-            }
-          }
-           ?>
-          <?php
-            $user = null;
-            if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
-            {
-          ?>
-          <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:left; border-style:solid; border-width:thin;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-            <h4 style="margin:0; font-family:arial;">Profile: <?php echo isset($_SESSION['student'])?'Student':'Store Member'?></h4>
-          </div>
-          <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" enctype="multipart/form-data">
-            <div id="profilePicContainer">
-              <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
-              <div id="coverProfilePhoto">
-                <input type="hidden" id="removeProfilePhoto" name="removeProfilePhoto" value="false">
-                <div id="profilephotoContainer">
-                  <div id="profilePhoto"></div>
-                </div>
-                <!-- <img  src="icons/profile.png" width="150px" height="150px" alt="profilePic"> -->
-              </div>
-              <div style="background-color:white; padding:20px; color:black; padding-bottom:0px;">
-                <h2 style="margin:0;"><?php echo getAccountType()?></h2>
-              </div>
-              <div style="font-family:arial;color:black;background-color:white;padding:20px;">
-                Upload Profile Photo:
-                <input type="file" name="profile_image" onchange="previewPhoto()" id="profile_image">
-                <div id="imageErrorMsg"></div>
-              </div>
-            </div>
-            <div class="accountPrefTitle" style="padding:10px; margin-top: 20px;font-size: 12pt;text-align:center; border-style:solid; border-width:thin;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-              <h4 style="margin:0; font-family:arial;">User Details</h4>
-            </div>
+      <div id="main">
+        <?php
+        include '_fixedHeaderAndSideBar.php'
+         ?>
+        <div id="contentContainer">
+          <div id="content">
             <?php
+            function getAccountType() {
+              if (isset($_SESSION['student'])) {
+                return '<div>'.strtoupper(unserialize($_SESSION['student'])->getUsername()).'</div>';
+              }elseif (isset($_SESSION['storemember'])) {
+                return '<div>'.strtoupper(unserialize($_SESSION['storemember'])->getUsername()).'</div>';
+              }
+            }
+             ?>
+            <?php
+              $user = null;
+              if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
+              {
+            ?>
+            <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:left; border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+              <h4 style="margin:0; font-family:arial;">Profile: <?php echo isset($_SESSION['student'])?'Student':'Store Member'?></h4>
+            </div>
+            <form style="margin-top: 10px;" onsubmit="return profileForm()" id="profileForm" enctype="multipart/form-data">
+              <div id="profilePicContainer">
+                <a class="linkBtn" id="removeProfilePhotoBtn" style="padding:5;float:right;margin:0" href="javascript:ToggleRemoveProfilePhoto()">Remove Profile Photo</a>
+                <div id="coverProfilePhoto">
+                  <input type="hidden" id="removeProfilePhoto" name="removeProfilePhoto" value="false">
+                  <div id="profilephotoContainer">
+                    <div id="profilePhoto"></div>
+                  </div>
+                  <!-- <img  src="icons/profile.png" width="150px" height="150px" alt="profilePic"> -->
+                </div>
+                <div style="background-color:white; padding:20px; color:black; padding-bottom:0px;">
+                  <h2 style="margin:0;"><?php echo getAccountType()?></h2>
+                </div>
+                <div style="font-family:arial;color:black;background-color:white;padding:20px;">
+                  Upload Profile Photo:
+                  <input type="file" name="profile_image" onchange="previewPhoto()" id="profile_image">
+                  <div id="imageErrorMsg"></div>
+                </div>
+              </div>
+              <div class="accountPrefTitle" style="padding:10px; margin-top: 20px;font-size: 12pt;text-align:center; border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+                <h4 style="margin:0; font-family:arial;">User Details</h4>
+              </div>
+              <?php
+                  if(isset($_SESSION['student']))
+                  {
+                    $user = unserialize($_SESSION['student']);
+                  }else {
+                    $user = unserialize($_SESSION['storemember']);
+                  }
+              ?>
+              <input type="hidden" name="userid" value="<?php echo $user->getUserId()?>">
+              <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
+              <div id="formContentContainerAccount" style="padding:0px;">
+                <div id="formContentAccount" style="margin-top:0px; padding-top: 20px;border-top-left-radius:0px; border-top-right-radius:0px;">
+                  <div class="inputWrap">
+                    <span class="inputLabel">Email</span>
+                    <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
+                  </div>
+                  <div id="ChangePass">
+                    <div>
+                      <a href="javascript:void(0)" onclick="changePassword()" class="linkBtn">Change Password</a>
+                    </div>
+                    <div id="changePwDiv" style="margin-bottom: 20px; display:none;padding:20px; border-style:solid;border-width:thin; border-color: black;">
+                      <div class="inputWrap">
+                        <span class="inputLabel">Current Password</span>
+                        <input class="formInput" type="text" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="">
+                      </div>
+                      <div class="inputWrap">
+                        <span class="inputLabel">New Password</span>
+                        <input class="formInput" type="text" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
+                      </div>
+                      <div class="inputWrap">
+                        <span class="inputLabel">Confirm New Password</span>
+                        <input class="formInput" type="text" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
+                      </div>
+                      <div id="checkNewPwDiv">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inputWrap" style="margin-top: 20px;">
+                    <span class="inputLabel">First Name</span>
+                    <input class="formInput" type="text" name="input_fname" placeholder="Type Your First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Last Name</span>
+                    <input class="formInput" type="text" name="input_lname" placeholder="Type Your Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()">
+                  </div>
+                  <?php
+                      if(isset($_SESSION['student']))
+                      {
+                  ?>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Date Of Birth</span>
+                    <input class="formInput" type="date" name="input_dob" placeholder="Type Your Date Of Birth" value="<?php echo $user->getDob() ?>" max="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+                  </div>
+                  <div class="inputWrap">
+                    <select name="input_university" onchange="handleMsgChange()">
+                    <?php
+                      $conn = createSqlConn();
+                      $university = SqlResultToArray("select * from university",$conn);
+                      foreach ($university as $key => $value) {
+                        if($value['university_name'] == $user->getUniversity())
+                        {
+                          echo '<option value="'.$value['university_name'].'" selected>'.$value['university_name'].'</option>';
+                        }else {
+                          echo '<option value="'.$value['university_name'].'">'.$value['university_name'].'</option>';
+                        }
+                      }
+                      closeSqlConn($conn);
+                    ?>
+                  </select>
+                </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">Graduation Date</span>
+                    <input class="formInput" type="date" name="input_graduation" placeholder="Type Your Graduation Date" value="<?php echo $user->getGradDate() ?>" min="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
+                  </div>
+              </div>
+            </div>
+              <?php
+                }
+              ?>
+              <input type="hidden" id="changepw" name="changepw" value="">
+              <?php
                 if(isset($_SESSION['student']))
                 {
-                  $user = unserialize($_SESSION['student']);
-                }else {
-                  $user = unserialize($_SESSION['storemember']);
-                }
-            ?>
-            <input type="hidden" name="userid" value="<?php echo $user->getUserId()?>">
-            <!-- <input type="text" name="input_username" placeholder="Username" value="<?php echo $user->getUsername()?>" oninput="handleMsgChange()"> -->
-            <div id="formContentContainerAccount" style="padding:0px;">
-              <div id="formContentAccount" style="margin-top:0px; padding-top: 20px;border-top-left-radius:0px; border-top-right-radius:0px;">
-                <div class="inputWrap">
-                  <span class="inputLabel">Email</span>
-                  <input class="formInput" type="text" name="input_email" placeholder="Type Your E-Mail" value="<?php echo $user->getEmail() ?>" oninput="handleMsgChange()">
+              ?>
+                <div class="accountPrefTitle" style="">
+                  <h4>Preferences</h4>
                 </div>
-                <div id="ChangePass">
-                  <div>
-                    <a href="javascript:void(0)" onclick="changePassword()" class="linkBtn">Change Password</a>
-                  </div>
-                  <div id="changePwDiv" style="margin-bottom: 20px; display:none;padding:20px; border-style:solid;border-width:thin; border-color: black;">
-                    <div class="inputWrap">
-                      <span class="inputLabel">Current Password</span>
-                      <input class="formInput" type="text" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="">
-                    </div>
-                    <div class="inputWrap">
-                      <span class="inputLabel">New Password</span>
-                      <input class="formInput" type="text" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
-                    </div>
-                    <div class="inputWrap">
-                      <span class="inputLabel">Confirm New Password</span>
-                      <input class="formInput" type="text" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()">
-                    </div>
-                    <div id="checkNewPwDiv">
-                    </div>
-                  </div>
-                </div>
-                <div class="inputWrap" style="margin-top: 20px;">
-                  <span class="inputLabel">First Name</span>
-                  <input class="formInput" type="text" name="input_fname" placeholder="Type Your First Name"value="<?php echo $user->getFirstName()?>" oninput="handleMsgChange()">
-                </div>
-                <div class="inputWrap">
-                  <span class="inputLabel">Last Name</span>
-                  <input class="formInput" type="text" name="input_lname" placeholder="Type Your Last Name" value="<?php echo $user->getLastName()?>" oninput="handleMsgChange()">
-                </div>
-                <?php
-                    if(isset($_SESSION['student']))
-                    {
-                ?>
-                <div class="inputWrap">
-                  <span class="inputLabel">Date Of Birth</span>
-                  <input class="formInput" type="date" name="input_dob" placeholder="Type Your Date Of Birth" value="<?php echo $user->getDob() ?>" max="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
-                </div>
-                <div class="inputWrap">
-                  <select name="input_university" onchange="handleMsgChange()">
-                  <?php
-                    $conn = createSqlConn();
-                    $university = SqlResultToArray("select * from university",$conn);
-                    foreach ($university as $key => $value) {
-                      if($value['university_name'] == $user->getUniversity())
+              <?php
+                  $conn = createSqlConn();
+                  $categ = SqlResultToArray("select * from category",$conn);
+                  $subcateg = SqlResultToArray("select * from subcategory",$conn);
+                  $categIndx = 1;
+                  $db_prefCategs = unserialize($user->getPrefCategories());
+                  $db_prefSubCategs = unserialize($user->getPrefSubCategories());
+                  // if($db_prefCategs == false || $db_prefSubCategs == false)
+                  // {
+                  //   $db_prefCategs = array();
+                  //   $db_prefSubCategs = array();
+                  // }
+                  foreach ($subcateg as $key1 => $value1) {
+                    foreach ($db_prefCategs as $key2 => $value2) {
+                      if($value1['category_name'] == $value2)
                       {
-                        echo '<option value="'.$value['university_name'].'" selected>'.$value['university_name'].'</option>';
-                      }else {
-                        echo '<option value="'.$value['university_name'].'">'.$value['university_name'].'</option>';
+                        array_push($db_prefSubCategs,$value1['subcategory_name']);
+                        break;
                       }
-                    }
-                    closeSqlConn($conn);
-                  ?>
-                </select>
-              </div>
-                <div class="inputWrap">
-                  <span class="inputLabel">Graduation Date</span>
-                  <input class="formInput" type="date" name="input_graduation" placeholder="Type Your Graduation Date" value="<?php echo $user->getGradDate() ?>" min="<?php echo getTodayDate(); ?>" oninput="handleMsgChange()">
-                </div>
-            </div>
-          </div>
-            <?php
-              }
-            ?>
-            <input type="hidden" id="changepw" name="changepw" value="">
-            <?php
-              if(isset($_SESSION['student']))
-              {
-            ?>
-              <div class="accountPrefTitle" style="">
-                <h4>Preferences</h4>
-              </div>
-            <?php
-                $conn = createSqlConn();
-                $categ = SqlResultToArray("select * from category",$conn);
-                $subcateg = SqlResultToArray("select * from subcategory",$conn);
-                $categIndx = 1;
-                $db_prefCategs = unserialize($user->getPrefCategories());
-                $db_prefSubCategs = unserialize($user->getPrefSubCategories());
-                // if($db_prefCategs == false || $db_prefSubCategs == false)
-                // {
-                //   $db_prefCategs = array();
-                //   $db_prefSubCategs = array();
-                // }
-                foreach ($subcateg as $key1 => $value1) {
-                  foreach ($db_prefCategs as $key2 => $value2) {
-                    if($value1['category_name'] == $value2)
-                    {
-                      array_push($db_prefSubCategs,$value1['subcategory_name']);
-                      break;
                     }
                   }
-                }
-                foreach ($categ as $key1 => $value1) {
-                  $category = $value1['category_name'];
-                  $c = replaceSpacesAndchars($category);
-                  echo '<div class="accountPref" style="">';
-                  echo '<input type="checkbox" '.setCategSubCategChecked($db_prefCategs,$category).' onchange="ToggleCategory(this)" id="'.$c.'" name="categ'.$categIndx.'" value="'.$category.'" style="float:left;">';
-                  echo '<span style="float:left">'.$category.'</span>';
-                  echo '</div>';
-                  echo '<div class="accountSubPref" id="'.$c.'-subContainer" style="overflow:hidden;">';
-                  $indx = 1;
-                  foreach ($subcateg as $key2 => $value2) {
-                    if($value2['category_name'] == $category)
-                    {
-                      $subcategory = $value2['subcategory_name'];
-                      $s = replaceSpacesAndchars($subcategory);
-                      echo '<div id="'.$c.'-subCateg'.$indx.'" style="float:left; margin:5px;">';
-                      echo '<input type="checkbox" '.setCategSubCategChecked($db_prefSubCategs,$subcategory).' style="float:left;" onchange="ToggleSubCategory(this)" id="'.$c.'_'.$indx.'" name="subCateg_'.$categIndx.'_'.$indx.'" value="'.$subcategory.'">';
-                      echo '<span style="float:left;">'.$subcategory.'</span>';
-                      echo '</div>';
-                      $indx++;
-                    }
-                  }
-                  echo '</div>';
-                  $categIndx++;
-                }
-                closeSqlConn($conn);
-              }
-              ?>
-              <div id="errorMsgDiv" style="display:none">
-              </div>
-              <div <?php echo isset($_SESSION['student'])? 'class="accountPrefBtn"':''?>>
-                <input type="button" name="saveProfile" value="Save Settings" onclick="updateProfileFrm()">
-              </div>
-              </form>
-              <?php
-              if(isset($_SESSION['student']))
-              {
-                // echo '<div>Select Categories here</div>';
-                // echo '<div>category name  -------  checkbox</div>';
-                // echo '<div>subcategories  -------  checkboxes</div>';
-                // echo '<div>Save account settings button</div>';
-                echo '<div class="accountPrefBtn">';
-                echo '<div style="margin-right:10px;display:inline-block;"><a href="history.php" class="linkBtn">Store History</a></div>';
-                echo '<div style="display:inline-block;"><a href="favouritestores.php" class="linkBtn">Favourite Stores</a></div>';
-                echo '</div>';
-            ?>
-            <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center; border-style:solid; border-width:thin;">
-              <h4 style="margin:0; font-family:arial;">Claimed Discounts</h4>
-            </div>
-            <div>
-              <?php
-                $claimedL = $user->getStudentClaims();
-                $claimedL = array_reverse($claimedL);
-                if(sizeof($claimedL) == 0)
-                {
-                  echo '<div class="accountPref" style="padding:20px; border-top:0;text-align:left; border-style:solid; border-width:thin;">';
-                  echo 'No discounts claimed';
-                  echo '</div>';
-                }else {
-                  $updateclaimedL = $claimedL;
-                  $studentclaimidsToRemove = array();
-                  foreach ($claimedL as $key => $value) {
-                      $discount = $value->getDiscount();
-                      $storeName = null;
-                      if($value->isDiscountAvailable())
+                  foreach ($categ as $key1 => $value1) {
+                    $category = $value1['category_name'];
+                    $c = replaceSpacesAndchars($category);
+                    echo '<div class="accountPref" style="">';
+                    echo '<input type="checkbox" '.setCategSubCategChecked($db_prefCategs,$category).' onchange="ToggleCategory(this)" id="'.$c.'" name="categ'.$categIndx.'" value="'.$category.'" style="float:left;">';
+                    echo '<span style="float:left">'.$category.'</span>';
+                    echo '</div>';
+                    echo '<div class="accountSubPref" id="'.$c.'-subContainer" style="overflow:hidden;">';
+                    $indx = 1;
+                    foreach ($subcateg as $key2 => $value2) {
+                      if($value2['category_name'] == $category)
                       {
-                        $storeName = (new store($discount->getStoreId()))->getName();
-                      }else {
-                        $storeName = $value->getStoreName();
-                      }
-                      // $discount->getDiscountId();
-                      // $discount->getCode();
-                      // $discount->getStartDate();
-                      $cond1 = $value->isDiscountAvailable() && !$value->isUsed();
-                      $cond2 = !$value->isDiscountAvailable() && $value->isUsed();
-                      $cond3 = $value->isDiscountAvailable() && $value->isUsed();
-                      if(($cond1 && $value->isDiscountExpired()) || (!$value->isDiscountAvailable() && !$value->isUsed() && $value->isDiscountExpired()))
-                      {
-                        unset($updateclaimedL[$key]);
-                        array_push($studentclaimidsToRemove, $value->getStudentClaimID());
-                        continue;
-                      }
-                      if($cond1 || $cond2 || $cond3)
-                      {
-                        echo '<div class="claimedDiscount">';
-                        if(!$value->isUsed())
-                        {
-                          echo '<p style="margin-bottom:20px;margin-top:0px;border-width:thin;border-top:0; border-left:0;border-right:0; border-style:solid; padding-bottom:5px;">Discount Expires: '.$discount->getExpireDate().'</p>';
-                        }else {
-                          if($value->isDiscountRated())
-                          {
-                            $dr = $value->getDiscountRating();
-                            if($dr == '1')
-                            {
-                              $dr = 'GOOD';
-                            }elseif ($dr == '0') {
-                              $dr = 'BAD';
-                            }
-                            echo '<p style="margin:0;margin-bottom:20px;font-family:arial;font-weight:900;">CODE USED: '.$dr.'</p>';
-                          }else {
-                            echo '<p style="margin:0;margin-bottom:20px;font-family:arial;font-weight:900;">CODE USED</p>';
-                          }
-                        }
-                        echo '<h2 style="text-align:center; margin-bottom:20px;font-family:arial;">'.$storeName.'</h2>';
-                        echo '<h4 style="text-align:center; margin:2px;font-family:arial;">'.$discount->getPercent().'% OFF '.$discount->getName().'</h4>';
-                        echo '<p style="text-align:center;font-family:arial;">'.$discount->getSubCategory().'</p>';
-                ?>
-                <?php
-                        if(!$value->isUsed())
-                        {
-                ?>
-                          <form id="showDiscountForm<?php echo $value->getStudentClaimID() ?>">
-                            <input type="hidden" name="discountid" value="<?php echo $discount->getDiscountId() ?>">
-                            <input type="hidden" name="studentclaimid" value="<?php echo $value->getStudentClaimID() ?>">
-                            <p style="text-align:center;"><input type="button" name="showcode" value="Show Code" onclick="showDiscountFrm('showDiscountForm<?php echo $value->getStudentClaimID() ?>')"></p>
-                          </form>
-                <?php
-                        }else{
-                          if(!$value->isDiscountRated())
-                          {
-                            echo '<p>What do you think about this discount?</p>';
-              ?>
-              <?php
-                          }else {
-                            echo '<p>Change Rating</p>';
-                          }
-              ?>
-                          <form id="rateForm<?php echo $discount->getDiscountId();?>">
-                            <input type="hidden" name="studentclaimid" value="<?php echo $value->getStudentClaimID()?>">
-                            <input type="button" style="padding:5px;margin:0;" name="rate" value="GOOD" onclick="rateFrm(true, 'rateForm<?php echo $discount->getDiscountId();?>')">
-                            <input type="button" style="padding:5px;margin:0;" name="rate" value="BAD" onclick="rateFrm(false, 'rateForm<?php echo $discount->getDiscountId();?>')">
-                          </form>
-              <?php
-                        }
+                        $subcategory = $value2['subcategory_name'];
+                        $s = replaceSpacesAndchars($subcategory);
+                        echo '<div id="'.$c.'-subCateg'.$indx.'" style="float:left; margin:5px;">';
+                        echo '<input type="checkbox" '.setCategSubCategChecked($db_prefSubCategs,$subcategory).' style="float:left;" onchange="ToggleSubCategory(this)" id="'.$c.'_'.$indx.'" name="subCateg_'.$categIndx.'_'.$indx.'" value="'.$subcategory.'">';
+                        echo '<span style="float:left;">'.$subcategory.'</span>';
                         echo '</div>';
-              ?>
-                <?php
+                        $indx++;
                       }
+                    }
+                    echo '</div>';
+                    $categIndx++;
                   }
-                  $up = array();
-                  foreach ($updateclaimedL as $key => $value) {
-                    array_push($up, $value->getStudentClaimID());
-                  }
-                  $up = array_reverse($up);
-                  $user->setClaimedListArray($up,$studentclaimidsToRemove);
+                  closeSqlConn($conn);
+                }
+                ?>
+                <div id="errorMsgDiv" style="display:none">
+                </div>
+                <div <?php echo isset($_SESSION['student'])? 'class="accountPrefBtn"':''?>>
+                  <input type="button" name="saveProfile" value="Save Settings" onclick="updateProfileFrm()">
+                </div>
+                </form>
+                <?php
+                if(isset($_SESSION['student']))
+                {
+                  // echo '<div>Select Categories here</div>';
+                  // echo '<div>category name  -------  checkbox</div>';
+                  // echo '<div>subcategories  -------  checkboxes</div>';
+                  // echo '<div>Save account settings button</div>';
+                  echo '<div class="accountPrefBtn">';
+                  echo '<div style="margin-right:10px;display:inline-block;"><a href="history.php" class="linkBtn">Store History</a></div>';
+                  echo '<div style="display:inline-block;"><a href="favouritestores.php" class="linkBtn">Favourite Stores</a></div>';
                   echo '</div>';
-              }
               ?>
-            </div>
+              <div class="accountPrefTitle" style="padding:20px; margin-top: 20px;font-size: 15pt;text-align:center;">
+                <h4 style="margin:0; font-family:arial;">Claimed Discounts</h4>
+              </div>
+              <div>
+                <?php
+                  $claimedL = $user->getStudentClaims();
+                  $claimedL = array_reverse($claimedL);
+                  if(sizeof($claimedL) == 0)
+                  {
+                    echo '<div class="accountPref" style="padding:20px; border-top:0;text-align:left; border-style:solid; border-width:thin;">';
+                    echo 'No discounts claimed';
+                    echo '</div>';
+                  }else {
+                    $updateclaimedL = $claimedL;
+                    $studentclaimidsToRemove = array();
+                    foreach ($claimedL as $key => $value) {
+                        $discount = $value->getDiscount();
+                        $storeName = null;
+                        if($value->isDiscountAvailable())
+                        {
+                          $storeName = (new store($discount->getStoreId()))->getName();
+                        }else {
+                          $storeName = $value->getStoreName();
+                        }
+                        // $discount->getDiscountId();
+                        // $discount->getCode();
+                        // $discount->getStartDate();
+                        $cond1 = $value->isDiscountAvailable() && !$value->isUsed();
+                        $cond2 = !$value->isDiscountAvailable() && $value->isUsed();
+                        $cond3 = $value->isDiscountAvailable() && $value->isUsed();
+                        if(($cond1 && $value->isDiscountExpired()) || (!$value->isDiscountAvailable() && !$value->isUsed() && $value->isDiscountExpired()))
+                        {
+                          unset($updateclaimedL[$key]);
+                          array_push($studentclaimidsToRemove, $value->getStudentClaimID());
+                          continue;
+                        }
+                        if($cond1 || $cond2 || $cond3)
+                        {
+                          echo '<div class="claimedDiscount">';
+                          if(!$value->isUsed())
+                          {
+                            echo '<p style="margin-bottom:20px;margin-top:0px;border-width:thin;border-top:0; border-left:0;border-right:0; border-style:solid; padding-bottom:5px;">Discount Expires: '.$discount->getExpireDate().'</p>';
+                          }else {
+                            if($value->isDiscountRated())
+                            {
+                              $dr = $value->getDiscountRating();
+                              if($dr == '1')
+                              {
+                                $dr = 'GOOD';
+                              }elseif ($dr == '0') {
+                                $dr = 'BAD';
+                              }
+                              echo '<p style="margin:0;margin-bottom:20px;font-family:arial;font-weight:900;">CODE USED: '.$dr.'</p>';
+                            }else {
+                              echo '<p style="margin:0;margin-bottom:20px;font-family:arial;font-weight:900;">CODE USED</p>';
+                            }
+                          }
+                          echo '<h2 style="text-align:center; margin-bottom:20px;font-family:arial;">'.$storeName.'</h2>';
+                          echo '<h4 style="text-align:center; margin:2px;font-family:arial;">'.$discount->getPercent().'% OFF '.$discount->getName().'</h4>';
+                          echo '<p style="text-align:center;font-family:arial;">'.$discount->getSubCategory().'</p>';
+                  ?>
+                  <?php
+                          if(!$value->isUsed())
+                          {
+                  ?>
+                            <form id="showDiscountForm<?php echo $value->getStudentClaimID() ?>">
+                              <input type="hidden" name="discountid" value="<?php echo $discount->getDiscountId() ?>">
+                              <input type="hidden" name="studentclaimid" value="<?php echo $value->getStudentClaimID() ?>">
+                              <p style="text-align:center;"><input type="button" name="showcode" value="Show Code" onclick="showDiscountFrm('showDiscountForm<?php echo $value->getStudentClaimID() ?>')"></p>
+                            </form>
+                  <?php
+                          }else{
+                            if(!$value->isDiscountRated())
+                            {
+                              echo '<p>What do you think about this discount?</p>';
+                ?>
+                <?php
+                            }else {
+                              echo '<p>Change Rating</p>';
+                            }
+                ?>
+                            <form id="rateForm<?php echo $discount->getDiscountId();?>">
+                              <input type="hidden" name="studentclaimid" value="<?php echo $value->getStudentClaimID()?>">
+                              <input type="button" style="padding:5px;margin:0;" name="rate" value="GOOD" onclick="rateFrm(true, 'rateForm<?php echo $discount->getDiscountId();?>')">
+                              <input type="button" style="padding:5px;margin:0;" name="rate" value="BAD" onclick="rateFrm(false, 'rateForm<?php echo $discount->getDiscountId();?>')">
+                            </form>
+                <?php
+                          }
+                          echo '</div>';
+                ?>
+                  <?php
+                        }
+                    }
+                    $up = array();
+                    foreach ($updateclaimedL as $key => $value) {
+                      array_push($up, $value->getStudentClaimID());
+                    }
+                    $up = array_reverse($up);
+                    $user->setClaimedListArray($up,$studentclaimidsToRemove);
+                    echo '</div>';
+                }
+                ?>
+              </div>
+              <?php
+                }else {
+                  echo '<div style="margin-top:10px"><a href="managestores.php" class="linkBtn">Manage Stores</a></div>';
+                }
+              ?>
             <?php
               }else {
-                echo '<div style="margin-top:10px"><a href="managestores.php" class="linkBtn">Manage Stores</a></div>';
+                echo 'No session set';
+              }
+              function replaceSpacesAndchars($val) {
+                $val = str_replace(' ', '',$val);
+                $val = str_replace('&', '_',$val);
+                return $val;
+              }
+              function setCategSubCategChecked($arr, $checkVal)
+              {
+                $checked = false;
+                foreach ($arr as $key => $value) {
+                  if($checkVal == $value)
+                  {
+                    $checked = true;
+                    break;
+                  }
+                }
+                if($checked)
+                {
+                  $checked = 'checked';
+                }else {
+                  $checked = '';
+                }
+                return $checked;
               }
             ?>
-          <?php
-            }else {
-              echo 'No session set';
-            }
-            function replaceSpacesAndchars($val) {
-              $val = str_replace(' ', '',$val);
-              $val = str_replace('&', '_',$val);
-              return $val;
-            }
-            function setCategSubCategChecked($arr, $checkVal)
-            {
-              $checked = false;
-              foreach ($arr as $key => $value) {
-                if($checkVal == $value)
-                {
-                  $checked = true;
-                  break;
-                }
-              }
-              if($checked)
-              {
-                $checked = 'checked';
-              }else {
-                $checked = '';
-              }
-              return $checked;
-            }
-          ?>
-            <form onsubmit="return removeAccountForm()" id="removeAccountForm" action="form_handlers/_removeAccount.php" method="post">
-              <div style="text-align:center">
-                <a href="#" class="linkBtn" style="padding:0px"><input style="width:auto;margin:0px;background-color:transparent;border:none;color:white" type="submit" value="[x] Remove Account"></a>
-              </div>
-            </form>
-        </div>
+              <form onsubmit="return removeAccountForm()" id="removeAccountForm" action="form_handlers/_removeAccount.php" method="post">
+                <div style="text-align:center">
+                  <a href="#" class="linkBtn" style="padding:0px"><input style="width:auto;margin:0px;background-color:transparent;border:none;color:white" type="submit" value="[x] Remove Account"></a>
+                </div>
+              </form>
+          </div>
       </div>
     </div>
     <script type="text/javascript">

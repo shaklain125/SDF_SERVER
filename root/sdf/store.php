@@ -86,130 +86,141 @@
   </head>
   <body>
     <div id="container">
-      <?php
-      include '_fixedHeaderAndSideBar.php'
-       ?>
-      <div id="contentContainer">
-        <div id="content">
-          <div>
-            <a class="linkBtn" href="index.php">Home</a>
-          </div>
-          <?php
-          $store = null;
-          if(isset($_GET['id']) and $_GET['id'] != null)
-          {
-            $store = new store($_GET['id']);
-            if(!$store->isNull())
-            {
-          ?>
-          <div style="padding:20px; text-align:center;">
-            <h1 style="padding:0;margin:0; font-family:arial;"><?php echo $store->getName();?></h1>
-          </div>
-          <div>
+      <div id="main">
+        <?php
+        include '_fixedHeaderAndSideBar.php'
+         ?>
+        <div id="contentContainer">
+          <div id="content">
+            <div>
+              <a class="linkBtn" href="index.php">Home</a>
+            </div>
             <?php
-            if(isset($_SESSION['student']))
+            $store = null;
+            if(isset($_GET['id']) and $_GET['id'] != null)
             {
-              $user = unserialize($_SESSION['student']);
-              $user->addStoreToHistory($store->getStoreId());
-              $active = '';
-              $active2 ='';
-              if($user->hasLikedStore($store->getStoreId()))
+              $store = new store($_GET['id']);
+              if(!$store->isNull())
               {
-                $active = 'activeLikeBtn';
-              }
-              if($user->hasDislikedStore($store->getStoreId()))
-              {
-                $active2 = 'activeDislikeBtn';
-              }
             ?>
-            <form id="rateStoreForm" style="text-align:center">
-              <input type="hidden" name="storeid" value="<?php echo $store->getStoreId()?>">
+            <div style="padding:20px; text-align:center;">
+              <h1 style="padding:0;margin:0; font-family:arial;"><?php echo $store->getName();?></h1>
+            </div>
+            <div>
+              <?php
+              if(isset($_SESSION['student']))
+              {
+                $user = unserialize($_SESSION['student']);
+                $user->addStoreToHistory($store->getStoreId());
+                $active = '';
+                $active2 ='';
+                if($user->hasLikedStore($store->getStoreId()))
+                {
+                  $active = 'activeLikeBtn';
+                }
+                if($user->hasDislikedStore($store->getStoreId()))
+                {
+                  $active2 = 'activeDislikeBtn';
+                }
+              ?>
+              <form id="rateStoreForm" style="text-align:center">
+                <input type="hidden" name="storeid" value="<?php echo $store->getStoreId()?>">
+                <div style="text-align:center; font-size: 25pt;display: flex;justify-content: center;font-family:arial;">
+                  <div style="text-align:center;padding:10px; padding-right:0;padding-left:0;margin-right:10px">
+                    <input type="button" class="likebtn <?php echo $active ?>" name="like" id="like" value="" onclick="rateStore(true)">
+                    <span id="likes"><?php echo $store->getLikes(); ?></span>
+                  </div>
+                  <div style="text-align:center;padding:10px;">
+                    <input type="button" class="dislikebtn <?php echo $active2 ?>" name="dislike" id="dislike" value="" onclick="rateStore(false)">
+                    <span id="dislikes"><?php echo $store->getDislikes(); ?></span>
+                  </div>
+                </div>
+              </form>
+              <?php
+            }else {
+              ?>
               <div style="text-align:center; font-size: 25pt;display: flex;justify-content: center;font-family:arial;">
-                <div style="text-align:center;padding:10px; padding-right:0;padding-left:0;margin-right:10px">
-                  <input type="button" class="likebtn <?php echo $active ?>" name="like" id="like" value="" onclick="rateStore(true)">
-                  <span id="likes"><?php echo $store->getLikes(); ?></span>
+                <div style="text-align:center;padding:10px;display: flex;justify-content: center;">
+                  <div class="likebtnDisabled"></div>
+                  <div style="padding:10px; width:50px; height:50px; margin:0;"><?php echo $store->getLikes(); ?></div>
                 </div>
-                <div style="text-align:center;padding:10px;">
-                  <input type="button" class="dislikebtn <?php echo $active2 ?>" name="dislike" id="dislike" value="" onclick="rateStore(false)">
-                  <span id="dislikes"><?php echo $store->getDislikes(); ?></span>
+                <div style="text-align:center;padding:10px; display: flex;justify-content: center;">
+                  <div class="dislikebtnDisabled"></div>
+                  <div style="padding:10px; width:50px; height:50px; margin:0;"><?php echo $store->getDislikes(); ?></div>
                 </div>
               </div>
-            </form>
-            <?php
-          }else {
-            ?>
-            <div style="text-align:center; font-size: 25pt;display: flex;justify-content: center;font-family:arial;">
-              <div style="text-align:center;padding:10px;display: flex;justify-content: center;">
-                <div class="likebtnDisabled"></div>
-                <div style="padding:10px; width:50px; height:50px; margin:0;"><?php echo $store->getLikes(); ?></div>
+              <?php
+            }
+              ?>
+            </div>
+            <div class="storePageText" style="padding-bottom:50px;">
+              <div style="padding:20px; text-align:center;">
+                <img class="storePhotoPage" src="<?php echo $store->getStorePhotoPath();?>" alt="">
               </div>
-              <div style="text-align:center;padding:10px; display: flex;justify-content: center;">
-                <div class="dislikebtnDisabled"></div>
-                <div style="padding:10px; width:50px; height:50px; margin:0;"><?php echo $store->getDislikes(); ?></div>
+              <div style="padding:20px; text-align:center;">
+                <?php echo $store->getWebsite();?>
+              </div>
+              <div style="padding:20px; text-align:center;">
+                <?php echo $store->getPhone();?>
+              </div>
+              <div style="padding:20px; text-align:center;">
+                <?php echo $store->getCategory();?>
+              </div>
+              <div style="padding:50px">
+                <h3 style="padding-bottom:10px;border-bottom:solid;border-width:thin;border-color:#d9d9d9; width:50%; margin:0px auto;margin-bottom:20px;">About Store</h3>
+                <?php echo $store->getDescription() == '' ? 'No Store Description' : $store->getDescription();?>
               </div>
             </div>
             <?php
-          }
-            ?>
-          </div>
-          <div style="padding:20px; text-align:center;">
-            <img class="storePhotoPage" src="<?php echo $store->getStorePhotoPath();?>" alt="">
-          </div>
-          <div style="padding:20px; text-align:center;">
-            <?php echo $store->getWebsite();?>
-          </div>
-          <div style="padding:20px; text-align:center;">
-            <?php echo $store->getPhone();?>
-          </div>
-          <div style="padding:20px; text-align:center;">
-            <?php echo $store->getCategory();?>
-          </div>
-          <div class="storePageText">
-            <?php echo $store->getDescription() == '' ? 'No Store Description' : $store->getDescription();?>
-          </div>
-          <?php
-            if(isset($_SESSION['student']))
-            {
-           ?>
-          <div id="storeDiscounts">
+              if(isset($_SESSION['student']))
+              {
+             ?>
+            <div id="storeDiscounts">
+              <?php
+                $discounts = $store->getDiscounts();
+                $discounts = array_reverse($discounts);
+                if(sizeof($discounts) > 0)
+                {
+                  ?>
+                  <h3 style="text-align:center;border-bottom:solid;border-width:thin;border-color:#d9d9d9; width:50%; margin:0px auto;margin-top:50px; margin-bottom:30px; padding-bottom:20px;">Discounts</h3>
+                  <?php
+                }
+                foreach ($discounts as $key => $value) {
+                  echo '<div id="discount'.$value->getDiscountId().'" class="storePageText" style="padding:20px; margin-top:20px; text-align:center;">';
+                  echo 'Discount Name: '.$value->getName().'</br>';
+                  echo 'Percentage: '.$value->getPercent().'%</br>';
+                  // echo 'Code: '.$value->getCode().'</br>';
+                  echo 'Start Date: '.$value->getStartDate().'</br>';
+                  echo 'Expire Date: '.$value->getExpireDate().'</br>';
+                  echo 'Subcategory: '.$value->getSubCategory().'</br>';
+              ?>
+                  <form id="claimDiscountForm<?php echo $value->getDiscountId()?>">
+                    <input type="hidden" name="discountid" value="<?php echo $value->getDiscountId()?>">
+                    <input type="button" name="claimDiscount" value="Claim Discount" onclick="claimDiscountFrm('claimDiscountForm<?php echo $value->getDiscountId()?>')">
+                  </form>
+              <?php
+                  echo '</div>';
+                }
+              ?>
+            </div>
             <?php
-              $discounts = $store->getDiscounts();
-              $discounts = array_reverse($discounts);
-              foreach ($discounts as $key => $value) {
-                echo '<div id="discount'.$value->getDiscountId().'" class="storePageText" style="padding:20px; margin-top:20px; text-align:center;">';
-                echo 'Discount Name: '.$value->getName().'</br>';
-                echo 'Percentage: '.$value->getPercent().'%</br>';
-                // echo 'Code: '.$value->getCode().'</br>';
-                echo 'Start Date: '.$value->getStartDate().'</br>';
-                echo 'Expire Date: '.$value->getExpireDate().'</br>';
-                echo 'Subcategory: '.$value->getSubCategory().'</br>';
-            ?>
-                <form id="claimDiscountForm<?php echo $value->getDiscountId()?>">
-                  <input type="hidden" name="discountid" value="<?php echo $value->getDiscountId()?>">
-                  <input type="button" name="claimDiscount" value="Claim Discount" onclick="claimDiscountFrm('claimDiscountForm<?php echo $value->getDiscountId()?>')">
-                </form>
-            <?php
-                echo '</div>';
               }
             ?>
-          </div>
-          <?php
-            }
-          ?>
-          <div id="StoreLocations">
+            <div id="StoreLocations">
 
-          </div>
-          <div id="Store Photos">
+            </div>
+            <div id="Store Photos">
 
-          </div>
-          <?php
+            </div>
+            <?php
+                }else {
+                  echo 'No page found';
+                }
               }else {
                 echo 'No page found';
               }
-            }else {
-              echo 'No page found';
-            }
-          ?>
+            ?>
+          </div>
         </div>
       </div>
     </div>

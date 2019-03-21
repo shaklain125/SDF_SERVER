@@ -1,19 +1,44 @@
-html,#container {
+html,body{
   margin: 0;
   padding: 0;
+	height: 100%;
 }
-
 body{
-  margin: 0;
-  padding: 0;
-  background-color: rgb(10, 16, 22);
+  background-color: rgb(10,16,22);
   color: white;
   font-family: 'myriad-pro';
 }
-* {box-sizing: border-box};
+
+*{
+  margin: 0;
+  box-sizing: border-box;
+}
+
+input[type=checkbox]
+{
+  margin-top: 4px;
+  margin-right: 4px;
+}
 
 #container{
+  min-height: 100%;
+  margin: 0px;
   box-sizing: border-box;
+}
+
+#main{
+  overflow: auto;
+  padding-bottom: 180px;
+}
+
+#footer {
+  background-color: rgb(28,28,28);
+  color:white;
+  height: 80px;
+  position: relative;
+  padding: 20px;
+  margin-top: -80px;
+  clear:both;
 }
 
 #logo{
@@ -54,6 +79,7 @@ body{
   text-align: left;
   cursor: pointer;
   outline: none;
+  font-family: arial;
 }
 
 .sidenav a{
@@ -99,28 +125,25 @@ body{
   margin-left: 50px;
 }
 
-#copyrightInfo {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: grey;
-    font-weight: lighter;
-    font-family: arial;
-    font-size: 11pt;
-  }
 #copyrightInfoBottom{
-  display: none;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
+  display: block;
   text-align: center;
   color: grey;
   font-weight: lighter;
   font-family: arial;
   font-size: 11pt;
 }
+
+#termsAndPolicy{
+  color: white;
+}
+
+#errorMsgDiv{
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+}
+
 .openbtn {
   font-size: 20px;
   cursor: pointer;
@@ -310,7 +333,7 @@ input[type=submit],input[type=button]{
   padding-right: 55px;
   padding-top: 65px;
   padding-bottom: 54px;
-  background-color: rgb(28, 28, 28);
+  background-color: #262525;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -340,7 +363,7 @@ input[type=submit],input[type=button]{
   padding-bottom: 49px;
   display: block;
   font-size: 39px;
-  color: #333333;
+  color: white;
   line-height: 1.2;
   text-align: center;
 }
@@ -370,6 +393,16 @@ input[type=submit],input[type=button]{
   padding: 0 7px 0 43px;
 }
 
+.textAreaInput {
+  font-size: 10pt;
+  color: white;
+  width: 100%;
+  background: transparent;
+  border-color:white;
+  border-style: solid;
+  border-width: thin;
+}
+
 input {
 	outline: none;
 	border: none;
@@ -385,10 +418,14 @@ textarea:focus, input:focus {
 }
 
 .formText {
-  font-size: 14px;
+  color:white;
+  font-size: 12pt;
   line-height: 1.5;
-  color: #333333;
-  text-transform: uppercase;
+  text-transform: none;
+}
+
+#registerALink{
+  color:white;
 }
 
 .wrapLogin-btn, .wrapRegistration-btn {
@@ -398,7 +435,7 @@ textarea:focus, input:focus {
 .login-btn, .registration-btn {
   background: green;
   font-size: 16px;
-  color: #fff;
+  color: white;
   line-height: 1.2;
   text-transform: uppercase;
   display: flex;
@@ -458,7 +495,7 @@ textarea{
 
 .StoreLink{
   text-decoration: none;
-  background-color: rgba(28,28,28);
+  background-color: #262525;
   color: white;
   margin-right:30px;
   border-style:none;
@@ -502,6 +539,7 @@ textarea{
   height: 180px;
   margin-bottom:30px;
   margin: 0px auto;
+  cursor: pointer;
 }
 
 .searchLinkImg{
@@ -580,7 +618,7 @@ textarea{
 }
 
 .accountPref, .accountPrefTitle, .accountPrefBtn {
-  background-color: black;
+  background-color: #4f4f4f;
   width: 80%;
   margin: 0 auto;
   overflow: hidden;
@@ -603,7 +641,7 @@ textarea{
 }
 
 .accountSubPref{
-  background-color: rgb(28, 28, 28);
+  background-color: #262525;
   width: 80%;
   margin: 0 auto;
   overflow: hidden;
@@ -632,7 +670,7 @@ textarea{
 }
 
 .accountPrefTitle {
-  background-color: #f2f2f2;
+  background-color: #8c8c8c;
   padding: 20px;
   margin-top: 20px;
   font-size: 15pt;
@@ -645,7 +683,7 @@ textarea{
 }
 
 .claimedDiscount{
-  background-color: rgb(28, 28, 28);
+  background-color: #262525;
   width: 80%;
   margin: 0 auto;
   overflow: hidden;
@@ -716,8 +754,8 @@ textarea{
 }
 
 .manageStoreStyle {
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: #262525;
   width: 80%;
   margin: 0 auto;
   border-radius: 10px;
@@ -830,16 +868,6 @@ textarea{
   #profilePicContainer{
     width: 100%;
   }
-  #copyrightInfo{
-    display: none;
-  }
-  #copyrightInfoBottom{
-    display: block;
-    position: static;
-    right:;
-    bottom:;
-    left:;
-  }
 
   #formContentAccount, #formContentAddStore, #formContentEditStore, .manageStoreStyle, #profilePicContainer, #formContentAccount, .storePageText,.accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
     width: 100%;
@@ -920,17 +948,6 @@ textarea{
     }
     #profilePicContainer{
       width: 100%;
-    }
-    #copyrightInfo{
-      display: none;
-    }
-
-    #copyrightInfoBottom{
-      display: block;
-      position: static;
-      right:;
-      bottom:;
-      left:;
     }
 
     #formContentAccount, #formContentAddStore, #formContentEditStore, .manageStoreStyle, #profilePicContainer, #formContentAccount, .storePageText,.accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
@@ -1017,16 +1034,7 @@ textarea{
     #profilePicContainer{
       width: 100%;
     }
-    #copyrightInfo{
-      display: none;
-    }
-    #copyrightInfoBottom{
-      display: block;
-      position: static;
-      right:;
-      bottom:;
-      left:;
-    }
+
     #formContentAccount, #formContentAddStore, #formContentEditStore, .manageStoreStyle, #profilePicContainer, #formContentAccount, .storePageText,.accountPrefTitle,.claimedDiscount,.accountSubPref,.accountPref,.accountPrefBtn{
       width: 100%;
     }
@@ -1036,14 +1044,5 @@ textarea{
     }
 }
 @media only screen and (orientation: landscape) and (max-height: 534px) {
-  #copyrightInfo{
-    display: none;
-  }
-  #copyrightInfoBottom{
-    display: block;
-    position: static;
-    right:;
-    bottom:;
-    left:;
-  }
+
 }

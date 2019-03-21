@@ -7,8 +7,6 @@
   </head>
   <body>
     <?php
-
-
       startSession();
       if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
       {
@@ -16,45 +14,44 @@
       }
     ?>
     <div id="container">
-      <?php
-      include '_fixedHeaderAndSideBar.php'
-       ?>
-       <div id="contentContainer">
-         <div id="content">
-           <div id="formContentContainer">
-           <div id="formContent">
-               <form id="loginForm">
-                 <span class="loginForm-title">
-                   Login
-                 </span>
-                 <div class="inputWrap">
-                  <span class="inputLabel">Username</span>
-                   <input class="formInput" type="text" name="signin_username" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Username" value="">
-                 </div>
-                 <br />
-                 <br />
-                 <div class="inputWrap">
-                  <span class="inputLabel">Password</span>
-                   <input class="formInput" type="text" name="signin_pw" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Password"value="">
-                 </div>
-
-            <br />
-            <br />
-                 <div id="errorMsgDiv" style="display:none">
-                 </div>
-                 <div class="wrapLogin-btn">
-                   <input class="login-btn" type="button" name="signin" value="Log In" onclick="signinFrm()">
-                 </div>
-                 <div style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;">
-                  <a href="signup.php" class="formText">
-                    Sign Up
-                  </a>
-                </div>
-              </form>
+      <div id="main">
+        <?php
+        include '_fixedHeaderAndSideBar.php'
+         ?>
+         <div id="contentContainer">
+           <div id="content">
+             <div id="formContentContainer">
+             <div id="formContent">
+                 <form id="loginForm">
+                   <span class="loginForm-title">
+                     Login
+                   </span>
+                   <div class="inputWrap">
+                    <span class="inputLabel">Username</span>
+                     <input class="formInput" type="text" name="signin_username" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Username" value="">
+                   </div>
+                   <br />
+                   <br />
+                   <div class="inputWrap">
+                    <span class="inputLabel">Password</span>
+                     <input class="formInput" type="text" name="signin_pw" onkeydown="keyHandle(event)" oninput="handlechange()" placeholder="Type Your Password"value="">
+                   </div>
+                  <br />
+                  <br />
+                   <div class="wrapLogin-btn">
+                     <input class="login-btn" type="button" name="signin" value="Log In" onclick="signinFrm()">
+                   </div>
+                   <div id="errorMsgDiv" style="display:none">
+                   </div>
+                   <div style="display: flex; flex-direction: column; align-items: center; padding-top: 30px; font-size:12pt; font-weight:normal; font-family:arial;">
+                   <span>Not registered?  <a href="signup.php" class="formText">Sign Up</a></span>
+                  </div>
+                </form>
+             </div>
+           </div>
            </div>
          </div>
-         </div>
-       </div>
+      </div>
     </div>
     <script type="text/javascript">
       // window.onload = Load()

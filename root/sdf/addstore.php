@@ -65,45 +65,47 @@
       $user = unserialize($_SESSION['storemember']);
     ?>
     <div id="container">
-      <?php
-      include '_fixedHeaderAndSideBar.php'
-       ?>
-      <div id="contentContainer">
-        <div id="content">
-          <h3 style="text-align: center;">Add store page</h3>
-          <div id="formContentContainer">
-            <div id="formContentAddStore">
-              <form id="addStoreForm">
-                <div id="errorMsgDiv" style="display:none">
-                </div>
-                <div class="inputWrap">
-                  <span class="inputLabel">* Store name</span>
-                  <input class="formInput" type="text" id="input_store_name" name="input_store_name" placeholder="Input Store name" value="">
-                </div>
-                <div class="inputWrap">
-                  <span class="inputLabel">* Website</span>
-                  <input class="formInput" type="text" id="input_store_website" name="input_store_website" placeholder="Input Website" value="">
-                </div>
-                <div class="inputWrap">
-                  <span class="inputLabel">* Phone No.</span>
-                  <input class="formInput" type="text" id="input_store_phone" name="input_store_phone" placeholder="Input Phone No." value="">
-                </div>
-                <select id="input_store_category" name="input_store_category" style="border-style:solid; border-width:thin">
-                  <?php
-                    $conn = createSqlConn();
-                    $categ = SqlResultToArray("select * from category",$conn);
-                    foreach ($categ as $key => $value) {
-                      echo '<option value="'.$value['category_name'].'">'.$value['category_name'].'</option>';
-                    }
-                    closeSqlConn($conn);
-                  ?>
-                </select>
-                <textarea style="border-style:solid; border-width:thin; border-color:black" id="input_store_descr" rows="30" name="input_store_descr" placeholder="Store Description" maxlength="3000" oninput="countDescriptionChar()"></textarea>
-                <div>
-                  <span id="descrCharcount">0/3000</span>
-                </div>
-                <input type="button" name="addStore" value="Create Store Page" onclick="addStoreFrm()">
-              </form>
+      <div id="main">
+        <?php
+        include '_fixedHeaderAndSideBar.php'
+         ?>
+        <div id="contentContainer">
+          <div id="content">
+            <h3 style="text-align: center;">Add store page</h3>
+            <div id="formContentContainer">
+              <div id="formContentAddStore">
+                <form id="addStoreForm">
+                  <div id="errorMsgDiv" style="display:none">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">* Store name</span>
+                    <input class="formInput" type="text" id="input_store_name" name="input_store_name" placeholder="Input Store name" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">* Website</span>
+                    <input class="formInput" type="text" id="input_store_website" name="input_store_website" placeholder="Input Website" value="">
+                  </div>
+                  <div class="inputWrap">
+                    <span class="inputLabel">* Phone No.</span>
+                    <input class="formInput" type="text" id="input_store_phone" name="input_store_phone" placeholder="Input Phone No." value="">
+                  </div>
+                  <select id="input_store_category" name="input_store_category" style="border-style:solid; border-width:thin">
+                    <?php
+                      $conn = createSqlConn();
+                      $categ = SqlResultToArray("select * from category",$conn);
+                      foreach ($categ as $key => $value) {
+                        echo '<option value="'.$value['category_name'].'">'.$value['category_name'].'</option>';
+                      }
+                      closeSqlConn($conn);
+                    ?>
+                  </select>
+                  <textarea  class="textAreaInput" id="input_store_descr" rows="30" name="input_store_descr" placeholder="Store Description" maxlength="3000" oninput="countDescriptionChar()"></textarea>
+                  <div>
+                    <span id="descrCharcount">0/3000</span>
+                  </div>
+                  <input type="button" name="addStore" value="Create Store Page" onclick="addStoreFrm()">
+                </form>
+              </div>
             </div>
           </div>
         </div>

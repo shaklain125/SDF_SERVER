@@ -98,46 +98,48 @@
       include '_checkLoggedIn.php';
     ?>
     <div id="container">
-      <?php
-      include '_fixedHeaderAndSideBar.php'
-       ?>
-      <div id="contentContainer">
-        <div id="content">
-          <div>
-            <a class="linkBtn" href="account.php">Account</a>
-          </div>
-          <a href="addstore.php" class="linkBtn">+ Add Store Page</a>
-            <?php
-            $user = unserialize($_SESSION['storemember']);
-            $stores = unserialize($user->getStores());
-            if($stores != null)
-            {
-              ?>
-              <div id="ManageStoresList" style="padding-left:5%;padding-right:5%;">
-              <form id="removeAllForm" style="display:inline-block; float:right;">
-                <a href="#" class="linkBtn" style="padding:0px"><input style="width:auto;margin:0px;background-color:transparent;border:none;color:white" type="button" value="Remove All" onclick="javascript:removeAllStoresFrm()"></a>
-              </form>
+      <div id="main">
+        <?php
+        include '_fixedHeaderAndSideBar.php'
+         ?>
+        <div id="contentContainer">
+          <div id="content">
+            <div>
+              <a class="linkBtn" href="account.php">Account</a>
+            </div>
+            <a href="addstore.php" class="linkBtn">+ Add Store Page</a>
               <?php
-              $stores = array_reverse($stores);
-              foreach ($stores as $key => $value) {
-                $store1 = new store($value);
-                $name = $store1->getName();
-                echo '<div class="manageStoreStyle" id="store'.$store1->getStoreId().'" style="overflow:hidden;width:100%;border-style:solid;border-width:thin;padding:10px;margin-top:20px;">';
-                echo '<div>ID: '.$store1->getStoreId().' | '.$name.'</div>';
-                echo '<input type="button" style="float:left" onclick="location.href=\'modifystore?id='.$store1->getStoreId().'\'" name="modify_store" value="Modify Store">';
-                echo '<form style="float:right" id="RemoveStoreForm'.$key.'">';
-                echo '<input type="hidden" name="storeid" value="'.$store1->getStoreId().'">';
-                echo '<input type="button" name="removeStore" value="Remove Store" onclick="removeStoreFrm(\'RemoveStoreForm'.$key.'\')">';
-                echo '</form>';
-                echo '</div>';
+              $user = unserialize($_SESSION['storemember']);
+              $stores = unserialize($user->getStores());
+              if($stores != null)
+              {
+                ?>
+                <div id="ManageStoresList" style="padding-left:5%;padding-right:5%;">
+                <form id="removeAllForm" style="display:inline-block; float:right;">
+                  <a href="#" class="linkBtn" style="padding:0px"><input style="width:auto;margin:0px;background-color:transparent;border:none;color:white" type="button" value="Remove All" onclick="javascript:removeAllStoresFrm()"></a>
+                </form>
+                <?php
+                $stores = array_reverse($stores);
+                foreach ($stores as $key => $value) {
+                  $store1 = new store($value);
+                  $name = $store1->getName();
+                  echo '<div class="manageStoreStyle" id="store'.$store1->getStoreId().'" style="overflow:hidden;width:100%;padding:10px;margin-top:20px;">';
+                  echo '<div>ID: '.$store1->getStoreId().' | '.$name.'</div>';
+                  echo '<input type="button" style="float:left" onclick="location.href=\'modifystore?id='.$store1->getStoreId().'\'" name="modify_store" value="Modify Store">';
+                  echo '<form style="float:right" id="RemoveStoreForm'.$key.'">';
+                  echo '<input type="hidden" name="storeid" value="'.$store1->getStoreId().'">';
+                  echo '<input type="button" name="removeStore" value="Remove Store" onclick="removeStoreFrm(\'RemoveStoreForm'.$key.'\')">';
+                  echo '</form>';
+                  echo '</div>';
+                }
+                ?>
+                </div>
+                <?php
+              }else {
+                echo '<div style="margin:20px">No stores added</div>';
               }
               ?>
-              </div>
-              <?php
-            }else {
-              echo '<div style="margin:20px">No stores added</div>';
-            }
-            ?>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,13 @@
 <div id="mySidebar" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <?php
+    if((!LoggedIn() && (basename($_SERVER['SCRIPT_NAME']) != 'about.php')) || LoggedIn())
+    {
+?>
   <a href="index.php" class="active">Home</a>
+  <?php
+      }
+    ?>
   <?php
     if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
     {
@@ -25,14 +32,12 @@
   if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
   {
     echo '<a href="account.php">Account</a>';
-    echo '<a href="javascript:void(0)">About</a>';
-    echo '<a href="about.php">Logout</a>';
+    echo '<a href="about.php">About</a>';
+    echo '<a href="logout.php">Logout</a>';
   }else {
     echo '<a href="login.php">Log in</a>';
     echo '<a href="signup.php">Sign up</a>';
-    echo '<a href="about.php">About</a>';
   }
-   echo '<span id="copyrightInfo">Copyright (c) '.date("Y").' by Student Discount Finder Corporation. All Rights Reserved.</span>';
   ?>
 
 </div>
@@ -123,6 +128,7 @@
   function addFooter() {
     var footer = document.createElement("footer");
     footer.innerHTML = addCopyRight();
+    footer.id = 'footer';
     document.body.appendChild(footer)
   }
 
@@ -131,7 +137,7 @@
   function addDarkMode() {
     var div = document.createElement('div')
     div.innerHTML = addDarkModeSwitch()
-    document.getElementById('container').insertBefore(div, document.getElementById('container').childNodes[0]);
+    document.getElementById('main').insertBefore(div, document.getElementById('main').childNodes[0]);
   }
   function addDarkModeSwitch() {
     var e = null;
@@ -149,21 +155,53 @@
       if($user != null)
       {
         ?>
-        e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)"><?php echo $user->getStylePref() == 1?"ON":"OFF"?></button></div>'
+        if(localStorage.getItem('style') == 'ON' || localStorage.getItem('style') == 'OFF')
+        {
+          localStorage.removeItem('style');
+          console.log(localStorage.getItem('style'))
+        }
+        e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; padding-bottom:0px; text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)"><?php echo $user->getStylePref() == 1?"ON":"OFF"?></button></div>'
     <?php
+  }else {
+    ?>
+    var s = document.getElementById('web_style').href.endsWith('css/style.css')? 'OFF' : 'ON';
+    <?php
+    if(!LoggedIn())
+    {
+    ?>
+    if(localStorage.getItem("style") == 'ON' || localStorage.getItem("style") == 'OFF')
+    {
+
+      if(localStorage.getItem("style") == 'ON')
+      {
+        document.getElementById('web_style').setAttribute("href", 'css/dark_style.css')
+      }else {
+        document.getElementById('web_style').setAttribute("href", 'css/style.css')
       }
+      s = localStorage.getItem("style");
+    }
+    <?php
+  }
+    ?>
+    console.log(localStorage.getItem('style'))
+    e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; padding-bottom:0px;text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)">'+s+'</button></div>'
+    <?php
+  }
     ?>
     return e;
   }
 
   function changeStyle(e) {
+    <?php
+    if(LoggedIn())
+    {
+    ?>
     if(e.innerHTML == 'OFF')
     {
       e.innerHTML = 'ON'
     }else {
       e.innerHTML = 'OFF'
     }
-
     var reqData = 'style=' + e.innerHTML;
     var req = new XMLHttpRequest();
     req.onload = () =>
@@ -180,9 +218,9 @@
         {
           if(e.innerHTML == 'ON')
           {
-            element('web_style').setAttribute("href", 'css/dark_style.css')
+            document.getElementById('web_style').setAttribute("href", 'css/dark_style.css')
           }else {
-            element('web_style').setAttribute("href", 'css/style.css')
+            document.getElementById('web_style').setAttribute("href", 'css/style.css')
           }
         }
       }
@@ -190,6 +228,27 @@
     req.open('post', 'form_handlers/_styleChange.php');
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.send(reqData);
+
+    <?php
+  }else {
+    ?>
+    if(e.innerHTML == 'OFF')
+    {
+      e.innerHTML = 'ON'
+      localStorage.setItem('style','ON');
+    }else {
+      e.innerHTML = 'OFF'
+      localStorage.setItem('style','OFF');
+    }
+    if(e.innerHTML == 'ON')
+    {
+      document.getElementById('web_style').setAttribute("href", 'css/dark_style.css')
+    }else {
+      document.getElementById('web_style').setAttribute("href", 'css/style.css')
+    }
+    <?php
+  }
+    ?>
   }
 </script>
 
