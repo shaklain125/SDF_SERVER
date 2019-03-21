@@ -135,6 +135,7 @@
   window.addEventListener('onload',addDarkMode())
 
   function addDarkMode() {
+
     var div = document.createElement('div')
     div.innerHTML = addDarkModeSwitch()
     document.getElementById('main').insertBefore(div, document.getElementById('main').childNodes[0]);
@@ -180,6 +181,13 @@
       }
       s = localStorage.getItem("style");
     }
+    <?php
+  }
+  if((basename($_SERVER['SCRIPT_NAME']) == 'about.php'))
+  {
+    ?>
+    document.getElementById('web_style').setAttribute("href", 'css/dark_style.css');
+    return null;
     <?php
   }
     ?>

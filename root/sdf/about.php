@@ -3,9 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <?php include '_importPhp.php';include '_importStyle.php'; ?>
     <style>
-      body{
+    #myVideo {
+      position: fixed;
+      top:50px;
+      min-width: 100%;
+      min-height: 100%;
+      width: 100%;
+      height: auto;
+      z-index: -5;
+      object-position: 58% 50%;
+    }
+    video {
+      object-fit: cover;
+    }
+
+      /* body{
         background-image: url("./css/aboutBackground.gif");
         background-repeat: no-repeat;
         background-size:cover;
@@ -17,8 +30,8 @@
         padding: 0;
         min-height: calc(100vh - 40px);
         flex-direction: row;
-      }
-      .tint {
+      } */
+      /* .tint {
         z-index: 1;
         height: 100%;
         width: 100%;
@@ -26,7 +39,7 @@
         top: 0px;
         left: 0px;
         background: rgba(0, 0, 0, 0.7);
-      }
+      } */
       .aboutBtn{
         text-decoration: none;
         background-color: green;
@@ -40,41 +53,33 @@
         float:left;
       }
     </style>
+    <?php include '_importPhp.php';include '_importStyle.php'; ?>
   </head>
   <body>
-    <?php
-      startSession();
-      // if(isset($_SESSION['student']) || isset($_SESSION['storemember']))
-      // {
-      //   header('Location: index.php');
-      // }
-    ?>
-    <div class = "tint" id="container">
+    <div id="container" style="background: rgba(0, 0, 0, 0.6)">
       <div id="main">
         <?php
           include '_fixedHeaderAndSideBar.php'
          ?>
-         <div id="contentContainer">
-           <div style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;" id="content">
-             <h1 style="margin: 20px;">Student Discount Finder</h1>
-               <p style="margin: 20px;">Home to Thousands of Exclusive Student Deals. Sign Up Now and Benefit From a Large Range of Deals and Discounts Afforded to You!</p>
-                   <div>
-                    <a class="aboutBtn" href="signup.php" class="formText">
-                     Sign Up
-                   </a>
-                   <a class="aboutBtn"style="
-  "href="login.php" class="formText">
-                      Sign In
-                    </a>
-
-                 </div>
-              </div>
-              </div>
+         <div id="contentContainer" style="margin-top:50px;text-align:center;">
+           <div  style="display: flex; flex-direction: column; align-items: center; padding-top: 80px;" id="content">
+             <video autoPlay muted loop id="myVideo">
+                <source src="media/video.mp4" type="video/mp4"/>
+            </video>
+             <h1 style="margin: 20px; text-align:center;">Student Discount Finder</h1>
+               <p style="margin: 20px;text-align:center; font-family:arial; font-size:12pt;">Home to Thousands of Exclusive Student Deals. Sign Up Now and Benefit From a Large Range of Deals and Discounts Afforded to You!</p>
+               <div id="aboutBtnLinks">
+                 <a class="aboutBtn" href="signup.php" class="formText">Sign Up</a>
+                 <a class="aboutBtn" href="login.php" class="formText">Sign In</a>
+               </div>
             </div>
-          </div>
+        </div>
       </div>
-     </div>
+    </div>
     <script type="text/javascript">
+    window.addEventListener('onload', function () {
+      element("footer").style.backgroundColor = "rgb(28,28,28)";
+    })
     </script>
   </body>
 </html>
