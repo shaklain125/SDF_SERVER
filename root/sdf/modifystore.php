@@ -390,7 +390,10 @@
         {
           element("addDiscountsList").removeChild(arr[emptyDiscount])
         }
-        element("addDiscount").remove()
+        if(element("addDiscount"))
+        {
+          element("addDiscount").remove()
+        }
         element("newDiscounts").value = JSON.stringify(validNewDiscounts);
         element("discountsToRemove").value = JSON.stringify(discountsToRemove);
         // element("modifystoreForm").submit();
