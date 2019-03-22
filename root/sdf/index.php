@@ -138,8 +138,8 @@
                         echo $store->getName();
                         echo '</div>';
                         foreach ($prefDiscountFromStore as $key => $value) {
-                          echo '<div class="storeLinkText" title="'.$value->getPercent().'% Off '.$value->getName().'" style="text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
-                          echo substr($value->getPercent().'% Off '.$value->getName(), 0, 10).(strlen($value->getPercent().'% Off '.$value->getName()) > 10?'...':'');
+                          echo '<div class="storeLinkText" title="'.$value->getPercent().'% Off '.$value->getName().'" style="padding:0px; padding-left:10px;text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
+                          echo substr($value->getPercent().'% Off '.$value->getName(), 0, 10).(strlen($value->getPercent().'% Off '.$value->getName()) > 10?'...':'')
                           echo '</div>';
                         }
                         if(sizeof($prefDiscountFromStore) == 0)
@@ -185,8 +185,8 @@
                     if(sizeof($d) > 0)
                     {
                       $d = $d[0];
-                      echo '<div class="storeLinkText" title="'.$d->getPercent().'% Off '.$d->getName().'" style="text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
-                      echo substr($d->getPercent().'% Off '.$d->getName(), 0, 10).(strlen($d->getPercent().'% Off '.$d->getName()) > 10?'...':'');
+                      echo '<div class="storeLinkText" title="'.$d->getPercent().'% Off '.$d->getName().'" style="padding:0px; padding-left:10px;text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
+                      echo substr($d->getPercent().'% Off '.$d->getName(), 0, 10).(strlen($d->getPercent().'% Off '.$d->getName()) > 10?'...':'')
                       echo '</div>';
                     }else {
                       echo '<div style="text-align:center;">';
