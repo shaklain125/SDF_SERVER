@@ -247,15 +247,15 @@
                     <div id="changePwDiv" style="margin-bottom: 20px; display:none;padding:20px; border-style:solid;border-width:thin; border-color: black;">
                       <div class="inputWrap">
                         <span class="inputLabel">Current Password</span>
-                        <input class="formInput" type="text" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="" onkeypress="return NoSpaces(event)">
+                        <input class="formInput" type="password" id="currentpw" name="currentPass" placeholder="Type Your Current Password" value="" onkeypress="return NoSpaces(event)">
                       </div>
                       <div class="inputWrap">
                         <span class="inputLabel">New Password</span>
-                        <input class="formInput" type="text" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()"  onkeypress="return NoSpaces(event)">
+                        <input class="formInput" type="password" id="newpw" name="newPw" placeholder="Type a New Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()"  onkeypress="return NoSpaces(event)">
                       </div>
                       <div class="inputWrap">
                         <span class="inputLabel">Confirm New Password</span>
-                        <input class="formInput" type="text" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()"  onkeypress="return NoSpaces(event)">
+                        <input class="formInput" type="password" id="checknewpw" placeholder="Confirm Password" oninput="CheckNewPW()" value="" oninput="handleMsgChange()"  onkeypress="return NoSpaces(event)">
                       </div>
                       <div id="checkNewPwDiv">
                       </div>

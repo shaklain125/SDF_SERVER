@@ -175,10 +175,10 @@
                 $storememb = new storemember($store->getStorememberId());
                 ?>
                 <div style="margin-bottom:20px">
-                  <img src="<?php echo $storememb->getProfilePicturePath()?>" style="border-radius:100px;border:none;" width="100px" height="100px"alt="">
+                  <img src="<?php echo $storememb->getProfilePicturePath()?>" style="border-radius:100px;border:none;object-fit: cover;" width="100px" height="100px"alt="">
                 </div>
                 <?php
-                echo 'Added by '.$storememb->getFirstName().' '.$storememb->getLastName();
+                echo '<div>Added by</div>'.$storememb->getFirstName().' '.$storememb->getLastName();
                 ?>
               </div>
             </div>
