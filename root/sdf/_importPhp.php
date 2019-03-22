@@ -10,6 +10,7 @@ include 'classes/_studentclaim.php';
 include 'classes/_storemember.php';
 include 'classes/_store.php';
 include 'classes/_discount.php';
+include 'classes/_database.php';
 include '_helper.php';
 include '_updateUserSession.php';
 ?>

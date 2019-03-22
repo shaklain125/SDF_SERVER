@@ -26,6 +26,7 @@ function SqlResultToArray($query, $conn)
 }
 
 function isTableEmpty($tablename, $conn)
+{
   return $db->isTableEmpty($tablename, $conn);
 }
 
