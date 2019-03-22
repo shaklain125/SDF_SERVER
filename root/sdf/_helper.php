@@ -3,52 +3,52 @@ $db = database::getInstance();
 
 function getQueryResult($query, $conn)
 {
-  return $db::getQueryResult($query, $conn);
+  return $db->getQueryResult($query, $conn);
 }
 
 function createSqlConn()
 {
-  return $db::createSqlConn($conn);
+  return $db->createSqlConn($conn);
 }
 
 function closeSqlConn($conn)
 {
-  $db::closeSqlConn($conn);
+  $db->closeSqlConn($conn);
 }
 
 function realSqlString($val, $conn) {
-  return $db::realSqlString($val, $conn);
+  return $db->realSqlString($val, $conn);
 }
 
 function SqlResultToArray($query, $conn)
 {
-  return $db::SqlResultToArray($query, $conn);
+  return $db->SqlResultToArray($query, $conn);
 }
 
 function isTableEmpty($tablename, $conn)
-  return $db::isTableEmpty($tablename, $conn);
+  return $db->isTableEmpty($tablename, $conn);
 }
 
 function setAutoIncrement($tablename, $value, $conn)
 {
-  return $db::setAutoIncrement($tablename, $value, $conn);
+  return $db->setAutoIncrement($tablename, $value, $conn);
 }
 
 function getTableSize($tablename) {
-  return $db::getTableSize($tablename);
+  return $db->getTableSize($tablename);
 }
 
 function findRowInTable($column,$col_value,$table)
 {
-  return $db::findRowInTable($column,$col_value,$table);
+  return $db->findRowInTable($column,$col_value,$table);
 }
 
 function ResetTableAutoincrement($tablename) {
-  return $db::ResetTableAutoincrement($tablename);
+  return $db->ResetTableAutoincrement($tablename);
 }
 
 function setNextAvailableAutoIncrement($table,$incrCol) {
-  return $db::setNextAvailableAutoIncrement($table,$incrCol);
+  return $db->setNextAvailableAutoIncrement($table,$incrCol);
 }
 
 //Page X,Y Coordinates
