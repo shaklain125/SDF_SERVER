@@ -138,7 +138,7 @@
                         echo $store->getName();
                         echo '</div>';
                         foreach ($prefDiscountFromStore as $key => $value) {
-                          echo '<div class="storeLinkText" title="'.$value->getPercent().'% Off '.$value->getName().'" style="padding:0px; padding-left:10px;text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
+                          echo '<div class="storeLinkText" title="'.$value->getPercent().'% Off '.$value->getName().'" style="text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
                           echo $value->getPercent().'% Off '.$value->getName();
                           echo '</div>';
                         }
@@ -185,7 +185,7 @@
                     if(sizeof($d) > 0)
                     {
                       $d = $d[0];
-                      echo '<div class="storeLinkText" title="'.$d->getPercent().'% Off '.$d->getName().'" style="padding:0px; padding-left:10px;text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
+                      echo '<div class="storeLinkText" title="'.$d->getPercent().'% Off '.$d->getName().'" style="text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
                       echo $d->getPercent().'% Off '.$d->getName();
                       echo '</div>';
                     }else {
