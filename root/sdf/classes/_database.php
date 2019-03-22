@@ -5,7 +5,7 @@
  */
 class database
 {
-  private static $instance;;
+  private static $instance;
 
   public static function getInstance() {
     if(!isset($this->instance))
