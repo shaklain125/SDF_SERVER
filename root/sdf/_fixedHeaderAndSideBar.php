@@ -157,15 +157,13 @@
     }
       if($user != null)
       {
-        ?>
-        if(localStorage.getItem('style') == 'ON' || localStorage.getItem('style') == 'OFF')
+        if((basename($_SERVER['SCRIPT_NAME']) != 'about.php'))
         {
-          localStorage.removeItem('style');
-          console.log(localStorage.getItem('style'))
+          ?>
+          e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; padding-bottom:0px; text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)"><?php echo $user->getStylePref() == 1?"ON":"OFF"?></button></div>'
+          <?php
         }
-        e = '<div id="darkmodeToggle" style="margin-top:50px; padding:20px; padding-bottom:0px; text-align:right;"><span>Dark Mode: </span><button id="darkmodeSwitchBtn" type="button" name="button" onclick="changeStyle(this)"><?php echo $user->getStylePref() == 1?"ON":"OFF"?></button></div>'
-    <?php
-  }
+      }
     ?>
     return e;
   }

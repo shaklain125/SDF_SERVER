@@ -69,10 +69,17 @@
             </video>
              <h1 style="margin: 20px; text-align:center; color:white;">Student Discount Finder</h1>
                <p style="margin: 20px;text-align:center; color:white; font-family:arial; font-size:12pt;">Home to Thousands of Exclusive Student Deals. Sign Up Now and Benefit From a Large Range of Deals and Discounts Afforded to You!</p>
-               <div id="aboutBtnLinks">
-                 <a class="aboutBtn" href="signup.php" class="formText">Sign Up</a>
-                 <a class="aboutBtn" href="login.php" class="formText">Sign In</a>
-               </div>
+               <?php
+               if(!LoggedIn())
+               {
+                 ?>
+                 <div id="aboutBtnLinks">
+                   <a class="aboutBtn" href="signup.php" class="formText">Sign Up</a>
+                   <a class="aboutBtn" href="login.php" class="formText">Sign In</a>
+                 </div>
+                 <?php
+               }
+               ?>
             </div>
         </div>
       </div>
