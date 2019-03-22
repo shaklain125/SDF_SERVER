@@ -135,11 +135,11 @@
                         echo '</div>';
                         echo '</div>';
                         echo '<div class="storeLinkText" title="'.$store->getName().'" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
-                        echo $store->getName();
+                        echo substr($store->getName(), 0, 30).(strlen($store->getName()) > 30?'...':'');
                         echo '</div>';
                         foreach ($prefDiscountFromStore as $key => $value) {
                           echo '<div class="storeLinkText" title="'.$value->getPercent().'% Off '.$value->getName().'" style="padding:0px; padding-left:10px;text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
-                          echo substr($value->getPercent().'% Off '.$value->getName(), 0, 45).(strlen($value->getPercent().'% Off '.$value->getName()) > 45?'...':'');
+                          echo substr($value->getPercent().'% Off '.$value->getName(), 0, 30).(strlen($value->getPercent().'% Off '.$value->getName()) > 30?'...':'');
                           echo '</div>';
                         }
                         if(sizeof($prefDiscountFromStore) == 0)
@@ -178,7 +178,7 @@
                     echo '</div>';
                     echo '</div>';
                     echo '<div class="storeLinkText" title="'.$store->getName().'" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
-                    echo $store->getName();
+                    echo substr($store->getName(), 0, 30).(strlen($store->getName()) > 30?'...':'');
                     echo '</div>';
                     $d = $store->getDiscounts();
                     $d = array_reverse($d);
@@ -186,7 +186,7 @@
                     {
                       $d = $d[0];
                       echo '<div class="storeLinkText" title="'.$d->getPercent().'% Off '.$d->getName().'" style="padding:0px; padding-left:10px;text-align:center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">';
-                      echo substr($d->getPercent().'% Off '.$d->getName(), 0, 45).(strlen($d->getPercent().'% Off '.$d->getName()) > 45?'...':'');
+                      echo substr($d->getPercent().'% Off '.$d->getName(), 0, 30).(strlen($d->getPercent().'% Off '.$d->getName()) > 30?'...':'');
                       echo '</div>';
                     }else {
                       echo '<div style="text-align:center;">';
