@@ -95,6 +95,15 @@
       return $result;
     }
 
+    public function getProfilePicturePath() {
+      if(!is_dir('users/'.$this->getUserId().'/'))
+      {
+        return 'icons/profile.png';
+      }else {
+        return 'users/'.$this->getUserId().'/profile.png';
+      }
+    }
+
     public function updateProfile($email,$fname,$lname,$password) {
       $conn = createSqlConn();
       $q = null;

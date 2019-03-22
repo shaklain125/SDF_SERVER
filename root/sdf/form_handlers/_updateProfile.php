@@ -19,17 +19,14 @@ if(isset($_POST['userid']))
   }
   $userid = $_POST['userid'];
   // $input_username = $_POST['input_username'];
-  $input_email = null;
-  $input_fname = null;
-  $input_lname = null;
+  $input_email = $_POST['input_email'];
+  $input_fname = $_POST['input_fname'];
+  $input_lname = $_POST['input_lname'];
   $input_dob = null;
   $input_university = null;
   $input_graduation = null;
   if(isset($_SESSION['student']))
   {
-    $input_email = $_POST['input_email'];
-    $input_fname = $_POST['input_fname'];
-    $input_lname = $_POST['input_lname'];
     $input_dob = $_POST['input_dob'];
     $input_university = $_POST['input_university'];
     $input_graduation = $_POST['input_graduation'];
@@ -103,7 +100,8 @@ if(isset($_POST['userid']))
     if($user->updateProfile($input_email,$input_fname,$input_lname,$newPass))
     {
       echo json_encode(array(
-        'message' => 'Updated'
+        'message' => 'Updated',
+        'fn' => $input_fname
       ));
     }
   }

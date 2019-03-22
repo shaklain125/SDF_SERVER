@@ -176,22 +176,10 @@
                     <div style="float:right">
                       <a href="javascript:void(0)" style="margin-top:0" class="linkBtn" onclick="removeFromDiscountList(this)" id="removeListDiscount">[X] Remove</a>
                     </div>
-                    <div class="inputWrap">
-                      <span class="inputLabel">Discount Name</span>
-                      <input type="text" placeholder="Type In Discount Name" name="input_discount_name" oninput="handleChange()" value="">
-                    </div>
-                    <div class="inputWrap">
-                      <span class="inputLabel">Discount Percent</span>
-                      <input type="text" placeholder="Type In Discount Percent" name="input_discount_percent" oninput="handleChange()" value="">
-                    </div>
-                    <div class="inputWrap">
-                      <span class="inputLabel">Discount Start Date</span>
-                      <input type="date" placeholder="Enter Discount Start Date" name="input_discount_start" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
-                    </div>
-                    <div class="inputWrap">
-                      <span class="inputLabel">Discount Expire Date</span>
-                      <input type="date" placeholder="Enter Discount Expire Date" name="input_discount_expire" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
-                    </div>
+                    <input type="text" placeholder="Type In Discount Name" name="input_discount_name" oninput="handleChange()"  onkeypress="return LettersOnly(event)" value="">
+                    <input type="text" placeholder="Type In Discount Percent" name="input_discount_percent" oninput="handleChange()" onkeypress="return NumbersOnly(event)" max="100" min="0" value="">
+                    <input type="date" placeholder="Enter Discount Start Date" name="input_discount_start" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
+                    <input type="date" placeholder="Enter Discount Expire Date" name="input_discount_expire" oninput="handleChange()" min="<?php echo getTodayDate(); ?>" value="">
                     <select name="input_discount_subcateg" style="border-style:solid; border-width:thin">
                       <?php
                         $conn = createSqlConn();
@@ -235,9 +223,8 @@
         {
           return false;
         }
-        ApplyChanges();
         // AddXandYScrollToForm("modifystoreForm");
-        return true
+        return ApplyChanges();
       }
       var discountsToRemove = [];
       var discountsToRemoveDiv = [];
@@ -323,9 +310,10 @@
         if(!element("storename").value)
         {
           element("errorMsg").innerHTML = "Please enter a store name";
-          return
+          return false;
         }
         var addDiscChild = element("addDiscountsList").children;
+        var datindx = 0;
         for(var i = 0; i < addDiscChild.length; i++)
         {
           var DiscountInputs = addDiscChild[i].children
@@ -335,6 +323,8 @@
             input_discount_start: null,
             input_discount_expire: null
           }
+          var sdate = null;
+          var edate = null;
           for(var x = 0; x < DiscountInputs.length; x++)
           {
             if(DiscountInputs[x].tagName == 'INPUT' || DiscountInputs[x].tagName == 'SELECT')
@@ -345,25 +335,25 @@
                 newDiscount = null;
                 if(DiscountInputs[x].type == 'date')
                 {
-                    element("errorMsg").innerHTML = "Please enter a valid date";
+                    element("errorMsg").innerHTML = "Please fill in the date input";
                 }else {
                     element("errorMsg").innerHTML = "Please fill all fields in the new discounts";
                 }
-                return;
+                return false;
                 // break;
               }else {
                 if(DiscountInputs[x].name == "input_discount_percent")
                 {
                   if(!isNaN(DiscountInputs[x].value))
                   {
-                    if(Number(DiscountInputs[x].value) < 0 && Number(DiscountInputs[x].value) > 100)
+                    if(Number(DiscountInputs[x].value) < 0 || Number(DiscountInputs[x].value) > 100)
                     {
                       element("errorMsg").innerHTML = "Please enter discount percentage value between 0 and 100";
-                      return;
+                      return false;
                     }
                   }else {
                     element("errorMsg").innerHTML = "Please enter discount percentage value between 0 and 100";
-                    return;
+                    return false;
                   }
                 }
                 if(DiscountInputs[x].type == 'date')
@@ -374,7 +364,15 @@
                   if(d < today)
                   {
                     element("errorMsg").innerHTML = "Please enter a valid date";
-                    return
+                    return false;
+                  }
+                  if(datindx == 0)
+                  {
+                    sdate = d;
+                    datindx++;
+                  }else if (datindx == 1) {
+                    edate = d;
+                    datindx++;
                   }
                 }
                 newDiscount[DiscountInputs[x].name] = DiscountInputs[x].value
@@ -383,7 +381,13 @@
           }
           if(newDiscount != null)
           {
-            validNewDiscounts.push(newDiscount)
+            if(edate > sdate)
+            {
+              validNewDiscounts.push(newDiscount)
+            }else {
+              element("errorMsg").innerHTML = "Expire date is earlier than start date";
+              return false
+            }
           }
         }
         for(var emptyDiscount in arr)
@@ -396,6 +400,7 @@
         }
         element("newDiscounts").value = JSON.stringify(validNewDiscounts);
         element("discountsToRemove").value = JSON.stringify(discountsToRemove);
+        return true;
         // element("modifystoreForm").submit();
       }
       function handleChange()

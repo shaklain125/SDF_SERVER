@@ -170,6 +170,17 @@
                 <h3 style="padding-bottom:10px;border-bottom:solid;border-width:thin;border-color:#d9d9d9; width:50%; margin:0px auto;margin-bottom:20px;">About Store</h3>
                 <?php echo $store->getDescription() == '' ? 'No Store Description' : $store->getDescription();?>
               </div>
+              <div style="padding:50px">
+                <?php
+                $storememb = new storemember($store->getStorememberId());
+                ?>
+                <div style="margin-bottom:20px">
+                  <img src="<?php echo $storememb->getProfilePicturePath()?>" style="border-radius:100px;border:none;" width="100px" height="100px"alt="">
+                </div>
+                <?php
+                echo 'Added by '.$storememb->getFirstName().' '.$storememb->getLastName();
+                ?>
+              </div>
             </div>
             <?php
               if(isset($_SESSION['student']))

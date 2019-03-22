@@ -57,6 +57,14 @@
       }
     }
 
+    public function getStorememberId()
+    {
+      if(!$this->isNull())
+      {
+        return $this->storePage[0]['storememberID'];
+      }
+    }
+
     public function getPhone()
     {
       if(!$this->isNull())

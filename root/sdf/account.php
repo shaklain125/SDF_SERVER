@@ -16,6 +16,7 @@
         }
         var fd = new FormData(element('profileForm'));
         var reqData = fd;
+        console.log($('#profileForm').serialize())
         var req = new XMLHttpRequest();
         req.onload = () =>
         {
