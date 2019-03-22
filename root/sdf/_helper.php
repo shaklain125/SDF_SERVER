@@ -1,78 +1,105 @@
 <?php
-function ArrayNotNull($arr)
-{
-  foreach ($arr as $field) {
-    if(strlen($field) == 0)
-    {
-      return false;
-    }
-  }
-  return true;
-}
+$db = database::getInstance();
+
 function getQueryResult($query, $conn)
 {
-  return $conn->query($query);
+  return $db::getQueryResult($query, $conn);
 }
 
 function createSqlConn()
 {
-  $conn = new mysqli('127.0.0.1', 'root', 'usbw', 'sdf_db');
-  if ($conn->connect_error) {
-      die('Connect Error (' . $conn->connect_errno . ') '.$conn->connect_error);
-      return null;
-  }
-  return $conn;
+  return $db::createSqlConn($conn);
 }
 
 function closeSqlConn($conn)
 {
-  $conn->close();
+  $db::closeSqlConn($conn);
 }
 
 function realSqlString($val, $conn) {
-  return $conn->real_escape_string($val);
+  return $db::realSqlString($val, $conn);
 }
 
 function SqlResultToArray($query, $conn)
 {
-  $result = getQueryResult($query,$conn);
-  $arr = array();
-  while($row = $result->fetch_assoc())
-  {
-    array_push($arr,$row);
-  }
-  return $arr;
+  return $db::SqlResultToArray($query, $conn);
 }
 
-function isTableEmpty($tablename, $conn) {
-  $q = "SELECT * FROM ".$tablename;
-  return sizeof(SqlResultToArray($q,$conn)) == 0;
+function isTableEmpty($tablename, $conn)
+  return $db::isTableEmpty($tablename, $conn);
 }
 
 function setAutoIncrement($tablename, $value, $conn)
 {
-  $q = "ALTER TABLE ".$tablename." AUTO_INCREMENT = ".$value;
-  return getQueryResult($q,$conn);
+  return $db::setAutoIncrement($tablename, $value, $conn);
 }
 
 function getTableSize($tablename) {
-  $conn = createSqlConn();
-  $s = sizeof(SqlResultToArray("select * from ".$tablename, $conn));
-  closeSqlConn($conn);
-  return $s;
+  return $db::getTableSize($tablename);
 }
 
 function findRowInTable($column,$col_value,$table)
 {
-  $conn = createSqlConn();
-  $searchTable = SqlResultToArray("select * from $table where $column=$col_value",$conn);
-  closeSqlConn($conn);
-  if(sizeof($searchTable) == 0)
+  return $db::findRowInTable($column,$col_value,$table);
+}
+
+function ResetTableAutoincrement($tablename) {
+  return $db::ResetTableAutoincrement($tablename);
+}
+
+function setNextAvailableAutoIncrement($table,$incrCol) {
+  return $db::setNextAvailableAutoIncrement($table,$incrCol);
+}
+
+//Page X,Y Coordinates
+
+function SetXandYScrollSession($x,$y) {
+  $_SESSION['scrollx'] = $x;
+  $_SESSION['scrolly'] = $y;
+}
+
+function GetXandYScrollPositions() {
+  startSession();
+  if(isset($_SESSION['scrollx']) && isset($_SESSION['scrolly']))
   {
-    return null;
+    $x = $_SESSION['scrollx'];
+    $y = $_SESSION['scrolly'];
+    unset($_SESSION['scrollx']);
+    unset($_SESSION['scrolly']);
+    return 'window.scrollTo('.$x.', '.$y.');';
   }else {
-    return $searchTable;
+    return '';
   }
+}
+
+
+//Directory
+
+function rrmdir($dir) {
+   if (is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if (is_dir($dir."/".$object))
+           rrmdir($dir."/".$object);
+         else
+           unlink($dir."/".$object);
+       }
+     }
+     rmdir($dir);
+   }
+ }
+
+//Session
+
+function startSession() {
+  if (session_status() == PHP_SESSION_NONE) {
+      session_start();
+  }
+}
+
+function LoggedIn() {
+  return isset($_SESSION['student']) || isset($_SESSION['storemember']);
 }
 
 function ShowError()
@@ -81,6 +108,7 @@ function ShowError()
   unset($_SESSION['errorMsg']);
   return $error;
 }
+
 function errorExists()
 {
   if(isset($_SESSION['errorMsg']))
@@ -89,15 +117,6 @@ function errorExists()
   }else {
     return 'none';
   }
-}
-function getTodayDate()
-{
-  $d = getdate();
-  return $d['year'].'-'.getZeroFrontDigit($d['mon']).'-'.getZeroFrontDigit($d['mday']);
-}
-function getZeroFrontDigit($numb)
-{
-  return (($numb >= 0) && ($numb <= 9)) ? '0'.$numb : $numb;
 }
 
 function keepData($val, $final)
@@ -121,42 +140,6 @@ function keepData($val, $final)
   }
 }
 
-function startSession() {
-  if (session_status() == PHP_SESSION_NONE) {
-      session_start();
-  }
-}
-
-function rrmdir($dir) { 
-   if (is_dir($dir)) {
-     $objects = scandir($dir);
-     foreach ($objects as $object) {
-       if ($object != "." && $object != "..") {
-         if (is_dir($dir."/".$object))
-           rrmdir($dir."/".$object);
-         else
-           unlink($dir."/".$object);
-       }
-     }
-     rmdir($dir);
-   }
- }
-
-function startsWith($val,$str) {
-  return substr($str, 0, strlen($val)) == $val;
-}
-function endsWith($val,$str) {
-  return substr($str, strlen($str) - strlen($val), strlen($str)) == $val;
-}
-
-function printval($val) {
-  print("<pre style='white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>".print_r($val,true)."</pre>");
-}
-
-function LoggedIn() {
-  return isset($_SESSION['student']) || isset($_SESSION['storemember']);
-}
-
 function getSessionDivMsg($timeoutMs) {
   if(isset($_SESSION['message']))
   {
@@ -166,44 +149,42 @@ function getSessionDivMsg($timeoutMs) {
   }
 }
 
-function SetXandYScrollSession($x,$y) {
-  $_SESSION['scrollx'] = $x;
-  $_SESSION['scrolly'] = $y;
+
+
+//String/Date/Integer/Array Functions
+
+function startsWith($val,$str) {
+  return substr($str, 0, strlen($val)) == $val;
 }
 
-function GetXandYScrollPositions() {
-  startSession();
-  if(isset($_SESSION['scrollx']) && isset($_SESSION['scrolly']))
-  {
-    $x = $_SESSION['scrollx'];
-    $y = $_SESSION['scrolly'];
-    unset($_SESSION['scrollx']);
-    unset($_SESSION['scrolly']);
-    return 'window.scrollTo('.$x.', '.$y.');';
-  }else {
-    return '';
+function endsWith($val,$str) {
+  return substr($str, strlen($str) - strlen($val), strlen($str)) == $val;
+}
+
+function printval($val) {
+  print("<pre style='white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>".print_r($val,true)."</pre>");
+}
+
+function getTodayDate()
+{
+  $d = getdate();
+  return $d['year'].'-'.getZeroFrontDigit($d['mon']).'-'.getZeroFrontDigit($d['mday']);
+}
+
+function getZeroFrontDigit($numb)
+{
+  return (($numb >= 0) && ($numb <= 9)) ? '0'.$numb : $numb;
+}
+
+function ArrayNotNull($arr)
+{
+  foreach ($arr as $field) {
+    if(strlen($field) == 0)
+    {
+      return false;
+    }
   }
-}
-
-function ResetTableAutoincrement($tablename) {
-  $conn = createSqlConn();
-  if(isTableEmpty($tablename,$conn))
-  {
-    return setAutoIncrement($tablename,1,$conn);
-  }else {
-    return setAutoIncrement($tablename,getTableSize($tablename)+1,$conn);
-  }
-  closeSqlConn($conn);
-}
-
-function setNextAvailableAutoIncrement($table,$incrCol) {
-  $conn = createSqlConn();
-  $q = 'SELECT t1.'.$incrCol.'+1 AS MISSING_ID FROM '.$table.' AS t1 LEFT JOIN '.$table.' AS t2 ON t1.'.$incrCol.'+1 = t2.'.$incrCol.' WHERE t2.'.$incrCol.' IS NULL ORDER BY t1.'.$incrCol.' LIMIT 1';
-  $incrementVal = SqlResultToArray($q,$conn);
-  $incrementVal  = (int) $incrementVal[0]['MISSING_ID'];
-  $result = setAutoIncrement($table,$incrementVal,$conn);
-  closeSqlConn($conn);
-  return $result;
+  return true;
 }
 
 function searchArr($arr, $val) {
@@ -215,6 +196,10 @@ function searchArr($arr, $val) {
   }
   return false;
 }
+
+
+
+//Pagination
 
 function getSearchPagination($query, $totalNofResults, $results_per_page, $page, $number_of_pages) {
   echo '<div style="text-align:center;">';
@@ -257,7 +242,6 @@ function getFavStoresPagination($totalNofResults, $results_per_page, $page, $num
   }
   echo '</div>';
 }
-
 
 function getPageNumber() {
   if(isset($_GET['page']))
