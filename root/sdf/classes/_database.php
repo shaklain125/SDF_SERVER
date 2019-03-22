@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  */
@@ -7,12 +6,13 @@ class database
 {
   private static $instance;
 
-  public static function getInstance() {
-    if(!isset($this->instance))
+  public static function getInstance()
+  {
+    if (self::$instance == null)
     {
-      $this->instance = new database();
+      self::$instance = new database();
     }
-    return $this->instance;
+    return self::$instance;
   }
 
   public function getQueryResult($query, $conn)
@@ -37,17 +37,6 @@ class database
 
   public function realSqlString($val, $conn) {
     return $conn->real_escape_string($val);
-  }
-
-  public function $this->SqlResultToArray($query, $conn)
-  {
-    $result = $this->getQueryResult($query,$conn);
-    $arr = array();
-    while($row = $result->fetch_assoc())
-    {
-      array_push($arr,$row);
-    }
-    return $arr;
   }
 
   public function SqlResultToArray($query, $conn)

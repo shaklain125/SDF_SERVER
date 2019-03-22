@@ -1,55 +1,55 @@
 <?php
-$db = database::getInstance();
+$database1 = database::getInstance();
 
 function getQueryResult($query, $conn)
 {
-  return $db->getQueryResult($query, $conn);
+  return $GLOBALS['database1']->getQueryResult($query, $conn);
 }
 
 function createSqlConn()
 {
-  return $db->createSqlConn($conn);
+  return $GLOBALS['database1']->createSqlConn();
 }
 
 function closeSqlConn($conn)
 {
-  $db->closeSqlConn($conn);
+  $GLOBALS['database1']->closeSqlConn($conn);
 }
 
 function realSqlString($val, $conn) {
-  return $db->realSqlString($val, $conn);
+  return $GLOBALS['database1']->realSqlString($val, $conn);
 }
 
 function SqlResultToArray($query, $conn)
 {
-  return $db->SqlResultToArray($query, $conn);
+  return $GLOBALS['database1']->SqlResultToArray($query, $conn);
 }
 
 function isTableEmpty($tablename, $conn)
 {
-  return $db->isTableEmpty($tablename, $conn);
+  return $GLOBALS['database1']->isTableEmpty($tablename, $conn);
 }
 
 function setAutoIncrement($tablename, $value, $conn)
 {
-  return $db->setAutoIncrement($tablename, $value, $conn);
+  return $GLOBALS['database1']->setAutoIncrement($tablename, $value, $conn);
 }
 
 function getTableSize($tablename) {
-  return $db->getTableSize($tablename);
+  return $GLOBALS['database1']->getTableSize($tablename);
 }
 
 function findRowInTable($column,$col_value,$table)
 {
-  return $db->findRowInTable($column,$col_value,$table);
+  return $GLOBALS['database1']->findRowInTable($column,$col_value,$table);
 }
 
 function ResetTableAutoincrement($tablename) {
-  return $db->ResetTableAutoincrement($tablename);
+  return $GLOBALS['database1']->ResetTableAutoincrement($tablename);
 }
 
 function setNextAvailableAutoIncrement($table,$incrCol) {
-  return $db->setNextAvailableAutoIncrement($table,$incrCol);
+  return $GLOBALS['database1']->setNextAvailableAutoIncrement($table,$incrCol);
 }
 
 //Page X,Y Coordinates

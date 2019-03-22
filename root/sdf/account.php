@@ -437,6 +437,10 @@
                           echo '<h2 style="text-align:center; margin-bottom:20px;font-family:arial;">'.$storeName.'</h2>';
                           echo '<h4 style="text-align:center; margin:2px;font-family:arial;">'.$discount->getPercent().'% OFF '.$discount->getName().'</h4>';
                           echo '<p style="text-align:center;font-family:arial;">'.$discount->getSubCategory().'</p>';
+                          if($value->isUsed())
+                          {
+                            echo '<h3 style="text-align:center;font-family:arial;">'.$discount->getCode().'</h3>';
+                          }
                   ?>
                   <?php
                           if(!$value->isUsed())
